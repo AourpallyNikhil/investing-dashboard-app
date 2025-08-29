@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+// Initialize Supabase client (lazy initialization to avoid build errors)
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  );
+}
 
 interface SentimentDataPoint {
   ticker: string;
@@ -308,6 +310,8 @@ async function getCachedSentimentData(
   try {
     console.log('📊 Checking for cached sentiment data in database...');
     
+    const supabase = getSupabaseClient();
+    
     // Check if we have recent data (within 1 hour)
     const oneHourAgo = new Date();
     oneHourAgo.setHours(oneHourAgo.getHours() - 1);
@@ -408,6 +412,8 @@ async function getCachedSentimentData(
 async function saveSentimentDataToDatabase(data: SentimentResponse): Promise<void> {
   try {
     console.log(`💾 Saving ${data.data.length} sentiment data points to database...`);
+
+    const supabase = getSupabaseClient();
 
     // Clear existing sentiment data (keep only last 7 days)
     const sevenDaysAgo = new Date();
