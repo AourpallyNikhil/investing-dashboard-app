@@ -5,11 +5,13 @@ import { RedditAPI } from '@/lib/reddit-api'
 import { TwitterAPI } from '@/lib/twitter-api'
 import { analyzeSentimentWithLLM } from '@/lib/sentiment-llm'
 
-// Initialize Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// Initialize Supabase client (lazy initialization to avoid build errors)
+function getSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 interface SentimentDataPoint {
   ticker: string;
@@ -403,6 +405,8 @@ async function saveSentimentDataToDatabase(data: SentimentResponse): Promise<voi
   try {
     console.log(`💾 [CRON] Saving ${data.data.length} sentiment data points to database...`)
 
+    const supabase = getSupabaseClient()
+
     // Clear existing sentiment data (keep only last 7 days)
     const sevenDaysAgo = new Date()
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
@@ -515,6 +519,8 @@ async function saveSentimentDataToDatabase(data: SentimentResponse): Promise<voi
 async function saveRawRedditPosts(rawPosts: RawRedditPost[]): Promise<void> {
   try {
     console.log(`💾 [CRON] Processing ${rawPosts.length} raw Reddit posts...`)
+
+    const supabase = getSupabaseClient()
 
     // Clear old posts (keep only last 30 days)
     const thirtyDaysAgo = new Date()
@@ -788,6 +794,8 @@ function extractCommentsRecursively(
 async function saveRawRedditComments(rawComments: RawRedditComment[]): Promise<void> {
   try {
     console.log(`💾 [CRON] Processing ${rawComments.length} raw Reddit comments...`)
+
+    const supabase = getSupabaseClient()
 
     // Clear old comments (keep only last 30 days)
     const thirtyDaysAgo = new Date()
