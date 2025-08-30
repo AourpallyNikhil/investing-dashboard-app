@@ -202,3 +202,42 @@ export function getSentimentEmoji(sentimentScore: number): string {
 export function formatSentimentScore(score: number): string {
   return (score * 100).toFixed(1) + '%';
 }
+
+// Hook to refresh sentiment data
+export function useRefreshSentimentData(
+  source: SentimentSource = 'all',
+  timeframe: SentimentTimeframe = '24h'
+) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      console.log('🔄 Refreshing sentiment data...');
+      
+      const response = await fetch('/api/cron/sentiment-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer R+4asd5JITElFBC59X/jsMkJEkOcq30B7a72i1vlkFg=`
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('✅ Sentiment refresh completed:', data);
+      return data;
+    },
+    onSuccess: () => {
+      // Invalidate and refetch sentiment data queries
+      queryClient.invalidateQueries({ queryKey: ['sentiment-data'] });
+      console.log('🔄 Sentiment data cache invalidated');
+    },
+    onError: (error) => {
+      console.error('❌ Sentiment refresh failed:', error);
+    }
+  });
+}
