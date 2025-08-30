@@ -419,3 +419,4 @@ BEGIN
   RAISE NOTICE 'Cleaned up Reddit data older than 30 days';
 END;
 $$ LANGUAGE plpgsql;
+

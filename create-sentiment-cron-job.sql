@@ -14,7 +14,7 @@ SELECT cron.schedule(
   '0 6 * * *', -- Every day at 6:00 AM UTC
   $$
   SELECT net.http_post(
-    url := 'YOUR_RAILWAY_URL_HERE/api/cron/sentiment-data',
+    url := 'https://investing-dashboard-app-production.up.railway.app/api/cron/sentiment-data',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'Authorization', 'Bearer R+4asd5JITElFBC59X/jsMkJEkOcq30B7a72i1vlkFg='

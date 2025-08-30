@@ -69,3 +69,4 @@ ngrok http 3000
 Use the ngrok URL in your Supabase cron job.
 
 **Recommendation: Deploy to Vercel - it's free, reliable, and you can still develop locally and push updates easily.**
+

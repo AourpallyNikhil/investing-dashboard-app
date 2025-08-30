@@ -51,3 +51,4 @@ CREATE TRIGGER update_economic_data_metadata_updated_at
   BEFORE UPDATE ON economic_data_metadata 
   FOR EACH ROW 
   EXECUTE FUNCTION update_updated_at_column();
+

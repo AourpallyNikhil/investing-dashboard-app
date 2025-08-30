@@ -65,3 +65,4 @@ FROM cron.job_run_details
 WHERE jobid IN (SELECT jobid FROM cron.job WHERE jobname = 'daily-sentiment-fetch')
 ORDER BY start_time DESC
 LIMIT 10;
+

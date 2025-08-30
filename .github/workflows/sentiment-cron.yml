@@ -48,3 +48,4 @@ jobs:
 #    - BASE_URL: Your deployment URL (e.g., https://your-project.vercel.app)
 #    - CRON_SECRET: A secure random string for authentication
 # 3. The workflow will run automatically daily at 6 AM UTC
+

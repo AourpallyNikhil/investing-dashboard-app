@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel
 } from '@/components/ui/dropdown-menu'
-import { RefreshCw, ChevronDown, TrendingUp, Clock, CheckCircle, AlertCircle } from 'lucide-react'
+import { RefreshCw, ChevronDown, TrendingUp, Clock, CheckCircle, AlertCircle, MessageSquare } from 'lucide-react'
 import { useDataRefresh } from '@/hooks/use-data-refresh'
 import { cn } from '@/lib/utils'
 
@@ -27,6 +27,7 @@ export function RefreshDataButton({
   size = 'default' 
 }: RefreshDataButtonProps) {
   const [showDropdown, setShowDropdown] = useState(false)
+  const [isSentimentRefreshing, setIsSentimentRefreshing] = useState(false)
   const {
     refreshHighPriority,
     refreshMediumPriority,
@@ -55,6 +56,35 @@ export function RefreshDataButton({
     } catch (error) {
       // Error is handled by the hook
       console.error('Refresh failed:', error)
+    }
+  }
+
+  const handleSentimentRefresh = async () => {
+    setIsSentimentRefreshing(true)
+    try {
+      console.log('🔄 Starting sentiment data refresh...')
+      
+      const response = await fetch('/api/cron/sentiment-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer R+4asd5JITElFBC59X/jsMkJEkOcq30B7a72i1vlkFg=`
+        }
+      })
+
+      const data = await response.json()
+      
+      if (response.ok) {
+        console.log('✅ Sentiment refresh completed:', data)
+      } else {
+        console.error('❌ Sentiment refresh failed:', data)
+      }
+      
+      setShowDropdown(false)
+    } catch (err) {
+      console.error('❌ Sentiment refresh error:', err)
+    } finally {
+      setIsSentimentRefreshing(false)
     }
   }
 
@@ -148,6 +178,25 @@ export function RefreshDataButton({
               <div className="font-medium">Popular Stocks</div>
               <div className="text-sm text-muted-foreground">Top 3 most viewed</div>
             </div>
+          </DropdownMenuItem>
+          
+          <DropdownMenuSeparator />
+          
+          <DropdownMenuItem 
+            onClick={handleSentimentRefresh}
+            disabled={isSentimentRefreshing || isRefreshing}
+            className="flex items-center justify-between"
+          >
+            <div className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              <div>
+                <div className="font-medium">Sentiment Data</div>
+                <div className="text-sm text-muted-foreground">Reddit & Twitter analysis</div>
+              </div>
+            </div>
+            {isSentimentRefreshing && (
+              <RefreshCw className="h-4 w-4 animate-spin" />
+            )}
           </DropdownMenuItem>
           
           <DropdownMenuSeparator />

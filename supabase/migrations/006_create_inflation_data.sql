@@ -58,3 +58,4 @@ COMMENT ON TABLE inflation_data_metadata IS 'Tracks when inflation data was last
 COMMENT ON COLUMN inflation_data_metadata.last_gemini_fetch IS 'Timestamp of last successful Gemini API call';
 COMMENT ON COLUMN inflation_data_metadata.gemini_sources IS 'Array of data sources returned by last Gemini call';
 
+

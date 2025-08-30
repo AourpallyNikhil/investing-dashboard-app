@@ -41,3 +41,4 @@ SELECT name FROM vault.secrets WHERE name IN ('base_url', 'cron_secret');
 -- For local development, you might want to create a test secret:
 -- Go to Supabase Vault and add:
 -- Name: local_cron_secret, Value: test-secret-123
+
