@@ -64,34 +64,7 @@ export function useSentimentData(
   });
 }
 
-export function useRefreshSentimentData(
-  source: SentimentSource = 'all',
-  timeframe: SentimentTimeframe = '24h'
-) {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: async () => {
-      // Just invalidate cache to refetch from database
-      // The actual data fetching is now done by the cron job
-      queryClient.invalidateQueries({ queryKey: ['sentiment-data'] });
-      
-      // Return a simple success response
-      return { 
-        success: true, 
-        message: 'Refreshed data from database',
-        timestamp: new Date().toISOString() 
-      };
-    },
-    onSuccess: () => {
-      // Additional invalidation to ensure all related queries are refreshed
-      queryClient.invalidateQueries({ queryKey: ['sentiment-data'] });
-      queryClient.invalidateQueries({ queryKey: ['bullish-tickers'] });
-      queryClient.invalidateQueries({ queryKey: ['bearish-tickers'] });
-      queryClient.invalidateQueries({ queryKey: ['mentioned-tickers'] });
-    },
-  });
-}
+
 
 // Specialized hooks for different use cases
 export function useRedditSentiment(timeframe: SentimentTimeframe = '24h') {
