@@ -1,11 +1,9 @@
--- Create the production sentiment data cron job
--- Run this in Supabase SQL Editor after setting up Vault secrets
+-- Create the production sentiment data cron job (No Vault Required)
+-- Run this in Supabase SQL Editor after Railway deployment is complete
 
--- First, you need to set up these secrets in Supabase Vault:
--- Go to: https://supabase.com/dashboard/project/yfqdtjwgvsixnhyseqbi/settings/vault
--- Add:
--- 1. Name: base_url, Value: https://your-vercel-app.vercel.app
--- 2. Name: cron_secret, Value: a-secure-random-string-123
+-- IMPORTANT: Replace these values with your actual Railway URL and cron secret:
+-- 1. Replace 'YOUR_RAILWAY_URL_HERE' with your actual Railway app URL
+-- 2. The cron secret is already set: R+4asd5JITElFBC59X/jsMkJEkOcq30B7a72i1vlkFg=
 
 -- Remove any existing sentiment job (to avoid duplicates)
 SELECT cron.unschedule('daily-sentiment-fetch');
@@ -16,10 +14,10 @@ SELECT cron.schedule(
   '0 6 * * *', -- Every day at 6:00 AM UTC
   $$
   SELECT net.http_post(
-    url := vault.read_secret('base_url') || '/api/cron/sentiment-data',
+    url := 'YOUR_RAILWAY_URL_HERE/api/cron/sentiment-data',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'Authorization', 'Bearer ' || vault.read_secret('cron_secret')
+      'Authorization', 'Bearer R+4asd5JITElFBC59X/jsMkJEkOcq30B7a72i1vlkFg='
     ),
     body := jsonb_build_object()
   );
@@ -35,6 +33,3 @@ SELECT
   jobname
 FROM cron.job 
 WHERE jobname = 'daily-sentiment-fetch';
-
--- Check if vault secrets exist (this shows secret names, not values)
-SELECT name FROM vault.secrets WHERE name IN ('base_url', 'cron_secret');
