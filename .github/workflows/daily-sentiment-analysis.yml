@@ -2,7 +2,7 @@ name: Daily Sentiment Analysis
 
 on:
   schedule:
-    # Run daily at 9:00 AM UTC (adjust timezone as needed)
+    # Run daily at 9:00 AM UTC (4 AM EST / 1 AM PST)
     - cron: '0 9 * * *'
   workflow_dispatch: # Allow manual triggering
 
@@ -21,8 +21,9 @@ jobs:
     
     - name: Install dependencies
       run: |
+        cd cron
         python -m pip install --upgrade pip
-        pip install requests
+        pip install -r requirements.txt
     
     - name: Run sentiment analysis
       env:
@@ -35,8 +36,8 @@ jobs:
       
     - name: Upload logs as artifact
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: sentiment-analysis-logs
+        name: sentiment-analysis-logs-${{ github.run_number }}
         path: cron/sentiment_cron.log
-        retention-days: 30
+        retention-days: 7
