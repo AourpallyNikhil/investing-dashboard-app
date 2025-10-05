@@ -21,8 +21,8 @@ jobs:
         
     - name: Install dependencies
       run: |
-        cd cron
-        pip install -r requirements.txt
+        python -m pip install --upgrade pip
+        pip install requests
         
     - name: Run sentiment analysis
       env:
@@ -30,8 +30,17 @@ jobs:
         CRON_SECRET: ${{ secrets.CRON_SECRET }}
         REQUEST_TIMEOUT: 2700
       run: |
+        echo "Using BASE_URL: $BASE_URL"
         cd cron
         python sentiment_fetch.py
+        
+    - name: Upload logs as artifact
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: sentiment-analysis-logs-${{ github.run_number }}
+        path: cron/sentiment_cron.log
+        retention-days: 7
         
     - name: Log completion
       run: echo "Sentiment analysis cron job completed at $(date)"
