@@ -1,0 +1,18 @@
+# Dockerfile for Railway Cron Job
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the cron script and config
+COPY sentiment_fetch.py .
+COPY config.env .
+
+# Make script executable
+RUN chmod +x sentiment_fetch.py
+
+# Run the sentiment analysis
+CMD ["python", "sentiment_fetch.py"]

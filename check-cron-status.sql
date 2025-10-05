@@ -39,3 +39,4 @@ SELECT name FROM vault.secrets WHERE name IN ('base_url', 'cron_secret');
 -- Test if we can make HTTP requests (check net extension)
 SELECT * FROM pg_extension WHERE extname = 'http';
 
+

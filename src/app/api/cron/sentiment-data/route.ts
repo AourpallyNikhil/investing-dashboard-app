@@ -4,6 +4,7 @@ import { redditRSSAPI } from '@/lib/reddit-rss'
 import { RedditAPI } from '@/lib/reddit-api'
 import { TwitterAPI } from '@/lib/twitter-api'
 import { analyzeSentimentWithLLM } from '@/lib/sentiment-llm'
+import { saveRawRedditPostsWithLLM, saveRawTwitterPostsWithLLM } from '@/lib/enhanced-llm-ingestion'
 
 // Initialize Supabase client (lazy initialization to avoid build errors)
 function getSupabaseClient() {
@@ -47,6 +48,7 @@ interface SentimentResponse {
   topPosts?: RedditPostData[];
   rawRedditPosts?: RawRedditPost[];
   rawRedditComments?: RawRedditComment[];
+  rawTwitterPosts?: any[];
   sources: string[];
   lastUpdated: string;
   fromCache: boolean;
@@ -164,32 +166,52 @@ interface RawRedditComment {
  */
 export async function POST(request: NextRequest) {
   try {
-    console.log('🤖 [CRON] Starting daily sentiment data fetch...')
+    console.log('🤖 [CRON] ========== SENTIMENT DATA FETCH STARTED ==========')
+    console.log('🤖 [CRON] Timestamp:', new Date().toISOString())
+    console.log('🤖 [CRON] Request URL:', request.url)
+    console.log('🤖 [CRON] Request method:', request.method)
     
     // Verify this is a legitimate cron request
     const authHeader = request.headers.get('authorization')
     const cronSecret = process.env.CRON_SECRET
     
+    console.log('🔐 [CRON] Auth header present:', !!authHeader)
+    console.log('🔐 [CRON] Cron secret present:', !!cronSecret)
+    console.log('🔐 [CRON] Auth header value:', authHeader?.substring(0, 20) + '...')
+    
     if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
       console.error('❌ [CRON] Unauthorized cron request')
+      console.error('❌ [CRON] Expected:', `Bearer ${cronSecret}`)
+      console.error('❌ [CRON] Received:', authHeader)
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+    
+    console.log('✅ [CRON] Authorization successful, proceeding with data fetch...')
 
     // Fetch fresh sentiment data
     const sentimentData = await fetchSentimentData()
     
     // Save to database
+    console.log('💾 [CRON] About to save sentiment data to database...')
     await saveSentimentDataToDatabase(sentimentData)
+    console.log('💾 [CRON] Database save operation completed')
+    
+    // NOTE: Aggregations now happen automatically in real-time during LLM processing
+    console.log('✅ [CRON] Real-time aggregations will be handled by LLM processing functions')
     
     console.log('✅ [CRON] Daily sentiment data fetch completed successfully')
+    console.log('🤖 [CRON] ========== SENTIMENT DATA FETCH COMPLETED ==========')
     
-    return NextResponse.json({
+    const response = {
       success: true,
       message: 'Sentiment data fetched and saved successfully',
       dataPoints: sentimentData.data.length,
       topPosts: sentimentData.topPosts?.length || 0,
       timestamp: new Date().toISOString()
-    })
+    }
+    
+    console.log('📤 [CRON] Returning response:', JSON.stringify(response, null, 2))
+    return NextResponse.json(response)
 
   } catch (error) {
     console.error('❌ [CRON] Error in daily sentiment fetch:', error)
@@ -215,9 +237,38 @@ async function fetchSentimentData(): Promise<SentimentResponse> {
     
     console.log('📊 [CRON] Fetching sentiment data for last 24 hours')
 
-    // Default subreddits and Twitter accounts to monitor
-    const subreddits = ['wallstreetbets', 'investing', 'stocks', 'SecurityAnalysis']
-    const twitterAccounts = ['elonmusk', 'chamath', 'cathiedwood']
+    // Fetch active data sources from configuration tables
+    const supabase = getSupabaseClient()
+    
+    // Get active Reddit sources
+    const { data: redditSources, error: redditError } = await supabase
+      .from('reddit_sources')
+      .select('subreddit')
+      .eq('is_active', true)
+    
+    if (redditError) {
+      console.error('❌ [CRON] Error fetching Reddit sources:', redditError)
+      // Fallback to default subreddits
+      var subreddits = ['wallstreetbets', 'investing', 'stocks', 'StockMarket', 'ValueInvesting']
+    } else {
+      var subreddits = redditSources.map(source => source.subreddit)
+      console.log(`📱 [CRON] Loaded ${subreddits.length} active Reddit sources:`, subreddits)
+    }
+    
+    // Get active Twitter sources
+    const { data: twitterSources, error: twitterError } = await supabase
+      .from('twitter_sources')
+      .select('username')
+      .eq('is_active', true)
+    
+    if (twitterError) {
+      console.error('❌ [CRON] Error fetching Twitter sources:', twitterError)
+      // Fallback to default accounts
+      var twitterAccounts = ['jimcramer', 'CathieDWood', 'charliebilello', 'markminervini', 'PeterLBrandt']
+    } else {
+      var twitterAccounts = twitterSources.map(source => source.username)
+      console.log(`🐦 [CRON] Loaded ${twitterAccounts.length} active Twitter sources:`, twitterAccounts)
+    }
 
     let redditTickers: any[] = []
     let twitterTickers: any[] = []
@@ -320,14 +371,47 @@ async function fetchSentimentData(): Promise<SentimentResponse> {
       console.error('❌ [CRON] Failed to fetch Reddit comments:', error)
     }
 
-    // Fetch Twitter data
-    console.log('🐦 [CRON] Fetching Twitter sentiment data...')
+    // Fetch Twitter data using twitterapi.io
+    console.log('🐦 [CRON] Fetching Twitter sentiment data via twitterapi.io...')
+    let rawTwitterPosts: any[] = []
     try {
+      // Use environment variable for twitterapi.io API key
       const twitterAPI = new TwitterAPI()
-      twitterTickers = await twitterAPI.getTrendingTickers(twitterAccounts, hours)
+      
+      // Fetch individual Twitter posts for the posts table (this will also be used for ticker analysis)
+      console.log('🐦 [CRON] Fetching individual Twitter posts for database...')
+      const twitterResults = await twitterAPI.getMultipleUserTweets(twitterAccounts, { maxResults: 50 })
+      
+      // Extract ticker data from the same results (avoid duplicate API calls)
+      twitterTickers = twitterAPI.extractTickersFromResults(twitterResults, hours)
+      
+      // Convert Twitter results to our format
+      twitterResults.forEach(result => {
+        result.tweets.forEach(tweet => {
+          rawTwitterPosts.push({
+            tweet_id: tweet.id,
+            text: tweet.text,
+            author_username: result.username,
+            author_id: tweet.author_id,
+            author_name: result.user?.name || result.username,
+            created_at: tweet.created_at,
+            retweet_count: tweet.public_metrics.retweet_count,
+            like_count: tweet.public_metrics.like_count,
+            reply_count: tweet.public_metrics.reply_count,
+            quote_count: tweet.public_metrics.quote_count,
+            url: `https://twitter.com/${result.username}/status/${tweet.id}`,
+            hashtags: tweet.entities?.hashtags?.map(h => h.tag) || [],
+            cashtags: tweet.entities?.cashtags?.map(c => c.tag) || [],
+            raw_json: tweet
+          })
+        })
+      })
+      
+      console.log(`🐦 [CRON] Successfully fetched Twitter data: ${twitterAccounts.length} accounts, ${rawTwitterPosts.length} posts`)
+      console.log(`🔍 [CRON] DEBUG: First 2 rawTwitterPosts:`, JSON.stringify(rawTwitterPosts.slice(0, 2), null, 2))
     } catch (error) {
-      console.error('❌ [CRON] Twitter API failed:', error)
-      // Continue without Twitter data
+      console.error('❌ [CRON] TwitterAPI.io failed:', error)
+      // Continue without Twitter data - will use mock data instead
     }
 
     // Combine and process data
@@ -344,6 +428,7 @@ async function fetchSentimentData(): Promise<SentimentResponse> {
       topPosts: topPosts,
       rawRedditPosts: rawRedditPosts,
       rawRedditComments: rawRedditComments,
+      rawTwitterPosts: rawTwitterPosts,
       sources: ['Reddit RSS', 'Twitter API'],
       lastUpdated: new Date().toISOString().split('T')[0],
       fromCache: false
@@ -431,25 +516,49 @@ async function saveSentimentDataToDatabase(data: SentimentResponse): Promise<voi
       last_updated: point.last_updated || new Date().toISOString()
     }))
 
+    console.log(`📊 [CRON] About to insert ${sentimentRows.length} sentiment records...`)
+    console.log(`📊 [CRON] Sample record structure:`, JSON.stringify(sentimentRows[0], null, 2))
+    console.log(`📊 [CRON] Database URL:`, process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 30) + '...')
+    console.log(`📊 [CRON] Service key present:`, !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+
     // Insert new sentiment data
-    console.log(`📊 [CRON] Inserting ${sentimentRows.length} sentiment records...`)
-    
-    const { error: insertError } = await supabase
+    const { data: insertResult, error: insertError } = await supabase
       .from('sentiment_data')
       .insert(sentimentRows)
+      .select()
 
     if (insertError) {
       console.error('❌ [CRON] Error inserting sentiment data:', insertError)
+      console.error('❌ [CRON] Error details:', JSON.stringify(insertError, null, 2))
       throw insertError
     }
     
     console.log(`✅ [CRON] Successfully saved ${sentimentRows.length} sentiment records to database`)
+    console.log(`✅ [CRON] Insert result:`, insertResult ? `${insertResult.length} records returned` : 'No records returned')
+    
+    // Verify data was actually saved by querying back
+    console.log(`🔍 [CRON] Verifying data was saved...`)
+    const { data: verifyData, error: verifyError } = await supabase
+      .from('sentiment_data')
+      .select('ticker, sentiment_score, created_at')
+      .gte('created_at', new Date(Date.now() - 60000).toISOString()) // Last minute
+      .order('created_at', { ascending: false })
+      .limit(5)
+    
+    if (verifyError) {
+      console.error('❌ [CRON] Error verifying saved data:', verifyError)
+    } else {
+      console.log(`✅ [CRON] Verification: Found ${verifyData?.length || 0} recent records`)
+      if (verifyData && verifyData.length > 0) {
+        console.log(`✅ [CRON] Sample verified records:`, verifyData.map(r => `${r.ticker}: ${r.sentiment_score}`))
+      }
+    }
 
-    // Save raw Reddit posts to database for AI analysis
+    // Save raw Reddit posts to database for AI analysis with LLM processing
     if (data.rawRedditPosts && data.rawRedditPosts.length > 0) {
-      console.log(`💾 [CRON] Saving ${data.rawRedditPosts.length} raw Reddit posts for AI analysis...`)
+      console.log(`💾 [CRON] Processing ${data.rawRedditPosts.length} raw Reddit posts with LLM + real-time aggregation...`)
       
-      await saveRawRedditPosts(data.rawRedditPosts)
+      await saveRawRedditPostsWithLLM(data.rawRedditPosts)
     }
 
     // Save raw Reddit comments to database for AI analysis
@@ -457,6 +566,22 @@ async function saveSentimentDataToDatabase(data: SentimentResponse): Promise<voi
       console.log(`💾 [CRON] Saving ${data.rawRedditComments.length} raw Reddit comments for AI analysis...`)
       
       await saveRawRedditComments(data.rawRedditComments)
+    }
+
+    // Save raw Twitter posts to database for AI analysis with LLM processing
+    console.log(`🔍 [CRON] DEBUG: rawTwitterPosts check - exists: ${!!data.rawTwitterPosts}, length: ${data.rawTwitterPosts?.length || 0}`)
+    if (data.rawTwitterPosts && data.rawTwitterPosts.length > 0) {
+      console.log(`💾 [CRON] Processing ${data.rawTwitterPosts.length} raw Twitter posts with LLM + real-time aggregation...`)
+      console.log(`🔍 [CRON] DEBUG: Sample post structure:`, JSON.stringify(data.rawTwitterPosts[0], null, 2))
+      
+      try {
+        await saveRawTwitterPostsWithLLM(data.rawTwitterPosts)
+        console.log(`✅ [CRON] Successfully completed LLM Twitter processing with real-time aggregation`)
+      } catch (error) {
+        console.error(`❌ [CRON] Error in LLM Twitter processing:`, error)
+      }
+    } else {
+      console.log(`⚠️ [CRON] No Twitter posts to process - rawTwitterPosts is ${data.rawTwitterPosts ? 'empty' : 'undefined'}`)
     }
 
     // Also save top posts to the simple table for UI carousel (backward compatibility)
@@ -536,47 +661,20 @@ async function saveRawRedditPosts(rawPosts: RawRedditPost[]): Promise<void> {
     }
 
     // Prepare raw posts for insertion
+    // 🎯 MINIMAL DATA: Only insert what's essential for sentiment analysis
     const rawPostRows = rawPosts.map(post => ({
       post_id: post.id,
-      fullname: post.name || `t3_${post.id}`,
       title: post.title,
       selftext: post.selftext || '',
-      selftext_html: post.selftext_html || '',
       author: post.author,
-      author_fullname: post.author_fullname || '',
-      author_flair_text: post.author_flair_text || '',
       subreddit: post.subreddit,
-      subreddit_id: post.subreddit_id || '',
-      subreddit_name_prefixed: post.subreddit_name_prefixed || `r/${post.subreddit}`,
       score: post.score || 0,
-      upvote_ratio: post.upvote_ratio || 0.5,
-      ups: post.ups || post.score || 0,
-      downs: post.downs || 0,
       num_comments: post.num_comments || 0,
       created_utc: post.created_utc,
-      edited: post.edited || false,
-      distinguished: post.distinguished || null,
-      stickied: post.stickied || false,
-      locked: post.locked || false,
-      archived: post.archived || false,
       url: post.url,
       permalink: post.permalink,
-      shortlink: post.shortlink || '',
-      thumbnail: post.thumbnail || '',
-      post_hint: post.post_hint || '',
-      domain: post.domain || '',
-      is_self: post.is_self !== undefined ? post.is_self : true,
-      is_video: post.is_video || false,
-      over_18: post.over_18 || false,
-      total_awards_received: post.total_awards_received || 0,
-      gilded: post.gilded || 0,
-      all_awardings: post.all_awardings || [],
-      link_flair_text: post.link_flair_text || '',
-      link_flair_css_class: post.link_flair_css_class || '',
-      raw_json: post.raw_json || post,
-      retrieved_at: new Date().toISOString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      // raw_json: post.raw_json || post, // Temporarily removed due to PostgREST cache issues
+      retrieved_at: new Date().toISOString()
     }))
 
     console.log(`📊 [CRON] Inserting ${rawPostRows.length} raw posts into reddit_posts_raw table...`)
@@ -767,7 +865,7 @@ function extractCommentsRecursively(
       locked: !!commentData.locked,
       total_awards_received: commentData.total_awards_received || 0,
       gilded: commentData.gilded || 0,
-      all_awardings: commentData.all_awardings || [],
+      // all_awardings: commentData.all_awardings || [], // Temporarily removed due to schema cache issue
       raw_json: commentData
     }
     
@@ -810,37 +908,16 @@ async function saveRawRedditComments(rawComments: RawRedditComment[]): Promise<v
       console.warn('⚠️ [CRON] Error deleting old comments:', deleteError)
     }
 
-    // Prepare comments for insertion
+    // 🎯 MINIMAL COMMENTS DATA: Only what's essential for sentiment analysis
     const commentRows = rawComments.map(comment => ({
       comment_id: comment.id,
-      fullname: comment.name || `t1_${comment.id}`,
       post_id: comment.post_id,
-      parent_id: comment.parent_id || comment.post_id,
       body: comment.body || '',
-      body_html: comment.body_html || '',
       author: comment.author,
-      author_fullname: comment.author_fullname || '',
-      author_flair_text: comment.author_flair_text || '',
       score: comment.score || 0,
-      ups: comment.ups || 0,
-      downs: comment.downs || 0,
-      controversiality: comment.controversiality || 0,
       created_utc: comment.created_utc,
-      edited: comment.edited || false,
-      distinguished: comment.distinguished || null,
-      stickied: comment.stickied || false,
-      depth: comment.depth || 0,
-      is_submitter: comment.is_submitter || false,
-      score_hidden: comment.score_hidden || false,
-      archived: comment.archived || false,
-      locked: comment.locked || false,
-      total_awards_received: comment.total_awards_received || 0,
-      gilded: comment.gilded || 0,
-      all_awardings: comment.all_awardings || [],
-      raw_json: comment.raw_json || comment,
-      retrieved_at: new Date().toISOString(),
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      // raw_json: comment.raw_json || comment, // Temporarily removed due to PostgREST cache issues
+      retrieved_at: new Date().toISOString()
     }))
 
     console.log(`📊 [CRON] Inserting ${commentRows.length} comments into reddit_comments table...`)
@@ -867,6 +944,320 @@ async function saveRawRedditComments(rawComments: RawRedditComment[]): Promise<v
   } catch (error) {
     console.error('❌ [CRON] Error saving raw Reddit comments:', error)
     // Don't throw - this is non-critical for sentiment analysis
+  }
+}
+
+/**
+ * Save raw Twitter posts to the comprehensive table for AI analysis
+ */
+async function saveRawTwitterPosts(rawTwitterPosts: any[]): Promise<void> {
+  try {
+    console.log(`💾 [CRON] Processing ${rawTwitterPosts.length} raw Twitter posts...`)
+    console.log(`🔍 [CRON] DEBUG: saveRawTwitterPosts called with data:`, rawTwitterPosts.slice(0, 1))
+
+    const supabase = getSupabaseClient()
+
+    // Step 1: Ensure actionable tweets schema exists
+    await ensureActionableTweetsSchema(supabase)
+
+    // Step 2: Upsert author data for follower count normalization
+    await upsertTwitterAuthors(supabase, rawTwitterPosts)
+
+    // Clear old posts (keep only last 30 days)
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+    
+    const { error: deleteError } = await supabase
+      .from('twitter_posts_raw')
+      .delete()
+      .lt('retrieved_at', thirtyDaysAgo.toISOString())
+    
+    if (deleteError) {
+      console.warn('⚠️ [CRON] Error deleting old Twitter posts:', deleteError)
+    }
+
+    // Prepare raw Twitter posts for insertion
+    const twitterPostRows = rawTwitterPosts.map(post => ({
+      tweet_id: post.tweet_id,
+      text: post.text,
+      author_username: post.author_username,
+      author_id: post.author_id,
+      author_name: post.author_name,
+      created_at: post.created_at,
+      retweet_count: post.retweet_count || 0,
+      like_count: post.like_count || 0,
+      reply_count: post.reply_count || 0,
+      quote_count: post.quote_count || 0,
+      url: post.url,
+      hashtags: post.hashtags || [],
+      cashtags: post.cashtags || [],
+      raw_json: post.raw_json || post,
+      retrieved_at: new Date().toISOString()
+    }))
+
+    console.log(`📊 [CRON] Inserting ${twitterPostRows.length} Twitter posts into twitter_posts_raw table...`)
+    
+    // Insert in batches to avoid timeout
+    const batchSize = 50
+    for (let i = 0; i < twitterPostRows.length; i += batchSize) {
+      const batch = twitterPostRows.slice(i, i + batchSize)
+      
+      const { error: insertError } = await supabase
+        .from('twitter_posts_raw')
+        .upsert(batch, { onConflict: 'tweet_id' })
+
+      if (insertError) {
+        console.error(`❌ [CRON] Error inserting Twitter posts batch ${i}-${i + batch.length}:`, insertError)
+        console.error(`❌ [CRON] Error details:`, JSON.stringify(insertError, null, 2))
+        console.error(`❌ [CRON] Sample batch data:`, JSON.stringify(batch[0], null, 2))
+        // Continue with other batches
+      } else {
+        console.log(`✅ [CRON] Inserted batch ${i}-${i + batch.length} Twitter posts`)
+      }
+    }
+
+    // Also save to simple twitter_posts table for UI
+    const simpleTwitterPosts = rawTwitterPosts.map(post => ({
+      tweet_id: post.tweet_id,
+      text: post.text,
+      author: post.author_username,
+      like_count: post.like_count || 0,
+      retweet_count: post.retweet_count || 0,
+      reply_count: post.reply_count || 0,
+      url: post.url,
+      created_at: post.created_at,
+      retrieved_at: new Date().toISOString()
+    }))
+
+    // Clear old simple posts (keep only last 3 days)
+    const threeDaysAgo = new Date()
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3)
+    
+    const { error: deleteSimpleError } = await supabase
+      .from('twitter_posts')
+      .delete()
+      .lt('retrieved_at', threeDaysAgo.toISOString())
+    
+    if (deleteSimpleError) {
+      console.warn('⚠️ [CRON] Error deleting old simple Twitter posts:', deleteSimpleError)
+    }
+
+    // Insert simple posts (use upsert to handle duplicates)
+    const { error: simpleInsertError } = await supabase
+      .from('twitter_posts')
+      .upsert(simpleTwitterPosts, { onConflict: 'tweet_id' })
+
+    if (simpleInsertError) {
+      console.error('❌ [CRON] Error inserting simple Twitter posts:', simpleInsertError)
+      console.error(`❌ [CRON] Simple insert error details:`, JSON.stringify(simpleInsertError, null, 2))
+      console.error(`❌ [CRON] Sample simple post data:`, JSON.stringify(simpleTwitterPosts[0], null, 2))
+    } else {
+      console.log(`✅ [CRON] Successfully saved ${rawTwitterPosts.length} Twitter posts to both tables`)
+    }
+
+  } catch (error) {
+    console.error('❌ [CRON] Error saving raw Twitter posts:', error)
+    // Don't throw - this is non-critical for sentiment analysis
+  }
+}
+
+/**
+ * Ensure actionable tweets schema exists
+ */
+async function ensureActionableTweetsSchema(supabase: any): Promise<void> {
+  try {
+    console.log('🏗️ [CRON] Ensuring actionable tweets schema exists...')
+    
+    // Check if twitter_authors table exists
+    const { data: authorsCheck, error: authorsCheckError } = await supabase
+      .from('twitter_authors')
+      .select('author_id')
+      .limit(1)
+    
+    if (authorsCheckError && authorsCheckError.code === '42P01') {
+      console.log('📊 [CRON] Creating twitter_authors table...')
+      
+      // Create twitter_authors table using raw SQL
+      const createAuthorsSQL = `
+        CREATE TABLE IF NOT EXISTS public.twitter_authors (
+          author_id VARCHAR(50) PRIMARY KEY,
+          author_username VARCHAR(100) UNIQUE,
+          author_name TEXT,
+          follower_count INT NOT NULL DEFAULT 0,
+          following_count INT NOT NULL DEFAULT 0,
+          tweet_count INT NOT NULL DEFAULT 0,
+          listed_count INT NOT NULL DEFAULT 0,
+          profile_json JSONB,
+          updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        );
+        
+        CREATE INDEX IF NOT EXISTS idx_twitter_authors_username ON public.twitter_authors(author_username);
+      `
+      
+      const { error: createError } = await supabase.rpc('exec_sql', { sql: createAuthorsSQL })
+      if (createError) {
+        console.warn('⚠️ [CRON] Could not create twitter_authors table via RPC, will continue without it:', createError)
+      } else {
+        console.log('✅ [CRON] twitter_authors table created successfully')
+      }
+    }
+
+    // Create views and materialized views
+    await createActionableTweetsViews(supabase)
+    
+  } catch (error) {
+    console.warn('⚠️ [CRON] Error ensuring actionable tweets schema (non-critical):', error)
+  }
+}
+
+/**
+ * Create actionable tweets views and materialized views
+ */
+async function createActionableTweetsViews(supabase: any): Promise<void> {
+  try {
+    console.log('🏗️ [CRON] Creating actionable tweets views...')
+    
+    // Create tweet_features view
+    const tweetFeaturesSQL = `
+      CREATE OR REPLACE VIEW public.tweet_features AS
+      WITH base AS (
+        SELECT
+          r.tweet_id,
+          r.text,
+          r.author_username,
+          r.author_id,
+          r.author_name,
+          r.created_at,
+          COALESCE((r.raw_json->>'is_retweet')::boolean, false) as is_retweet,
+          r.url,
+          r.raw_json,
+          COALESCE(r.cashtags,
+                   (SELECT array_agg(DISTINCT upper(m[1]))
+                    FROM regexp_matches(r.text, '\\$([A-Za-z]{1,5})', 'g') m)
+          ) AS tickers,
+          (COALESCE(r.like_count,0)
+           + COALESCE(r.retweet_count,0)
+           + COALESCE(r.reply_count,0)
+           + COALESCE(r.quote_count,0))::int AS engagement
+        FROM public.twitter_posts_raw r
+        WHERE r.created_at > NOW() - INTERVAL '36 hours'
+      )
+      SELECT
+        b.*,
+        COALESCE(a.follower_count, 1) AS follower_count,
+        ((b.engagement::float / GREATEST(1, COALESCE(a.follower_count,1)::float))
+          / GREATEST(1, EXTRACT(epoch FROM (NOW()-b.created_at))/60.0)) AS velocity,
+        (b.text ~* '(^|[^A-Za-z])(\\$?\\d{1,5}(\\.\\d+)?)(\\s*(target|pt|tp|stop|risk|at|above|below))') AS has_numbers,
+        (b.text ~* '(entry|bought|added|starter|trimmed|long|short|calls|puts|stop|target|pt|tp|breakout|breakdown|support|resistance|ath|sweep|unusual|iv|gamma|delta|roll)') AS has_action_words,
+        ((b.url IS NOT NULL AND b.url <> '')
+           OR EXISTS (SELECT 1 FROM jsonb_path_query(b.raw_json, '$.entities.urls[*]'))) AS has_link,
+        EXISTS (SELECT 1 FROM jsonb_path_query(b.raw_json, '$.includes.media[*] ? (@.type == "photo" || @.type == "video")')) AS has_chart
+      FROM base b
+      LEFT JOIN public.twitter_authors a ON a.author_id = b.author_id;
+    `
+    
+    const { error: viewError } = await supabase.rpc('exec_sql', { sql: tweetFeaturesSQL })
+    if (viewError) {
+      console.warn('⚠️ [CRON] Could not create tweet_features view:', viewError)
+    } else {
+      console.log('✅ [CRON] tweet_features view created')
+    }
+
+    // Create top_actionable_tweets view (simplified version without materialized views initially)
+    const actionableTweetsSQL = `
+      CREATE OR REPLACE VIEW public.top_actionable_tweets AS
+      WITH tf AS (
+        SELECT *
+        FROM public.tweet_features
+        WHERE created_at > NOW() - INTERVAL '24 hours'
+          AND array_length(tickers,1) >= 1
+          AND COALESCE(is_retweet,false) = false
+      )
+      SELECT
+        tf.tweet_id,
+        tf.author_username,
+        tf.author_id,
+        tf.author_name,
+        tf.text,
+        tf.tickers,
+        tf.created_at,
+        tf.follower_count,
+        tf.engagement,
+        tf.velocity,
+        -- Simplified scoring without materialized views initially
+        tf.velocity AS velocity_z,
+        0 AS authors_60m,
+        ((CASE WHEN tf.has_action_words THEN 1 ELSE 0 END)
+         + (CASE WHEN tf.has_numbers THEN 1 ELSE 0 END)
+         + (CASE WHEN (tf.has_link OR tf.has_chart) THEN 1 ELSE 0 END)) AS actionability_score,
+        (CASE WHEN tf.text ~* '(earnings|guidance|upgrade|downgrade|pt |price target|fda|pdufa|contract|award|halt|8-k|10-q|s-1|press release|^pr\\b|\\bir\\b)' THEN 1 ELSE 0 END) AS catalyst_score,
+        1.0 AS author_novelty,
+        exp( - EXTRACT(epoch FROM (NOW()-tf.created_at))/60.0 / 240.0 ) AS time_decay,
+        -- Simplified scoring
+        (tf.velocity * 0.4 
+         + ((CASE WHEN tf.has_action_words THEN 1 ELSE 0 END)
+            + (CASE WHEN tf.has_numbers THEN 1 ELSE 0 END)
+            + (CASE WHEN (tf.has_link OR tf.has_chart) THEN 1 ELSE 0 END)) * 0.3
+         + (CASE WHEN tf.text ~* '(earnings|guidance|upgrade|downgrade|pt |price target|fda|pdufa|contract|award|halt|8-k|10-q|s-1|press release|^pr\\b|\\bir\\b)' THEN 1 ELSE 0 END) * 0.2
+         + exp( - EXTRACT(epoch FROM (NOW()-tf.created_at))/60.0 / 240.0 ) * 0.1) AS score
+      FROM tf
+      WHERE (tf.has_action_words OR tf.has_numbers OR tf.has_link OR tf.has_chart)
+      ORDER BY score DESC;
+    `
+    
+    const { error: actionableError } = await supabase.rpc('exec_sql', { sql: actionableTweetsSQL })
+    if (actionableError) {
+      console.warn('⚠️ [CRON] Could not create top_actionable_tweets view:', actionableError)
+    } else {
+      console.log('✅ [CRON] top_actionable_tweets view created')
+    }
+    
+  } catch (error) {
+    console.warn('⚠️ [CRON] Error creating actionable tweets views (non-critical):', error)
+  }
+}
+
+/**
+ * Upsert Twitter author data for follower count normalization
+ */
+async function upsertTwitterAuthors(supabase: any, rawTwitterPosts: any[]): Promise<void> {
+  try {
+    console.log('👥 [CRON] Upserting Twitter author data...')
+    
+    // Extract unique authors from posts
+    const uniqueAuthors = new Map()
+    rawTwitterPosts.forEach(post => {
+      if (post.author_id && post.author_username) {
+        uniqueAuthors.set(post.author_id, {
+          author_id: post.author_id,
+          author_username: post.author_username,
+          author_name: post.author_name || post.author_username,
+          follower_count: post.follower_count || 0,
+          following_count: post.following_count || 0,
+          tweet_count: post.tweet_count || 0,
+          listed_count: post.listed_count || 0,
+          profile_json: post.raw_json || {},
+          updated_at: new Date().toISOString()
+        })
+      }
+    })
+    
+    const authorRows = Array.from(uniqueAuthors.values())
+    
+    if (authorRows.length > 0) {
+      const { error: upsertError } = await supabase
+        .from('twitter_authors')
+        .upsert(authorRows, { onConflict: 'author_id' })
+      
+      if (upsertError) {
+        console.warn('⚠️ [CRON] Could not upsert author data (non-critical):', upsertError)
+      } else {
+        console.log(`✅ [CRON] Upserted ${authorRows.length} Twitter authors`)
+      }
+    }
+    
+  } catch (error) {
+    console.warn('⚠️ [CRON] Error upserting Twitter authors (non-critical):', error)
   }
 }
 

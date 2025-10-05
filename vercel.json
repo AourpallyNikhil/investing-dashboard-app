@@ -1,0 +1,13 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/sentiment-data",
+      "schedule": "0 9 * * *"
+    }
+  ],
+  "functions": {
+    "app/api/cron/sentiment-data/route.ts": {
+      "maxDuration": 300
+    }
+  }
+}

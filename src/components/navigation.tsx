@@ -8,14 +8,12 @@ import { RefreshFinancialDataButton } from '@/components/ui/refresh-financial-da
 import { 
   Building2, 
   Home,
-  TrendingUp,
-  MessageCircle
+  TrendingUp
 } from 'lucide-react'
 
 const navigation = [
-  { name: 'Watchlist', href: '/', icon: Home },
-  { name: 'Macro', href: '/macro', icon: TrendingUp },
-  { name: 'Sentiment', href: '/sentiment', icon: MessageCircle },
+  { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'Data Sources', href: '/admin/sources', icon: TrendingUp },
 ]
 
 export function Navigation() {

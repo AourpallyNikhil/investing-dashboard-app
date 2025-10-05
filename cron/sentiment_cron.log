@@ -1,0 +1,353 @@
+2025-09-14 20:55:32,713 - INFO - ============================================================
+2025-09-14 20:55:32,713 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-14 20:55:32,713 - INFO - ⏰ Current time: 2025-09-14T20:55:32.713630
+2025-09-14 20:55:32,713 - INFO - ============================================================
+2025-09-14 20:55:32,713 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-14 20:55:32,713 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-14 20:55:32,713 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-15 09:07:05,325 - INFO - ============================================================
+2025-09-15 09:07:05,325 - INFO - ============================================================
+2025-09-15 09:07:05,325 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-15 09:07:05,325 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-15 09:07:05,325 - INFO - ⏰ Current time: 2025-09-15T09:07:05.325632
+2025-09-15 09:07:05,325 - INFO - ⏰ Current time: 2025-09-15T09:07:05.325632
+2025-09-15 09:07:05,325 - INFO - ============================================================
+2025-09-15 09:07:05,325 - INFO - ============================================================
+2025-09-15 09:07:05,325 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-15 09:07:05,325 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-15 09:07:05,325 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-15 09:07:05,325 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-15 09:07:05,326 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-15 09:07:05,326 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-15 09:12:05,362 - ERROR - ⏰ Request timed out after 300 seconds
+2025-09-15 09:12:05,362 - ERROR - ⏰ Request timed out after 300 seconds
+2025-09-15 09:12:05,365 - ERROR - ❌ Sentiment analysis cron job failed
+2025-09-15 09:12:05,365 - ERROR - ❌ Sentiment analysis cron job failed
+2025-09-15 09:12:05,365 - INFO - ============================================================
+2025-09-15 09:12:05,365 - INFO - ============================================================
+2025-09-15 09:33:20,263 - INFO - ============================================================
+2025-09-15 09:33:20,263 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-15 09:33:20,263 - INFO - ⏰ Current time: 2025-09-15T09:33:20.263906
+2025-09-15 09:33:20,263 - INFO - ============================================================
+2025-09-15 09:33:20,263 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-15 09:33:20,264 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-15 09:33:20,264 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-15 09:47:49,162 - INFO - 📡 Response status: 200
+2025-09-15 09:47:49,163 - INFO - ✅ Sentiment data fetch successful!
+2025-09-15 09:47:49,164 - INFO - 📊 Data points: 54
+2025-09-15 09:47:49,164 - INFO - 📱 Top posts: 15
+2025-09-15 09:47:49,164 - INFO - ⏰ Timestamp: 2025-09-15T16:47:49.122Z
+2025-09-15 09:47:49,164 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-15 09:47:49,164 - INFO - ============================================================
+2025-09-16 09:00:01,277 - INFO - ============================================================
+2025-09-16 09:00:01,277 - INFO - ============================================================
+2025-09-16 09:00:01,278 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-16 09:00:01,278 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-16 09:00:01,278 - INFO - ⏰ Current time: 2025-09-16T09:00:01.278365
+2025-09-16 09:00:01,278 - INFO - ⏰ Current time: 2025-09-16T09:00:01.278365
+2025-09-16 09:00:01,278 - INFO - ============================================================
+2025-09-16 09:00:01,278 - INFO - ============================================================
+2025-09-16 09:00:01,278 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-16 09:00:01,278 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-16 09:00:01,279 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-16 09:00:01,279 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-16 09:00:01,279 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-16 09:00:01,279 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-16 09:15:11,083 - INFO - 📡 Response status: 200
+2025-09-16 09:15:11,083 - INFO - 📡 Response status: 200
+2025-09-16 09:15:11,084 - INFO - ✅ Sentiment data fetch successful!
+2025-09-16 09:15:11,084 - INFO - ✅ Sentiment data fetch successful!
+2025-09-16 09:15:11,084 - INFO - 📊 Data points: 53
+2025-09-16 09:15:11,084 - INFO - 📊 Data points: 53
+2025-09-16 09:15:11,084 - INFO - 📱 Top posts: 15
+2025-09-16 09:15:11,084 - INFO - 📱 Top posts: 15
+2025-09-16 09:15:11,085 - INFO - ⏰ Timestamp: 2025-09-16T16:15:11.052Z
+2025-09-16 09:15:11,085 - INFO - ⏰ Timestamp: 2025-09-16T16:15:11.052Z
+2025-09-16 09:15:11,085 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-16 09:15:11,085 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-16 09:15:11,085 - INFO - ============================================================
+2025-09-16 09:15:11,085 - INFO - ============================================================
+2025-09-17 09:00:01,715 - INFO - ============================================================
+2025-09-17 09:00:01,715 - INFO - ============================================================
+2025-09-17 09:00:01,716 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-17 09:00:01,716 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-17 09:00:01,716 - INFO - ⏰ Current time: 2025-09-17T09:00:01.716164
+2025-09-17 09:00:01,716 - INFO - ⏰ Current time: 2025-09-17T09:00:01.716164
+2025-09-17 09:00:01,716 - INFO - ============================================================
+2025-09-17 09:00:01,716 - INFO - ============================================================
+2025-09-17 09:00:01,716 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-17 09:00:01,716 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-17 09:00:01,717 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-17 09:00:01,717 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-17 09:00:01,717 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-17 09:00:01,717 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-17 09:14:38,717 - INFO - 📡 Response status: 200
+2025-09-17 09:14:38,717 - INFO - 📡 Response status: 200
+2025-09-17 09:14:38,718 - INFO - ✅ Sentiment data fetch successful!
+2025-09-17 09:14:38,718 - INFO - ✅ Sentiment data fetch successful!
+2025-09-17 09:14:38,718 - INFO - 📊 Data points: 56
+2025-09-17 09:14:38,718 - INFO - 📊 Data points: 56
+2025-09-17 09:14:38,718 - INFO - 📱 Top posts: 15
+2025-09-17 09:14:38,718 - INFO - 📱 Top posts: 15
+2025-09-17 09:14:38,718 - INFO - ⏰ Timestamp: 2025-09-17T16:14:38.696Z
+2025-09-17 09:14:38,718 - INFO - ⏰ Timestamp: 2025-09-17T16:14:38.696Z
+2025-09-17 09:14:38,718 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-17 09:14:38,718 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-17 09:14:38,719 - INFO - ============================================================
+2025-09-17 09:14:38,719 - INFO - ============================================================
+2025-09-19 07:29:22,640 - INFO - ============================================================
+2025-09-19 07:29:22,641 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-19 07:29:22,641 - INFO - ⏰ Current time: 2025-09-19T07:29:22.641124
+2025-09-19 07:29:22,641 - INFO - ============================================================
+2025-09-19 07:29:22,641 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-19 07:29:22,641 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-19 07:29:22,641 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-19 07:43:15,424 - INFO - 📡 Response status: 200
+2025-09-19 07:43:15,425 - INFO - ✅ Sentiment data fetch successful!
+2025-09-19 07:43:15,425 - INFO - 📊 Data points: 50
+2025-09-19 07:43:15,425 - INFO - 📱 Top posts: 15
+2025-09-19 07:43:15,425 - INFO - ⏰ Timestamp: 2025-09-19T14:43:15.411Z
+2025-09-19 07:43:15,425 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-19 07:43:15,425 - INFO - ============================================================
+2025-09-19 07:43:48,400 - INFO - ============================================================
+2025-09-19 07:43:48,400 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-19 07:43:48,400 - INFO - ⏰ Current time: 2025-09-19T07:43:48.400633
+2025-09-19 07:43:48,400 - INFO - ============================================================
+2025-09-19 07:43:48,400 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-19 07:43:48,401 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-19 07:43:48,401 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-19 07:57:49,877 - INFO - 📡 Response status: 200
+2025-09-19 07:57:49,878 - INFO - ✅ Sentiment data fetch successful!
+2025-09-19 07:57:49,878 - INFO - 📊 Data points: 52
+2025-09-19 07:57:49,878 - INFO - 📱 Top posts: 15
+2025-09-19 07:57:49,878 - INFO - ⏰ Timestamp: 2025-09-19T14:57:49.861Z
+2025-09-19 07:57:49,879 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-19 07:57:49,879 - INFO - ============================================================
+2025-09-20 09:00:01,216 - INFO - ============================================================
+2025-09-20 09:00:01,216 - INFO - ============================================================
+2025-09-20 09:00:01,216 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-20 09:00:01,216 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-20 09:00:01,216 - INFO - ⏰ Current time: 2025-09-20T09:00:01.216694
+2025-09-20 09:00:01,216 - INFO - ⏰ Current time: 2025-09-20T09:00:01.216694
+2025-09-20 09:00:01,216 - INFO - ============================================================
+2025-09-20 09:00:01,216 - INFO - ============================================================
+2025-09-20 09:00:01,217 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-20 09:00:01,217 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-20 09:00:01,217 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-20 09:00:01,217 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-20 09:00:01,217 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-20 09:00:01,217 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-20 09:12:16,278 - INFO - 📡 Response status: 200
+2025-09-20 09:12:16,278 - INFO - 📡 Response status: 200
+2025-09-20 09:12:16,334 - INFO - ✅ Sentiment data fetch successful!
+2025-09-20 09:12:16,334 - INFO - ✅ Sentiment data fetch successful!
+2025-09-20 09:12:16,334 - INFO - 📊 Data points: 33
+2025-09-20 09:12:16,334 - INFO - 📊 Data points: 33
+2025-09-20 09:12:16,335 - INFO - 📱 Top posts: 15
+2025-09-20 09:12:16,335 - INFO - 📱 Top posts: 15
+2025-09-20 09:12:16,335 - INFO - ⏰ Timestamp: 2025-09-20T16:12:16.162Z
+2025-09-20 09:12:16,335 - INFO - ⏰ Timestamp: 2025-09-20T16:12:16.162Z
+2025-09-20 09:12:16,335 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-20 09:12:16,335 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-20 09:12:16,335 - INFO - ============================================================
+2025-09-20 09:12:16,335 - INFO - ============================================================
+2025-09-21 13:51:30,347 - INFO - ============================================================
+2025-09-21 13:51:30,347 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-21 13:51:30,347 - INFO - ⏰ Current time: 2025-09-21T13:51:30.347734
+2025-09-21 13:51:30,347 - INFO - ============================================================
+2025-09-21 13:51:30,347 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-21 13:51:30,348 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-21 13:51:30,348 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-21 14:03:35,462 - INFO - 📡 Response status: 200
+2025-09-21 14:03:35,465 - INFO - ✅ Sentiment data fetch successful!
+2025-09-21 14:03:35,465 - INFO - 📊 Data points: 46
+2025-09-21 14:03:35,465 - INFO - 📱 Top posts: 15
+2025-09-21 14:03:35,465 - INFO - ⏰ Timestamp: 2025-09-21T21:03:35.421Z
+2025-09-21 14:03:35,465 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-21 14:03:35,465 - INFO - ============================================================
+2025-09-22 06:54:29,446 - INFO - ============================================================
+2025-09-22 06:54:29,448 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-22 06:54:29,448 - INFO - ⏰ Current time: 2025-09-22T06:54:29.448255
+2025-09-22 06:54:29,448 - INFO - ============================================================
+2025-09-22 06:54:29,449 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-22 06:54:29,450 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-22 06:54:29,450 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-22 07:09:03,642 - INFO - 📡 Response status: 200
+2025-09-22 07:09:03,644 - INFO - ✅ Sentiment data fetch successful!
+2025-09-22 07:09:03,644 - INFO - 📊 Data points: 50
+2025-09-22 07:09:03,644 - INFO - 📱 Top posts: 15
+2025-09-22 07:09:03,644 - INFO - ⏰ Timestamp: 2025-09-22T14:09:03.617Z
+2025-09-22 07:09:03,645 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-22 07:09:03,645 - INFO - ============================================================
+2025-09-22 09:00:00,607 - INFO - ============================================================
+2025-09-22 09:00:00,607 - INFO - ============================================================
+2025-09-22 09:00:00,608 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-22 09:00:00,608 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-22 09:00:00,608 - INFO - ⏰ Current time: 2025-09-22T09:00:00.608207
+2025-09-22 09:00:00,608 - INFO - ⏰ Current time: 2025-09-22T09:00:00.608207
+2025-09-22 09:00:00,608 - INFO - ============================================================
+2025-09-22 09:00:00,608 - INFO - ============================================================
+2025-09-22 09:00:00,608 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-22 09:00:00,608 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-22 09:00:00,608 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-22 09:00:00,608 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-09-22 09:00:00,608 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-22 09:00:00,608 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-09-22 09:14:15,465 - INFO - 📡 Response status: 200
+2025-09-22 09:14:15,465 - INFO - 📡 Response status: 200
+2025-09-22 09:14:15,467 - INFO - ✅ Sentiment data fetch successful!
+2025-09-22 09:14:15,467 - INFO - ✅ Sentiment data fetch successful!
+2025-09-22 09:14:15,467 - INFO - 📊 Data points: 52
+2025-09-22 09:14:15,467 - INFO - 📊 Data points: 52
+2025-09-22 09:14:15,467 - INFO - 📱 Top posts: 15
+2025-09-22 09:14:15,467 - INFO - 📱 Top posts: 15
+2025-09-22 09:14:15,467 - INFO - ⏰ Timestamp: 2025-09-22T16:14:15.439Z
+2025-09-22 09:14:15,467 - INFO - ⏰ Timestamp: 2025-09-22T16:14:15.439Z
+2025-09-22 09:14:15,467 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-22 09:14:15,467 - INFO - ✅ Sentiment analysis cron job completed successfully
+2025-09-22 09:14:15,467 - INFO - ============================================================
+2025-09-22 09:14:15,467 - INFO - ============================================================
+2025-09-23 09:00:00,872 - INFO - ============================================================
+2025-09-23 09:00:00,872 - INFO - ============================================================
+2025-09-23 09:00:00,873 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-23 09:00:00,873 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-23 09:00:00,873 - INFO - ⏰ Current time: 2025-09-23T09:00:00.873128
+2025-09-23 09:00:00,873 - INFO - ⏰ Current time: 2025-09-23T09:00:00.873128
+2025-09-23 09:00:00,873 - INFO - ============================================================
+2025-09-23 09:00:00,873 - INFO - ============================================================
+2025-09-23 09:00:00,873 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-23 09:00:00,873 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-23 09:00:00,873 - ERROR - BASE_URL environment variable is required
+2025-09-23 09:00:00,873 - ERROR - BASE_URL environment variable is required
+2025-09-24 09:00:01,978 - INFO - ============================================================
+2025-09-24 09:00:01,978 - INFO - ============================================================
+2025-09-24 09:00:01,979 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-24 09:00:01,979 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-24 09:00:01,979 - INFO - ⏰ Current time: 2025-09-24T09:00:01.979275
+2025-09-24 09:00:01,979 - INFO - ⏰ Current time: 2025-09-24T09:00:01.979275
+2025-09-24 09:00:01,979 - INFO - ============================================================
+2025-09-24 09:00:01,979 - INFO - ============================================================
+2025-09-24 09:00:01,979 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-24 09:00:01,979 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-24 09:00:01,979 - ERROR - BASE_URL environment variable is required
+2025-09-24 09:00:01,979 - ERROR - BASE_URL environment variable is required
+2025-09-25 09:00:00,550 - INFO - ============================================================
+2025-09-25 09:00:00,550 - INFO - ============================================================
+2025-09-25 09:00:00,553 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-25 09:00:00,553 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-25 09:00:00,553 - INFO - ⏰ Current time: 2025-09-25T09:00:00.553340
+2025-09-25 09:00:00,553 - INFO - ⏰ Current time: 2025-09-25T09:00:00.553340
+2025-09-25 09:00:00,553 - INFO - ============================================================
+2025-09-25 09:00:00,553 - INFO - ============================================================
+2025-09-25 09:00:00,553 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-25 09:00:00,553 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-25 09:00:00,553 - ERROR - BASE_URL environment variable is required
+2025-09-25 09:00:00,553 - ERROR - BASE_URL environment variable is required
+2025-09-26 09:00:00,610 - INFO - ============================================================
+2025-09-26 09:00:00,610 - INFO - ============================================================
+2025-09-26 09:00:00,618 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-26 09:00:00,618 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-26 09:00:00,618 - INFO - ⏰ Current time: 2025-09-26T09:00:00.618519
+2025-09-26 09:00:00,618 - INFO - ⏰ Current time: 2025-09-26T09:00:00.618519
+2025-09-26 09:00:00,618 - INFO - ============================================================
+2025-09-26 09:00:00,618 - INFO - ============================================================
+2025-09-26 09:00:00,618 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-26 09:00:00,618 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-26 09:00:00,618 - ERROR - BASE_URL environment variable is required
+2025-09-26 09:00:00,618 - ERROR - BASE_URL environment variable is required
+2025-09-27 09:00:01,463 - INFO - ============================================================
+2025-09-27 09:00:01,463 - INFO - ============================================================
+2025-09-27 09:00:01,463 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-27 09:00:01,463 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-27 09:00:01,463 - INFO - ⏰ Current time: 2025-09-27T09:00:01.463321
+2025-09-27 09:00:01,463 - INFO - ⏰ Current time: 2025-09-27T09:00:01.463321
+2025-09-27 09:00:01,463 - INFO - ============================================================
+2025-09-27 09:00:01,463 - INFO - ============================================================
+2025-09-27 09:00:01,463 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-27 09:00:01,463 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-27 09:00:01,463 - ERROR - BASE_URL environment variable is required
+2025-09-27 09:00:01,463 - ERROR - BASE_URL environment variable is required
+2025-09-28 09:00:01,813 - INFO - ============================================================
+2025-09-28 09:00:01,813 - INFO - ============================================================
+2025-09-28 09:00:01,814 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-28 09:00:01,814 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-28 09:00:01,814 - INFO - ⏰ Current time: 2025-09-28T09:00:01.814232
+2025-09-28 09:00:01,814 - INFO - ⏰ Current time: 2025-09-28T09:00:01.814232
+2025-09-28 09:00:01,814 - INFO - ============================================================
+2025-09-28 09:00:01,814 - INFO - ============================================================
+2025-09-28 09:00:01,814 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-28 09:00:01,814 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-28 09:00:01,814 - ERROR - BASE_URL environment variable is required
+2025-09-28 09:00:01,814 - ERROR - BASE_URL environment variable is required
+2025-09-29 09:00:01,180 - INFO - ============================================================
+2025-09-29 09:00:01,180 - INFO - ============================================================
+2025-09-29 09:00:01,181 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-29 09:00:01,181 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-09-29 09:00:01,181 - INFO - ⏰ Current time: 2025-09-29T09:00:01.181151
+2025-09-29 09:00:01,181 - INFO - ⏰ Current time: 2025-09-29T09:00:01.181151
+2025-09-29 09:00:01,181 - INFO - ============================================================
+2025-09-29 09:00:01,181 - INFO - ============================================================
+2025-09-29 09:00:01,181 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-29 09:00:01,181 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-09-29 09:00:01,181 - ERROR - BASE_URL environment variable is required
+2025-09-29 09:00:01,181 - ERROR - BASE_URL environment variable is required
+2025-10-01 09:00:01,212 - INFO - ============================================================
+2025-10-01 09:00:01,212 - INFO - ============================================================
+2025-10-01 09:00:01,212 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-01 09:00:01,212 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-01 09:00:01,212 - INFO - ⏰ Current time: 2025-10-01T09:00:01.212874
+2025-10-01 09:00:01,212 - INFO - ⏰ Current time: 2025-10-01T09:00:01.212874
+2025-10-01 09:00:01,212 - INFO - ============================================================
+2025-10-01 09:00:01,212 - INFO - ============================================================
+2025-10-01 09:00:01,213 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-01 09:00:01,213 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-01 09:00:01,213 - ERROR - BASE_URL environment variable is required
+2025-10-01 09:00:01,213 - ERROR - BASE_URL environment variable is required
+2025-10-02 09:00:00,489 - INFO - ============================================================
+2025-10-02 09:00:00,489 - INFO - ============================================================
+2025-10-02 09:00:00,489 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-02 09:00:00,489 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-02 09:00:00,489 - INFO - ⏰ Current time: 2025-10-02T09:00:00.489920
+2025-10-02 09:00:00,489 - INFO - ⏰ Current time: 2025-10-02T09:00:00.489920
+2025-10-02 09:00:00,489 - INFO - ============================================================
+2025-10-02 09:00:00,489 - INFO - ============================================================
+2025-10-02 09:00:00,490 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-02 09:00:00,490 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-02 09:00:00,490 - ERROR - BASE_URL environment variable is required
+2025-10-02 09:00:00,490 - ERROR - BASE_URL environment variable is required
+2025-10-03 09:00:01,223 - INFO - ============================================================
+2025-10-03 09:00:01,223 - INFO - ============================================================
+2025-10-03 09:00:01,223 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-03 09:00:01,223 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-03 09:00:01,223 - INFO - ⏰ Current time: 2025-10-03T09:00:01.223337
+2025-10-03 09:00:01,223 - INFO - ⏰ Current time: 2025-10-03T09:00:01.223337
+2025-10-03 09:00:01,223 - INFO - ============================================================
+2025-10-03 09:00:01,223 - INFO - ============================================================
+2025-10-03 09:00:01,223 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-03 09:00:01,223 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-03 09:00:01,223 - ERROR - BASE_URL environment variable is required
+2025-10-03 09:00:01,223 - ERROR - BASE_URL environment variable is required
+2025-10-04 09:00:00,566 - INFO - ============================================================
+2025-10-04 09:00:00,566 - INFO - ============================================================
+2025-10-04 09:00:00,566 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-04 09:00:00,566 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-04 09:00:00,566 - INFO - ⏰ Current time: 2025-10-04T09:00:00.566919
+2025-10-04 09:00:00,566 - INFO - ⏰ Current time: 2025-10-04T09:00:00.566919
+2025-10-04 09:00:00,566 - INFO - ============================================================
+2025-10-04 09:00:00,566 - INFO - ============================================================
+2025-10-04 09:00:00,566 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-04 09:00:00,566 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-04 09:00:00,567 - ERROR - BASE_URL environment variable is required
+2025-10-04 09:00:00,567 - ERROR - BASE_URL environment variable is required
+2025-10-04 18:30:46,513 - INFO - ============================================================
+2025-10-04 18:30:46,513 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-04 18:30:46,513 - INFO - ⏰ Current time: 2025-10-04T18:30:46.513942
+2025-10-04 18:30:46,514 - INFO - ============================================================
+2025-10-04 18:30:46,514 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-04 18:30:46,514 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-10-04 18:30:46,515 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-10-04 18:33:44,109 - INFO - 📡 Response status: 500
+2025-10-04 18:33:44,111 - ERROR - ❌ Request failed with status 500
+2025-10-04 18:33:44,111 - ERROR - Response: {"error":"Failed to fetch sentiment data","message":"Unknown error","timestamp":"2025-10-05T01:33:44.101Z"}
+2025-10-04 18:33:44,111 - ERROR - ❌ Sentiment analysis cron job failed
+2025-10-04 18:33:44,112 - INFO - ============================================================

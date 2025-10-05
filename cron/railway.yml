@@ -1,0 +1,17 @@
+# Railway Cron Job Configuration
+# Deploy this as a separate Railway service for scheduled sentiment analysis
+
+version: 2
+
+services:
+  sentiment-cron:
+    build:
+      dockerfile: Dockerfile.cron
+    cron:
+      # Run daily at 9:00 AM UTC
+      - schedule: "0 9 * * *"
+        command: "python sentiment_fetch.py"
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
+      CRON_SECRET: ${{ secrets.CRON_SECRET }}
+      REQUEST_TIMEOUT: 2700

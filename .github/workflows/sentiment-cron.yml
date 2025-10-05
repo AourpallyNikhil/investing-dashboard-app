@@ -1,51 +1,37 @@
-name: Daily Sentiment Data Fetch
+name: Daily Sentiment Analysis Cron Job
 
-# Run daily at 6:00 AM UTC (2:00 AM EST, 11:00 PM PST)
-# This ensures fresh data is available when users check in the morning
 on:
   schedule:
-    - cron: '0 6 * * *'  # Daily at 6 AM UTC
-  
-  # Allow manual triggering for testing
-  workflow_dispatch:
+    # Run daily at 9:00 AM UTC (4 AM EST / 1 AM PST)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual triggers
 
 jobs:
-  fetch-sentiment-data:
+  sentiment-analysis:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Fetch Sentiment Data
-        run: |
-          curl -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            -d '{}' \
-            ${{ secrets.BASE_URL }}/api/cron/sentiment-data
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
         
-      - name: Check Response
-        run: |
-          response=$(curl -s -X POST \
-            -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            -d '{}' \
-            ${{ secrets.BASE_URL }}/api/cron/sentiment-data)
-          
-          echo "Response: $response"
-          
-          # Check if the response contains success
-          if echo "$response" | grep -q '"success":true'; then
-            echo "✅ Sentiment data fetch completed successfully"
-            exit 0
-          else
-            echo "❌ Sentiment data fetch failed"
-            echo "$response"
-            exit 1
-          fi
-
-# To set up this GitHub Action:
-# 1. Go to your repository Settings > Secrets and variables > Actions
-# 2. Add these secrets:
-#    - BASE_URL: Your deployment URL (e.g., https://your-project.vercel.app)
-#    - CRON_SECRET: A secure random string for authentication
-# 3. The workflow will run automatically daily at 6 AM UTC
-
+    - name: Install dependencies
+      run: |
+        cd cron
+        pip install -r requirements.txt
+        
+    - name: Run sentiment analysis
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        REQUEST_TIMEOUT: 2700
+      run: |
+        cd cron
+        python sentiment_fetch.py
+        
+    - name: Log completion
+      run: echo "Sentiment analysis cron job completed at $(date)"

@@ -217,3 +217,4 @@ async function analyzeSentimentFallback(tickerData: any[]): Promise<SentimentDat
   return sentimentResults;
 }
 
+

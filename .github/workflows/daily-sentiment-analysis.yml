@@ -1,0 +1,42 @@
+name: Daily Sentiment Analysis
+
+on:
+  schedule:
+    # Run daily at 9:00 AM UTC (adjust timezone as needed)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sentiment-analysis:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+    
+    - name: Run sentiment analysis
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        REQUEST_TIMEOUT: 2700
+      run: |
+        cd cron
+        python sentiment_fetch.py
+      
+    - name: Upload logs as artifact
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: sentiment-analysis-logs
+        path: cron/sentiment_cron.log
+        retention-days: 30

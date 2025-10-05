@@ -218,3 +218,4 @@ INSERT INTO economic_data_metadata (last_bls_fetch, total_records)
 VALUES (NULL, 0)
 ON CONFLICT DO NOTHING;
 
+

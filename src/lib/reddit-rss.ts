@@ -385,6 +385,10 @@ export class RedditRSSAPI {
       'THE', 'AND', 'FOR', 'ARE', 'BUT', 'NOT', 'YOU', 'ALL', 'CAN', 'HAD', 'HER', 'WAS', 'ONE',
       'OUR', 'OUT', 'DAY', 'GET', 'HAS', 'HIM', 'HIS', 'HOW', 'ITS', 'NEW', 'NOW', 'OLD', 'SEE',
       'TWO', 'WHO', 'BOY', 'DID', 'ITS', 'LET', 'PUT', 'SAY', 'SHE', 'TOO', 'USE', 'WE', 'WILL',
+      'THIS', 'THAT', 'WITH', 'FROM', 'THEY', 'BEEN', 'HAVE', 'THEIR', 'SAID', 'EACH', 'WHICH',
+      'WHAT', 'THERE', 'COULD', 'OTHER', 'AFTER', 'FIRST', 'WELL', 'YEAR', 'WORK', 'SUCH',
+      'MAKE', 'EVEN', 'MORE', 'MOST', 'TAKE', 'THAN', 'ONLY', 'THINK', 'ALSO', 'BACK', 'GOOD',
+      'LIFE', 'WAY', 'BECAUSE', 'UP', 'MAY', 'SO', 'THESE', 'TO', 'OF', 'IN', 'ON', 'AT', 'BY',
       'YOLO', 'MOON', 'HODL', 'FOMO', 'FUD', 'ATH', 'ATL', 'DD', 'TA', 'CEO', 'CFO', 'IPO',
       'SEC', 'FDA', 'NYSE', 'NASDAQ', 'SPY', 'QQQ', 'VTI', 'VOO' // ETFs are valid but common
     ];

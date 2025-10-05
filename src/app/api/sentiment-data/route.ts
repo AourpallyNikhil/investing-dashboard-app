@@ -38,9 +38,31 @@ interface RedditPostData {
   subreddit: string;
 }
 
+interface TwitterPostData {
+  tweet_id: string;
+  text: string;
+  author: string;
+  like_count: number;
+  retweet_count: number;
+  reply_count: number;
+  url: string;
+  created_at: string;
+  // Actionable tweet scoring fields
+  score?: number;
+  velocity_z?: number;
+  authors_60m?: number;
+  actionability_score?: number;
+  catalyst_score?: number;
+  author_novelty?: number;
+  time_decay?: number;
+  tickers?: string[];
+  follower_count?: number;
+}
+
 interface SentimentResponse {
   data: SentimentDataPoint[];
   topPosts?: RedditPostData[];
+  twitterPosts?: TwitterPostData[];
   sources: string[];
   lastUpdated: string;
   fromCache: boolean;
@@ -308,23 +330,74 @@ async function getCachedSentimentData(
   timeframe: string = '24h'
 ): Promise<SentimentResponse | null> {
   try {
-    console.log('📊 Checking for cached sentiment data in database...');
+    console.log(`📊 Checking for cached sentiment data in database (timeframe: ${timeframe})...`);
     
     const supabase = getSupabaseClient();
     
-    // Check if we have recent data (within 1 hour)
-    const oneHourAgo = new Date();
-    oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+    // Calculate the date range based on timeframe
+    const cutoffDate = new Date();
+    switch (timeframe) {
+      case '24h':
+        cutoffDate.setHours(cutoffDate.getHours() - 24);
+        break;
+      case '7d':
+        cutoffDate.setDate(cutoffDate.getDate() - 7);
+        break;
+      case '30d':
+        cutoffDate.setDate(cutoffDate.getDate() - 30);
+        break;
+      default:
+        cutoffDate.setHours(cutoffDate.getHours() - 24); // Default to 24h
+    }
     
-    // Query sentiment data
-    const { data: sentimentData, error: sentimentError } = await supabase
-      .from('sentiment_data')
+    // Query aggregated sentiment data (new system)
+    let sentimentData = null;
+    let sentimentError = null;
+    
+    // First try the new aggregations table (exclude GENERAL)
+    const { data: aggregatedData, error: aggregatedError } = await supabase
+      .from('sentiment_aggregations')
       .select('*')
-      .gte('created_at', oneHourAgo.toISOString())
-      .order('created_at', { ascending: false });
+      .eq('aggregation_period', timeframe)
+      .neq('ticker', 'GENERAL') // Exclude GENERAL category
+      .gte('calculated_at', cutoffDate.toISOString())
+      .order('total_mentions', { ascending: false });
+    
+    if (!aggregatedError && aggregatedData && aggregatedData.length > 0) {
+      console.log(`✅ Found ${aggregatedData.length} aggregated sentiment records`);
+      
+      // Transform aggregated data to match expected format
+      sentimentData = aggregatedData.map(agg => ({
+        ticker: agg.ticker,
+        sentiment_score: agg.avg_sentiment || 0.0,
+        sentiment_label: agg.avg_sentiment > 0.1 ? 'positive' : agg.avg_sentiment < -0.1 ? 'negative' : 'neutral',
+        mention_count: agg.total_mentions,
+        confidence: 0.85, // Default confidence for aggregated data
+        key_themes: ['Aggregated Analysis'], // Placeholder
+        summary: `${agg.total_mentions} mentions from ${agg.unique_posts} posts by ${agg.unique_authors} unique authors`,
+        source_breakdown: agg.source_breakdown || {
+          reddit: { mentions: 0, avg_sentiment: 0 },
+          twitter: { mentions: 0, avg_sentiment: 0 }
+        },
+        trending_contexts: [`${agg.total_upvotes} total upvotes`, `${agg.total_comments} total comments`],
+        last_updated: agg.calculated_at
+      }));
+    } else {
+      console.warn('⚠️ No aggregated data found, falling back to old sentiment_data table');
+      
+      // Fallback to old sentiment_data table
+      const { data: oldSentimentData, error: oldSentimentError } = await supabase
+        .from('sentiment_data')
+        .select('*')
+        .gte('created_at', cutoffDate.toISOString())
+        .order('created_at', { ascending: false });
+      
+      sentimentData = oldSentimentData;
+      sentimentError = oldSentimentError;
+    }
     
     if (sentimentError) {
-      console.error('❌ Error querying sentiment_data:', sentimentError);
+      console.error('❌ Error querying sentiment data:', sentimentError);
       return null;
     }
     
@@ -336,7 +409,7 @@ async function getCachedSentimentData(
     const { data: rawPostsData, error: rawPostsError } = await supabase
       .from('reddit_posts_raw')
       .select('*')
-      .gte('retrieved_at', oneHourAgo.toISOString())
+      .gte('retrieved_at', cutoffDate.toISOString())
       .order('retrieved_at', { ascending: false })
       .limit(15);
     
@@ -345,7 +418,7 @@ async function getCachedSentimentData(
       const { data: simplePostsData, error: simplePostsError } = await supabase
         .from('reddit_posts')
         .select('*')
-        .gte('created_at', oneHourAgo.toISOString())
+        .gte('created_at', cutoffDate.toISOString())
         .order('created_at', { ascending: false })
         .limit(15);
       
@@ -395,9 +468,68 @@ async function getCachedSentimentData(
       subreddit: post.subreddit
     }));
     
+    // Query Twitter posts using actionable tweets ranking
+    let twitterPostsData = null;
+    
+    // First try the actionable tweets view for smart ranking
+    const { data: actionableTweets, error: actionableError } = await supabase
+      .from('top_actionable_tweets')
+      .select(`
+        tweet_id, author_username, author_name, text, tickers, created_at, url,
+        follower_count, engagement, velocity_z, authors_60m, 
+        actionability_score, catalyst_score, author_novelty, time_decay, score
+      `)
+      .limit(15);
+    
+    if (!actionableError && actionableTweets && actionableTweets.length > 0) {
+      console.log(`✅ Found ${actionableTweets.length} actionable tweets with smart ranking`);
+      twitterPostsData = actionableTweets;
+    } else {
+      console.warn('⚠️ Actionable tweets view not available, falling back to simple query:', actionableError);
+      
+      // Fallback to simple twitter_posts table
+      const { data: rawTwitterPosts, error: twitterError } = await supabase
+        .from('twitter_posts')
+        .select('*')
+        .gte('retrieved_at', cutoffDate.toISOString())
+        .order('retrieved_at', { ascending: false })
+        .limit(15);
+      
+      if (twitterError) {
+        console.warn('⚠️ Error querying twitter_posts (table may not exist yet):', twitterError);
+      } else {
+        twitterPostsData = rawTwitterPosts;
+      }
+    }
+    
+    // Transform Twitter posts data
+    const transformedTwitterPosts = (twitterPostsData || []).map(post => ({
+      tweet_id: post.tweet_id,
+      text: post.text,
+      author: post.author_username || post.author,
+      like_count: post.like_count || 0,
+      retweet_count: post.retweet_count || 0,
+      reply_count: post.reply_count || 0,
+      url: post.url,
+      created_at: post.created_at,
+      // Include actionable scoring if available
+      score: post.score,
+      velocity_z: post.velocity_z,
+      authors_60m: post.authors_60m,
+      actionability_score: post.actionability_score,
+      catalyst_score: post.catalyst_score,
+      author_novelty: post.author_novelty,
+      time_decay: post.time_decay,
+      tickers: post.tickers,
+      follower_count: post.follower_count
+    }));
+    
+    console.log(`✅ Found cached Twitter data: ${transformedTwitterPosts.length} Twitter posts`);
+    
     return {
       data: transformedSentimentData,
       topPosts: transformedPosts,
+      twitterPosts: transformedTwitterPosts,
       sources: ['Cached Reddit API', 'Cached Twitter API', 'Cached Gemini Flash AI Analysis'],
       lastUpdated: new Date().toISOString().split('T')[0],
       fromCache: true

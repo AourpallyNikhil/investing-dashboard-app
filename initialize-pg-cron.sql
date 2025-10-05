@@ -25,3 +25,4 @@ END $$;
 SELECT cron.schedule('test-job', '* * * * *', 'SELECT 1;');
 SELECT cron.unschedule('test-job');
 
+

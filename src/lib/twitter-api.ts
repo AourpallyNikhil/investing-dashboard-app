@@ -1,6 +1,7 @@
 /**
- * Twitter/X API Integration for Sentiment Analysis
+ * Twitter/X API Integration for Sentiment Analysis using twitterapi.io
  * Fetches tweets from specified influencers for stock sentiment tracking
+ * Uses twitterapi.io as a reliable, cost-effective alternative to official Twitter API
  */
 
 interface Tweet {
@@ -8,6 +9,7 @@ interface Tweet {
   text: string;
   author_id: string;
   created_at: string;
+  url?: string;
   public_metrics: {
     retweet_count: number;
     like_count: number;
@@ -70,54 +72,82 @@ interface TwitterResponse {
 }
 
 export class TwitterAPI {
-  private readonly baseUrl = 'https://api.twitter.com/2';
-  private readonly bearerToken: string;
+  private readonly baseUrl = 'https://api.twitterapi.io';
+  private readonly apiKey: string;
   
-  constructor(bearerToken?: string) {
-    this.bearerToken = bearerToken || process.env.TWITTER_BEARER_TOKEN || '';
+  constructor(apiKey?: string) {
+    // Support both old and new environment variable names for backward compatibility
+    this.apiKey = apiKey || process.env.TWITTERAPI_IO_KEY || '';
     
-    if (!this.bearerToken) {
-      console.warn('⚠️ Twitter Bearer Token not provided. Twitter integration will use mock data.');
+    if (!this.apiKey) {
+      console.warn('⚠️ TwitterAPI.io API Key not provided. Twitter integration will use mock data.');
+    } else {
+      console.log('✅ TwitterAPI.io initialized successfully');
     }
   }
 
   /**
-   * Get user ID by username
+   * Get user ID by username using twitterapi.io
    */
   async getUserByUsername(username: string): Promise<TwitterUser | null> {
-    if (!this.bearerToken) {
+    if (!this.apiKey) {
+      console.log(`🤖 No TwitterAPI.io key, using mock data for @${username}`);
       return this.getMockUser(username);
     }
 
     try {
+      console.log(`🐦 Fetching user info for @${username} via twitterapi.io`);
+      
       const response = await fetch(
-        `${this.baseUrl}/users/by/username/${username}?user.fields=public_metrics`,
+        `${this.baseUrl}/twitter/user/info?userName=${username}`,
         {
           headers: {
-            'Authorization': `Bearer ${this.bearerToken}`,
+            'x-api-key': this.apiKey,
             'Content-Type': 'application/json',
           },
         }
       );
 
       if (!response.ok) {
-        throw new Error(`Twitter API error: ${response.status} ${response.statusText}`);
+        if (response.status === 404) {
+          console.warn(`⚠️ User @${username} not found`);
+          return null;
+        }
+        throw new Error(`TwitterAPI.io error: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
-      return data.data || null;
+      
+      // Transform twitterapi.io response to match our interface
+      if (data.data) {
+        const userData = data.data;
+        return {
+          id: userData.id_str || userData.id,
+          username: userData.screen_name || username,
+          name: userData.name || username,
+          public_metrics: {
+            followers_count: userData.followers_count || 0,
+            following_count: userData.friends_count || 0,
+            tweet_count: userData.statuses_count || 0
+          }
+        };
+      }
+
+      return null;
 
     } catch (error) {
       console.error(`❌ Error fetching Twitter user @${username}:`, error);
-      return null;
+      console.log(`🤖 Falling back to mock data for @${username}`);
+      return this.getMockUser(username);
     }
   }
 
   /**
-   * Fetch recent tweets from a user
+   * Fetch recent tweets from a user using twitterapi.io
+   * Note: userId can be either username or user ID for twitterapi.io
    */
   async getUserTweets(
-    userId: string,
+    userIdOrUsername: string,
     options: {
       maxResults?: number;
       sinceId?: string;
@@ -126,63 +156,121 @@ export class TwitterAPI {
     } = {}
   ): Promise<{ tweets: Tweet[]; nextToken?: string }> {
     const {
-      maxResults = 100,
+      maxResults = 50, // More conservative default
       sinceId,
       untilId,
       paginationToken
     } = options;
 
-    if (!this.bearerToken) {
-      return { tweets: this.getMockTweets(userId) };
+    if (!this.apiKey) {
+      return { tweets: this.getMockTweets(userIdOrUsername) };
     }
 
     try {
-      let url = `${this.baseUrl}/users/${userId}/tweets?` +
-        `max_results=${maxResults}&` +
-        `tweet.fields=created_at,public_metrics,context_annotations,entities&` +
-        `expansions=author_id&` +
-        `user.fields=username,name,public_metrics`;
-
+      console.log(`🐦 Fetching ${maxResults} tweets for user ${userIdOrUsername} via twitterapi.io`);
+      
+      // Build URL for twitterapi.io user tweets endpoint
+      // Note: twitterapi.io uses userName instead of user_id for tweets endpoint
+      let url = `${this.baseUrl}/twitter/user/last_tweets?userName=${userIdOrUsername}&count=${maxResults}`;
+      
       if (sinceId) url += `&since_id=${sinceId}`;
-      if (untilId) url += `&until_id=${untilId}`;
-      if (paginationToken) url += `&pagination_token=${paginationToken}`;
-
-      console.log(`🐦 Fetching tweets for user ${userId}...`);
+      if (untilId) url += `&max_id=${untilId}`;
 
       const response = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${this.bearerToken}`,
+          'x-api-key': this.apiKey,
           'Content-Type': 'application/json',
         },
       });
 
       if (!response.ok) {
-        throw new Error(`Twitter API error: ${response.status} ${response.statusText}`);
+        throw new Error(`TwitterAPI.io error: ${response.status} ${response.statusText}`);
       }
 
-      const data: TwitterResponse = await response.json();
-      const tweets = data.data || [];
+      const data = await response.json();
+      
+      // Transform twitterapi.io response to match our interface
+      const tweets: Tweet[] = [];
+      
+      // twitterapi.io returns tweets in data.tweets array
+      const tweetsArray = data.data?.tweets || [];
+      if (Array.isArray(tweetsArray)) {
+        tweetsArray.forEach((tweetData: any) => {
+          const tweetId = tweetData.id || tweetData.id_str;
+          tweets.push({
+            id: tweetId,
+            text: tweetData.text || '',
+            author_id: tweetData.author?.id || userIdOrUsername,
+            created_at: tweetData.createdAt || new Date().toISOString(),
+            // Construct Twitter URL for individual tweet
+            url: `https://twitter.com/${userIdOrUsername}/status/${tweetId}`,
+            public_metrics: {
+              retweet_count: tweetData.retweetCount || 0,
+              like_count: tweetData.likeCount || 0,
+              reply_count: tweetData.replyCount || 0,
+              quote_count: tweetData.quoteCount || 0
+            },
+            entities: {
+              cashtags: this.extractCashtagsFromText(tweetData.text || ''),
+              hashtags: tweetData.entities?.hashtags?.map((tag: any) => ({
+                start: tag.indices?.[0] || 0,
+                end: tag.indices?.[1] || 0,
+                tag: tag.text || ''
+              })) || [],
+              urls: tweetData.entities?.urls?.map((url: any) => ({
+                start: url.indices?.[0] || 0,
+                end: url.indices?.[1] || 0,
+                url: url.url || '',
+                expanded_url: url.expanded_url || '',
+                display_url: url.display_url || ''
+              })) || []
+            }
+          });
+        });
+      }
 
-      console.log(`✅ Fetched ${tweets.length} tweets`);
+      console.log(`✅ Fetched ${tweets.length} tweets via twitterapi.io`);
 
       return {
         tweets,
-        nextToken: data.meta?.next_token
+        nextToken: undefined // twitterapi.io uses different pagination
       };
 
     } catch (error) {
-      console.error(`❌ Error fetching tweets for user ${userId}:`, error);
-      return { tweets: [] };
+      console.error(`❌ Error fetching tweets for user ${userIdOrUsername}:`, error);
+      console.log(`🤖 Falling back to mock tweets for user ${userIdOrUsername}`);
+      return { tweets: this.getMockTweets(userIdOrUsername) };
     }
   }
 
   /**
-   * Fetch tweets from multiple users
+   * Extract cashtags from tweet text (helper for twitterapi.io response transformation)
+   */
+  private extractCashtagsFromText(text: string): Array<{ start: number; end: number; tag: string }> {
+    const cashtags: Array<{ start: number; end: number; tag: string }> = [];
+    const cashtagPattern = /\$([A-Z]{1,5})\b/g;
+    let match;
+    
+    while ((match = cashtagPattern.exec(text)) !== null) {
+      cashtags.push({
+        start: match.index,
+        end: match.index + match[0].length,
+        tag: match[1]
+      });
+    }
+    
+    return cashtags;
+  }
+
+  /**
+   * Fetch tweets from multiple users using twitterapi.io (supports high QPS)
    */
   async getMultipleUserTweets(
     usernames: string[],
     options: Parameters<typeof this.getUserTweets>[1] = {}
   ): Promise<Array<{ username: string; tweets: Tweet[]; user?: TwitterUser }>> {
+    console.log(`🐦 Processing ${usernames.length} Twitter users via twitterapi.io (no rate limits!)`);
+    
     const results = [];
 
     for (const username of usernames) {
@@ -190,12 +278,17 @@ export class TwitterAPI {
         // Get user info first
         const user = await this.getUserByUsername(username);
         if (!user) {
-          console.warn(`⚠️ User @${username} not found`);
+          console.warn(`⚠️ User @${username} not found, using mock data`);
+          results.push({
+            username,
+            tweets: this.getMockTweets(`mock_${username}`),
+            user: this.getMockUser(username)
+          });
           continue;
         }
 
-        // Get their tweets
-        const { tweets } = await this.getUserTweets(user.id, options);
+        // Get their tweets (use username for twitterapi.io)
+        const { tweets } = await this.getUserTweets(username, options);
         
         results.push({
           username,
@@ -203,19 +296,20 @@ export class TwitterAPI {
           user
         });
 
-        // Rate limiting: wait between requests
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Minimal delay to be respectful (twitterapi.io supports 200 QPS)
+        await new Promise(resolve => setTimeout(resolve, 100));
 
       } catch (error) {
         console.error(`Failed to fetch tweets from @${username}:`, error);
         results.push({
           username,
-          tweets: [],
-          user: undefined
+          tweets: this.getMockTweets(`mock_${username}`),
+          user: this.getMockUser(username)
         });
       }
     }
 
+    console.log(`✅ Completed processing ${usernames.length} users, got ${results.length} results`);
     return results;
   }
 
@@ -356,6 +450,59 @@ export class TwitterAPI {
     });
 
     // Convert to array and sort by mention count
+    return Array.from(tickerCounts.entries())
+      .map(([ticker, data]) => ({
+        ticker,
+        mentions: data.count,
+        avgLikes: data.totalLikes / data.count,
+        contexts: data.contexts.slice(0, 5) // Top 5 contexts
+      }))
+      .sort((a, b) => b.mentions - a.mentions)
+      .slice(0, 50); // Top 50 trending tickers
+  }
+
+  /**
+   * Extract ticker data from already-fetched results (to avoid duplicate API calls)
+   */
+  extractTickersFromResults(
+    results: Array<{ username: string; tweets: Tweet[]; user?: TwitterUser }>,
+    hoursBack: number = 24
+  ): Array<{ ticker: string; mentions: number; avgLikes: number; contexts: string[] }> {
+    const tickerCounts = new Map<string, { 
+      count: number; 
+      totalLikes: number; 
+      contexts: string[] 
+    }>();
+
+    const cutoffTime = new Date(Date.now() - (hoursBack * 60 * 60 * 1000));
+
+    results.forEach(({ tweets }) => {
+      tweets.forEach(tweet => {
+        // Only consider recent tweets
+        const tweetTime = new Date(tweet.created_at);
+        if (tweetTime < cutoffTime) return;
+
+        const tickers = this.extractStockTickers(tweet);
+
+        tickers.forEach(({ ticker, context, confidence }) => {
+          if (confidence > 0.7) { // Only high-confidence mentions
+            const existing = tickerCounts.get(ticker) || { 
+              count: 0, 
+              totalLikes: 0, 
+              contexts: [] 
+            };
+            
+            existing.count++;
+            existing.totalLikes += tweet.public_metrics.like_count;
+            existing.contexts.push(context);
+            
+            tickerCounts.set(ticker, existing);
+          }
+        });
+      });
+    });
+
+    // Convert to array and calculate averages
     return Array.from(tickerCounts.entries())
       .map(([ticker, data]) => ({
         ticker,

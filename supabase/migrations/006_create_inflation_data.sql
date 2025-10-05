@@ -59,3 +59,4 @@ COMMENT ON COLUMN inflation_data_metadata.last_gemini_fetch IS 'Timestamp of las
 COMMENT ON COLUMN inflation_data_metadata.gemini_sources IS 'Array of data sources returned by last Gemini call';
 
 
+

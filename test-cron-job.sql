@@ -39,3 +39,4 @@ FROM reddit_posts_raw
 ORDER BY retrieved_at DESC 
 LIMIT 5;
 
+
