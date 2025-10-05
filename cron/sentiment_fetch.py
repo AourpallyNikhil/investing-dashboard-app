@@ -31,7 +31,7 @@ def load_config():
     """Load configuration from environment or config file"""
     config_file = script_dir / "config.env"
     
-    # Load from config file if it exists
+    # Load from config file if it exists, but don't override existing env vars
     if config_file.exists():
         logger.info(f"Loading config from {config_file}")
         with open(config_file, 'r') as f:
@@ -39,7 +39,10 @@ def load_config():
                 line = line.strip()
                 if line and not line.startswith('#') and '=' in line:
                     key, value = line.split('=', 1)
-                    os.environ[key.strip()] = value.strip()
+                    key = key.strip()
+                    # Only set if not already in environment (prioritize env vars)
+                    if key not in os.environ:
+                        os.environ[key] = value.strip()
     
     # Required configuration
     base_url = os.getenv('BASE_URL')
