@@ -6,13 +6,12 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { RefreshFinancialDataButton } from '@/components/ui/refresh-financial-data-button'
 import { 
-  Building2, 
-  Home,
-  TrendingUp
+  TrendingUp,
+  Target
 } from 'lucide-react'
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'Breakout Stocks', href: '/', icon: Target },
   { name: 'Data Sources', href: '/admin/sources', icon: TrendingUp },
 ]
 
@@ -25,8 +24,7 @@ export function Navigation() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center space-x-8">
             <Link href="/" className="flex items-center space-x-2">
-              <Building2 className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">InvestDash</span>
+              {/* Clean navigation without branding */}
             </Link>
             
             <div className="hidden md:flex items-center space-x-1">
