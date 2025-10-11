@@ -166,7 +166,7 @@ Provide:
 - summary: 2-3 sentence summary`;
 
       const completion = await openai.beta.chat.completions.parse({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-nano',
         messages: [
           { role: 'system', content: 'You are a financial sentiment analyst analyzing social media discussions about stocks.' },
           { role: 'user', content: sentimentPrompt }
@@ -517,7 +517,7 @@ async function getCachedSentimentData(
       data: transformedSentimentData,
       topPosts: transformedPosts,
       twitterPosts: transformedTwitterPosts,
-      sources: ['Cached Reddit API', 'Cached Twitter API', 'OpenAI GPT-4o-mini AI Analysis'],
+      sources: ['Cached Reddit API', 'Cached Twitter API', 'OpenAI GPT-5 Nano AI Analysis'],
       lastUpdated: new Date().toISOString().split('T')[0],
       fromCache: true
     };

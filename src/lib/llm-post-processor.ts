@@ -80,7 +80,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     const prompt = buildBatchPrompt(posts, source)
     
     const completion = await client.beta.chat.completions.parse({
-      model: 'gpt-4o-mini',
+        model: 'gpt-5-nano',
       messages: [
         { role: 'system', content: 'You are a financial sentiment analyzer. Analyze social media posts and return structured sentiment data.' },
         { role: 'user', content: prompt }

@@ -67,7 +67,7 @@ Provide:
 - summary: 2-3 sentence summary`;
 
       const completion = await openai.beta.chat.completions.parse({
-        model: 'gpt-4o-mini',
+        model: 'gpt-5-nano',
         messages: [
           { role: 'system', content: 'You are a financial sentiment analyst analyzing social media discussions about stocks.' },
           { role: 'user', content: sentimentPrompt }
