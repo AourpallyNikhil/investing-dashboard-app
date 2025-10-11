@@ -3,22 +3,40 @@
  * Processes individual posts immediately after fetching from APIs
  */
 
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import OpenAI from 'openai'
 import { updateTickerAggregation, saveBatchWithRealTimeAggregation } from './real-time-aggregator'
+import { zodResponseFormat } from 'openai/helpers/zod'
+import { z } from 'zod'
 
-// Lazy initialization of Gemini to avoid issues when env vars aren't loaded yet
-let genAI: GoogleGenerativeAI | null = null;
+// Lazy initialization of OpenAI to avoid issues when env vars aren't loaded yet
+let openai: OpenAI | null = null;
 
-function getGenAI(): GoogleGenerativeAI {
-  if (!genAI) {
-    const apiKey = process.env.GEMINI_API_KEY;
+function getOpenAI(): OpenAI {
+  if (!openai) {
+    const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      throw new Error('GEMINI_API_KEY environment variable is not set');
+      throw new Error('OPENAI_API_KEY environment variable is not set');
     }
-    genAI = new GoogleGenerativeAI(apiKey);
+    openai = new OpenAI({ apiKey });
   }
-  return genAI;
+  return openai;
 }
+
+// Zod schema for structured output
+const PostAnalysisSchema = z.object({
+  ticker: z.string().nullable(),
+  sentiment_score: z.number().min(-1).max(1),
+  sentiment_label: z.enum(['positive', 'negative', 'neutral']),
+  confidence: z.number().min(0).max(1),
+  key_themes: z.array(z.string()),
+  actionability_score: z.number().min(0).max(1),
+  has_catalyst: z.boolean(),
+  reasoning: z.string()
+})
+
+const BatchAnalysisSchema = z.object({
+  analyses: z.array(PostAnalysisSchema)
+})
 
 export interface LLMPostAnalysis {
   ticker: string | null
@@ -45,8 +63,8 @@ export interface ProcessedPost {
  * Process multiple posts in a single LLM call for efficiency WITH REAL-TIME AGGREGATION
  */
 export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitter'): Promise<ProcessedPost[]> {
-  if (!process.env.GEMINI_API_KEY) {
-    console.warn('⚠️ [LLM] No GEMINI_API_KEY found, using fallback analysis')
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn('⚠️ [LLM] No OPENAI_API_KEY found, using fallback analysis')
     return posts.map(post => ({
       original: post,
       llm_analysis: getFallbackAnalysis(post, source),
@@ -58,28 +76,28 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
   try {
     console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts...`)
     
-    const model = getGenAI().getGenerativeModel({ 
-      model: 'gemini-1.5-flash-latest',
-      generationConfig: {
-        maxOutputTokens: 8192,
-        temperature: 0.1
-      }
-    })
-    
+    const client = getOpenAI()
     const prompt = buildBatchPrompt(posts, source)
     
-    const result = await model.generateContent(prompt)
-    const response = result.response.text()
+    const completion = await client.beta.chat.completions.parse({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: 'You are a financial sentiment analyzer. Analyze social media posts and return structured sentiment data.' },
+        { role: 'user', content: prompt }
+      ],
+      response_format: zodResponseFormat(BatchAnalysisSchema, 'batch_analysis'),
+      temperature: 0.1
+    })
+
+    const response = completion.choices[0].message.parsed
     
-    console.log(`🤖 [LLM] Raw response length: ${response.length} chars`)
-    
-    // Log response truncation warning
-    if (response.length > 3000 && !response.trim().endsWith(']')) {
-      console.warn(`⚠️ [LLM] Response may be truncated - length: ${response.length}, ends with: "${response.slice(-50)}"`)
+    if (!response || !response.analyses) {
+      throw new Error('Failed to parse OpenAI response')
     }
+
+    console.log(`🤖 [LLM] Successfully parsed ${response.analyses.length} analyses`)
     
-    // Parse JSON response
-    const analyses = parseGeminiResponse(response, posts.length)
+    const analyses = response.analyses
     
     if (analyses.length !== posts.length) {
       console.warn(`⚠️ [LLM] Analysis count mismatch: got ${analyses.length}, expected ${posts.length}`)
@@ -125,65 +143,35 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
 function buildBatchPrompt(posts: any[], source: 'reddit' | 'twitter'): string {
   const postTexts = posts.map((post, index) => {
     if (source === 'reddit') {
-      return `POST_${index}: "${post.title} ${post.selftext || ''}".trim()`
+      return `POST_${index}: ${post.title} ${post.selftext || ''}`.trim()
     } else {
-      return `POST_${index}: "${post.text}".trim()`
+      return `POST_${index}: ${post.text}`.trim()
     }
-  }).join('\n')
+  }).join('\n\n')
   
-  return `You are a financial sentiment analyzer. Analyze these ${source} posts and return a JSON array with exactly ${posts.length} objects.
-
-For each post, extract:
-1. **ticker**: Stock ticker mentioned (e.g., "NVDA", "AAPL") or null if none
-2. **sentiment_score**: Float from -1.0 (very negative) to 1.0 (very positive)  
-3. **sentiment_label**: "positive", "negative", or "neutral"
-4. **confidence**: Float from 0.0 to 1.0 (how confident you are)
-5. **key_themes**: Array of 1-3 key themes (e.g., ["earnings", "AI", "growth"])
-6. **actionability_score**: Float 0.0-1.0 (how actionable/specific is this for traders)
-7. **has_catalyst**: Boolean (mentions earnings, FDA approval, contracts, etc.)
-8. **reasoning**: Brief explanation of your analysis
+  return `Analyze these ${posts.length} ${source} posts and extract sentiment data for each.
 
 POSTS TO ANALYZE:
 ${postTexts}
 
-IMPORTANT RULES:
-- Company names → tickers (e.g., "NVIDIA" → "NVDA", "Apple" → "AAPL", "Tesla" → "TSLA")
+INSTRUCTIONS:
+- For ticker: Extract stock ticker symbol (e.g., "NVDA", "AAPL", "TSLA") or null if none mentioned
+- Company names should be converted to tickers (e.g., "NVIDIA" → "NVDA", "Apple" → "AAPL")
 - Only well-known public companies (no crypto, no private companies)
 - If multiple tickers mentioned, pick the PRIMARY one
-- Be conservative with sentiment scores (most posts are neutral)
-- Return valid JSON array with EXACTLY ${posts.length} objects
-- Use null for ticker if no stock mentioned
-- Always use true/false for has_catalyst (never incomplete)
+- For sentiment_score: Rate from -1.0 (very negative) to 1.0 (very positive), most posts are neutral (around 0)
+- For sentiment_label: "positive", "negative", or "neutral"
+- For confidence: Rate from 0.0 to 1.0
+- For key_themes: List 1-3 key themes (e.g., ["earnings", "AI", "growth"])
+- For actionability_score: Rate 0.0-1.0 how actionable/specific this is for traders
+- For has_catalyst: true if mentions earnings, FDA approval, contracts, product launches, etc.
+- For reasoning: Brief explanation of your analysis
 
-CRITICAL: Return ONLY valid JSON. No explanations, no markdown, no extra text.
-
-RESPONSE FORMAT (exactly ${posts.length} objects):
-[
-  {
-    "ticker": "NVDA",
-    "sentiment_score": 0.7,
-    "sentiment_label": "positive",
-    "confidence": 0.9,
-    "key_themes": ["earnings", "AI"],
-    "actionability_score": 0.8,
-    "has_catalyst": true,
-    "reasoning": "Positive discussion about NVIDIA's AI earnings potential"
-  },
-  {
-    "ticker": null,
-    "sentiment_score": 0.0,
-    "sentiment_label": "neutral",
-    "confidence": 0.5,
-    "key_themes": ["general"],
-    "actionability_score": 0.1,
-    "has_catalyst": false,
-    "reasoning": "No specific stock mentioned"
-  }
-]`
+Return exactly ${posts.length} analysis objects.`
 }
 
 /**
- * Parse Gemini's JSON response with robust error handling
+ * Legacy function - no longer needed with OpenAI structured outputs
  */
 function parseGeminiResponse(response: string, expectedCount: number = 10): LLMPostAnalysis[] {
   try {
