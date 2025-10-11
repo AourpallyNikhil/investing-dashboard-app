@@ -39,7 +39,16 @@ export async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts:
     };
   }
 
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    console.error('OPENAI_API_KEY environment variable is not set');
+    return {
+      sentimentData: await analyzeSentimentFallback(tickerData),
+      topPosts: topRedditPosts
+    };
+  }
+  
+  const openai = new OpenAI({ apiKey });
   const sentimentResults = [];
 
   for (const item of tickerData) {

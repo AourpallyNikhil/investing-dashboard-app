@@ -137,7 +137,13 @@ async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts: any[])
     };
   }
 
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    console.error('OPENAI_API_KEY environment variable is not set');
+    return NextResponse.json({ error: 'OpenAI API key not configured' }, { status: 500 });
+  }
+  
+  const openai = new OpenAI({ apiKey });
 
   const sentimentResults = [];
 
