@@ -59,7 +59,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts...`)
     
     const model = getGenAI().getGenerativeModel({ 
-      model: 'gemini-1.5-flash',
+      model: 'gemini-1.5-flash-latest',
       generationConfig: {
         maxOutputTokens: 8192,
         temperature: 0.1
