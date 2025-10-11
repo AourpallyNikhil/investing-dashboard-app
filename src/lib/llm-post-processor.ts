@@ -14,10 +14,19 @@ let openai: OpenAI | null = null;
 function getOpenAI(): OpenAI {
   if (!openai) {
     const apiKey = process.env.OPENAI_API_KEY;
+    console.log('🔑 [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY present:', !!apiKey);
+    console.log('🔑 [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY length:', apiKey?.length || 0);
+    
     if (!apiKey) {
+      console.error('❌ [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY environment variable is not set');
       throw new Error('OPENAI_API_KEY environment variable is not set');
     }
+    
+    console.log('✅ [LLM-PROCESSOR-DEBUG] Creating OpenAI client...');
     openai = new OpenAI({ apiKey });
+    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client created successfully:', !!openai);
+    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client has chat:', !!openai.chat);
+    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client has completions:', !!openai.chat?.completions);
   }
   return openai;
 }
