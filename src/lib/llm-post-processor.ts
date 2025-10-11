@@ -61,8 +61,9 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     const model = getGenAI().getGenerativeModel({ 
       model: 'gemini-2.0-flash-001',
       generationConfig: {
-        maxOutputTokens: 4096, // Increased to handle larger responses
-        temperature: 0.1
+        maxOutputTokens: 8192, // Increased to handle larger responses and prevent truncation
+        temperature: 0.1,
+        responseMimeType: 'application/json' // Request JSON format explicitly
       }
     })
     
