@@ -68,7 +68,7 @@ export async function processCommentsBatch(
   try {
     console.log(`🧠 [LLM] Processing ${commentsWithContext.length} comments...`)
     
-    const model = getGenAI().getGenerativeModel({ model: 'gemini-2.0-flash-exp' })
+    const model = getGenAI().getGenerativeModel({ model: 'gemini-2.5-flash-002' })
     const prompt = buildCommentBatchPrompt(commentsWithContext)
     
     console.log(`📝 [LLM] Sending comment analysis request to Gemini...`)

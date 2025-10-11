@@ -127,7 +127,7 @@ async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts: any[])
   }
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-001' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-002' });
 
   const sentimentResults = [];
 

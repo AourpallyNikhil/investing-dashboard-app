@@ -59,9 +59,9 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts...`)
     
     const model = getGenAI().getGenerativeModel({ 
-      model: 'gemini-2.0-flash-001',
+      model: 'gemini-2.5-flash-002',
       generationConfig: {
-        maxOutputTokens: 8192, // Increased to handle larger responses and prevent truncation
+        maxOutputTokens: 8192, // Gemini 2.5 Flash supports up to 65,536 tokens
         temperature: 0.1,
         responseMimeType: 'application/json' // Request JSON format explicitly
       }
@@ -545,7 +545,7 @@ export async function processRedditPostsBatch(posts: any[]): Promise<ProcessedPo
     console.log(`🤖 [LLM] Processing batch of ${posts.length} Reddit posts...`)
     
     const model = getGenAI().getGenerativeModel({ 
-      model: 'gemini-2.0-flash-001',
+      model: 'gemini-2.5-flash-002',
       generationConfig: {
         maxOutputTokens: 2048,
         temperature: 0.1
