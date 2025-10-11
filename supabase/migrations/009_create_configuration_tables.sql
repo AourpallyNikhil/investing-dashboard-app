@@ -99,3 +99,5 @@ ALTER TABLE public.app_settings ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow all operations on reddit_sources" ON public.reddit_sources FOR ALL USING (true);
 CREATE POLICY "Allow all operations on twitter_sources" ON public.twitter_sources FOR ALL USING (true);
 CREATE POLICY "Allow all operations on app_settings" ON public.app_settings FOR ALL USING (true);
+
+

@@ -237,38 +237,69 @@ async function fetchSentimentData(): Promise<SentimentResponse> {
     
     console.log('📊 [CRON] Fetching sentiment data for last 24 hours')
 
-    // Fetch active data sources from configuration tables
-    const supabase = getSupabaseClient()
+    // Default subreddits and Twitter accounts to monitor
+    const subreddits = ['wallstreetbets', 'investing', 'stocks', 'StockMarket', 'ValueInvesting']
     
-    // Get active Reddit sources
-    const { data: redditSources, error: redditError } = await supabase
-      .from('reddit_sources')
-      .select('subreddit')
-      .eq('is_active', true)
-    
-    if (redditError) {
-      console.error('❌ [CRON] Error fetching Reddit sources:', redditError)
-      // Fallback to default subreddits
-      var subreddits = ['wallstreetbets', 'investing', 'stocks', 'StockMarket', 'ValueInvesting']
-    } else {
-      var subreddits = redditSources.map(source => source.subreddit)
-      console.log(`📱 [CRON] Loaded ${subreddits.length} active Reddit sources:`, subreddits)
-    }
-    
-    // Get active Twitter sources
-    const { data: twitterSources, error: twitterError } = await supabase
-      .from('twitter_sources')
-      .select('username')
-      .eq('is_active', true)
-    
-    if (twitterError) {
-      console.error('❌ [CRON] Error fetching Twitter sources:', twitterError)
-      // Fallback to default accounts
-      var twitterAccounts = ['jimcramer', 'CathieDWood', 'charliebilello', 'markminervini', 'PeterLBrandt']
-    } else {
-      var twitterAccounts = twitterSources.map(source => source.username)
-      console.log(`🐦 [CRON] Loaded ${twitterAccounts.length} active Twitter sources:`, twitterAccounts)
-    }
+    // Top 50 Most Followed Stock Trading Influencers on X (Twitter)
+    const twitterAccounts = [
+      // Top tier influencers (1M+ followers)
+      'paulkrugman',      // Paul Krugman - Nobel laureate economist
+      'stoolpresidente',  // Dave Portnoy - Barstool Sports founder
+      'jimcramer',        // Jim Cramer - CNBC Mad Money host
+      'CathieDWood',      // Cathie Wood - ARK Invest CEO
+      
+      // High-influence analysts and strategists (500K+ followers)
+      'elerianm',         // Mohamed A. El-Erian - Economist
+      'charliebilello',   // Charlie Bilello - Chief Market Strategist
+      'sjosephburns',     // Steve Burns - Veteran trader
+      'markminervini',    // Mark Minervini - Champion trader
+      'PeterLBrandt',     // Peter L. Brandt - Legendary trader
+      'I_Am_The_ICT',     // ICT - Trading mentor
+      'profgalloway',     // Scott Galloway - NYU professor
+      'BrianFeroldi',     // Brian Feroldi - Stock educator
+      'morganhousel',     // Morgan Housel - Author
+      'LizAnnSonders',    // Liz Ann Sonders - Charles Schwab strategist
+      
+      // Mid-tier influencers (100K-500K followers)
+      'iancassel',        // Ian Cassel - Microcap investor
+      'benthompson',      // Ben Thompson - Stratechery founder
+      'deepakshenoy',     // Deepak Shenoy - Capitalmind CEO
+      'ajay_bagga',       // Ajay Bagga - Market expert
+      'InvestorsLive',    // Nathan Michaud - Day trader
+      'Ritholtz',         // Barry Ritholtz - CIO at Ritholtz Wealth
+      'RedDogT3',         // Scott Redler - T3Live strategist
+      'grahamstephan',    // Graham Stephan - Investor and YouTuber
+      'michaelbatnick',   // Michael Batnick - Irrelevant Investor
+      'JC_ParetsX',       // J.C. Parets - All Star Charts founder
+      'timothysykes',     // Timothy Sykes - Penny stock guru
+      
+      // Emerging and specialized influencers (50K-130K followers)
+      'arunstockguru',    // Arun Stock Guru - Startup mentor
+      'iDesignStrategy',  // iDesignStrategy - Web3 and AI investor
+      'investmenttalkk',  // Investment Talk - Finance writer
+      'olvelez007',       // Oliver Velez - Pro trader
+      'kenangrace',       // Kenan Grace - Stock market YouTuber
+      'ScarfaceTrades_',  // Scarface Trades - Day trader
+      'harmongreg',       // Greg Harmon - Dragonfly Capital president
+      'EdwardXLreal',     // EdwardXL - Funded trader mentor
+      'lti_finance',      // LTI Finance - Finance poster
+      'gunavanthvaid',    // Gunavanth Vaid - CA and microcap investor
+      'waltervannelli',   // Walter Vannelli - Forex and stock trader
+      'petermallouk',     // Peter Mallouk - CEO of Creative Planning
+      'value_invest12',   // Value Invest - Long-term investor
+      'emz_nolimits_',    // Emz Nolimits - Currency trader
+      '98_Rahat',         // Rahat - Experienced trader
+      'emmetlsavage',     // Emmet Savage - MyWallSt co-founder
+      'the_real_fly',     // The Real Fly - Market commentator
+      'markflowchatter',  // Mark Lehman - Flow trader
+      'optioneer18',      // Joe Kunkle - Options analyst
+      'thejasonmoser',    // Jason Moser - Motley Fool analyst
+      'EarningsWhisper',  // Earnings Whisper - Earnings calendar
+      'Newsquawk',        // Newsquawk - Real-time market news
+      'vicniederhoffer',  // Vic Niederhoffer - Trend trader
+      'bespokeinvest',    // Bespoke Investment - Research firm
+      'StockTwits'        // StockTwits - Social platform for traders
+    ]
 
     let redditTickers: any[] = []
     let twitterTickers: any[] = []

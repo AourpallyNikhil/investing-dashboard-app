@@ -77,7 +77,7 @@ export class TwitterAPI {
   
   constructor(apiKey?: string) {
     // Support both old and new environment variable names for backward compatibility
-    this.apiKey = apiKey || process.env.TWITTERAPI_IO_KEY || '';
+    this.apiKey = apiKey || process.env.TWITTERAPI_IO_KEY || process.env.TWITTER_BEARER_TOKEN || '';
     
     if (!this.apiKey) {
       console.warn('⚠️ TwitterAPI.io API Key not provided. Twitter integration will use mock data.');
@@ -91,8 +91,8 @@ export class TwitterAPI {
    */
   async getUserByUsername(username: string): Promise<TwitterUser | null> {
     if (!this.apiKey) {
-      console.log(`🤖 No TwitterAPI.io key, using mock data for @${username}`);
-      return this.getMockUser(username);
+      console.log(`❌ No TwitterAPI.io key available for @${username}`);
+      return null;
     }
 
     try {
@@ -137,8 +137,8 @@ export class TwitterAPI {
 
     } catch (error) {
       console.error(`❌ Error fetching Twitter user @${username}:`, error);
-      console.log(`🤖 Falling back to mock data for @${username}`);
-      return this.getMockUser(username);
+      console.log(`🚫 No fallback available for @${username}`);
+      return null;
     }
   }
 
@@ -163,7 +163,8 @@ export class TwitterAPI {
     } = options;
 
     if (!this.apiKey) {
-      return { tweets: this.getMockTweets(userIdOrUsername) };
+      console.log(`❌ No TwitterAPI.io key available for user ${userIdOrUsername}`);
+      return { tweets: [] };
     }
 
     try {
@@ -238,8 +239,8 @@ export class TwitterAPI {
 
     } catch (error) {
       console.error(`❌ Error fetching tweets for user ${userIdOrUsername}:`, error);
-      console.log(`🤖 Falling back to mock tweets for user ${userIdOrUsername}`);
-      return { tweets: this.getMockTweets(userIdOrUsername) };
+      console.log(`🚫 No mock data fallback - returning empty tweets for user ${userIdOrUsername}`);
+      return { tweets: [] };
     }
   }
 
@@ -278,12 +279,7 @@ export class TwitterAPI {
         // Get user info first
         const user = await this.getUserByUsername(username);
         if (!user) {
-          console.warn(`⚠️ User @${username} not found, using mock data`);
-          results.push({
-            username,
-            tweets: this.getMockTweets(`mock_${username}`),
-            user: this.getMockUser(username)
-          });
+          console.warn(`⚠️ User @${username} not found, skipping`);
           continue;
         }
 
@@ -301,11 +297,7 @@ export class TwitterAPI {
 
       } catch (error) {
         console.error(`Failed to fetch tweets from @${username}:`, error);
-        results.push({
-          username,
-          tweets: this.getMockTweets(`mock_${username}`),
-          user: this.getMockUser(username)
-        });
+        console.log(`🚫 Skipping @${username} - no mock data fallback`);
       }
     }
 
@@ -514,45 +506,4 @@ export class TwitterAPI {
       .slice(0, 50); // Top 50 trending tickers
   }
 
-  /**
-   * Mock data for development/testing when no API key
-   */
-  private getMockUser(username: string): TwitterUser {
-    return {
-      id: `mock_${username}`,
-      username,
-      name: `Mock ${username}`,
-      public_metrics: {
-        followers_count: Math.floor(Math.random() * 1000000),
-        following_count: Math.floor(Math.random() * 1000),
-        tweet_count: Math.floor(Math.random() * 10000)
-      }
-    };
-  }
-
-  private getMockTweets(userId: string): Tweet[] {
-    const mockTickers = ['AAPL', 'TSLA', 'NVDA', 'MSFT', 'GOOGL', 'AMZN', 'META'];
-    const mockTweets: Tweet[] = [];
-
-    for (let i = 0; i < 10; i++) {
-      const ticker = mockTickers[Math.floor(Math.random() * mockTickers.length)];
-      mockTweets.push({
-        id: `mock_tweet_${userId}_${i}`,
-        text: `Just analyzed $${ticker} - looking very promising for Q4 earnings! 🚀 #investing #stocks`,
-        author_id: userId,
-        created_at: new Date(Date.now() - Math.random() * 24 * 60 * 60 * 1000).toISOString(),
-        public_metrics: {
-          retweet_count: Math.floor(Math.random() * 100),
-          like_count: Math.floor(Math.random() * 500),
-          reply_count: Math.floor(Math.random() * 50),
-          quote_count: Math.floor(Math.random() * 20)
-        },
-        entities: {
-          cashtags: [{ start: 13, end: 18, tag: ticker }]
-        }
-      });
-    }
-
-    return mockTweets;
-  }
 }

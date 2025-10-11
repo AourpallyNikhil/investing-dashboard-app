@@ -17,9 +17,9 @@ export async function saveRawRedditPostsWithLLM(rawPosts: any[]): Promise<void> 
       return
     }
     
-    // Process posts through LLM in batches of 25
+    // Process posts through LLM in batches of 10 (reduced to prevent response truncation)
     // This automatically saves to DB and triggers real-time aggregation
-    const batchSize = 25
+    const batchSize = 10
     
     for (let i = 0; i < rawPosts.length; i += batchSize) {
       const batch = rawPosts.slice(i, i + batchSize)
@@ -58,9 +58,9 @@ export async function saveRawTwitterPostsWithLLM(rawTwitterPosts: any[]): Promis
       return
     }
     
-    // Process posts through LLM in batches of 30 (Twitter posts are shorter)
+    // Process posts through LLM in batches of 10 (reduced to prevent response truncation)
     // This automatically saves to DB and triggers real-time aggregation
-    const batchSize = 30
+    const batchSize = 10
     
     for (let i = 0; i < rawTwitterPosts.length; i += batchSize) {
       const batch = rawTwitterPosts.slice(i, i + batchSize)

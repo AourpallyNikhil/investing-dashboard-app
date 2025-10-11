@@ -58,7 +58,13 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
   try {
     console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts...`)
     
-    const model = getGenAI().getGenerativeModel({ model: 'gemini-2.0-flash-001' })
+    const model = getGenAI().getGenerativeModel({ 
+      model: 'gemini-2.0-flash-001',
+      generationConfig: {
+        maxOutputTokens: 4096, // Increased to handle larger responses
+        temperature: 0.1
+      }
+    })
     
     const prompt = buildBatchPrompt(posts, source)
     
@@ -66,6 +72,11 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     const response = result.response.text()
     
     console.log(`🤖 [LLM] Raw response length: ${response.length} chars`)
+    
+    // Log response truncation warning
+    if (response.length > 3000 && !response.trim().endsWith(']')) {
+      console.warn(`⚠️ [LLM] Response may be truncated - length: ${response.length}, ends with: "${response.slice(-50)}"`)
+    }
     
     // Parse JSON response
     const analyses = parseGeminiResponse(response, posts.length)
@@ -273,12 +284,37 @@ function fixCommonJsonIssues(jsonStr: string): string {
   jsonStr = jsonStr.replace(/:\s*"?has_catalys?t?$/gm, ': false')
   jsonStr = jsonStr.replace(/:\s*"?reasonin?g?$/gm, ': "Analysis incomplete"')
   
-  // Remove incomplete objects at the end
+  // Fix truncated field names (the main issue we're seeing)
+  jsonStr = jsonStr.replace(/"confiden?c?e?$/gm, '"confidence": 0.8')
+  jsonStr = jsonStr.replace(/"confide?$/gm, '"confidence": 0.8')
+  jsonStr = jsonStr.replace(/"actionability_scor?e?$/gm, '"actionability_score": 0.5')
+  jsonStr = jsonStr.replace(/"key_theme?s?$/gm, '"key_themes": ["general"]')
+  jsonStr = jsonStr.replace(/"has_catalys?t?$/gm, '"has_catalyst": false')
+  jsonStr = jsonStr.replace(/"reasonin?g?$/gm, '"reasoning": "Analysis incomplete"')
+  jsonStr = jsonStr.replace(/"sentiment_scor?e?$/gm, '"sentiment_score": 0.0')
+  jsonStr = jsonStr.replace(/"sentiment_labe?l?$/gm, '"sentiment_label": "neutral"')
+  
+  // Handle incomplete objects at the end more aggressively
   const lastCompleteObject = jsonStr.lastIndexOf('}')
   if (lastCompleteObject > 0) {
     const afterLastObject = jsonStr.substring(lastCompleteObject + 1).trim()
     if (afterLastObject && !afterLastObject.startsWith(']')) {
-      jsonStr = jsonStr.substring(0, lastCompleteObject + 1) + ']'
+      // Check if there's an incomplete object after the last complete one
+      const incompleteStart = jsonStr.indexOf('{', lastCompleteObject + 1)
+      if (incompleteStart > 0) {
+        // Remove the incomplete object and close the array
+        jsonStr = jsonStr.substring(0, lastCompleteObject + 1) + ']'
+      } else {
+        // Just close the array if no incomplete object
+        jsonStr = jsonStr.substring(0, lastCompleteObject + 1) + ']'
+      }
+    }
+  }
+  
+  // Ensure the JSON ends with a proper array closing
+  if (!jsonStr.trim().endsWith(']') && !jsonStr.trim().endsWith('}')) {
+    if (jsonStr.includes('[')) {
+      jsonStr = jsonStr.trim() + ']'
     }
   }
   

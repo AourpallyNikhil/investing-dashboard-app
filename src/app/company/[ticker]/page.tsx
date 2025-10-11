@@ -260,7 +260,7 @@ export default function CompanyPage({ params }: CompanyPageProps) {
               <CardContent>
                 <div className="text-center py-12 text-muted-foreground">
                   <Zap className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>Cash flow data will be available when connected to FinancialDatasets.ai</p>
+                  <p>Cash flow data is coming soon</p>
                 </div>
               </CardContent>
             </Card>
