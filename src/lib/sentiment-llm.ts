@@ -1,4 +1,15 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import OpenAI from 'openai'
+import { zodResponseFormat } from 'openai/helpers/zod'
+import { z } from 'zod'
+
+// Zod schema for sentiment analysis
+const SentimentAnalysisSchema = z.object({
+  sentiment_score: z.number().min(-1).max(1),
+  sentiment_label: z.enum(['positive', 'negative', 'neutral']),
+  confidence: z.number().min(0).max(1),
+  key_themes: z.array(z.string()),
+  summary: z.string()
+})
 
 interface SentimentDataPoint {
   ticker: string;
@@ -17,21 +28,18 @@ interface SentimentDataPoint {
 }
 
 /**
- * Analyze sentiment using Google's Gemini LLM
+ * Analyze sentiment using OpenAI GPT-4o-mini with Structured Outputs
  */
 export async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts: any[]): Promise<{ sentimentData: SentimentDataPoint[], topPosts: any[] }> {
-  // Initialize Gemini Flash for sentiment analysis
-  if (!process.env.GEMINI_API_KEY) {
-    console.warn('GEMINI_API_KEY not found, falling back to keyword-based analysis');
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn('OPENAI_API_KEY not found, falling back to keyword-based analysis');
     return {
       sentimentData: await analyzeSentimentFallback(tickerData),
       topPosts: topRedditPosts
     };
   }
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
-
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const sentimentResults = [];
 
   for (const item of tickerData) {
@@ -39,20 +47,10 @@ export async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts:
       const allContexts = [...item.reddit.contexts, ...item.twitter.contexts];
       
       // Create a comprehensive prompt for LLM sentiment analysis
-      const sentimentPrompt = `
-You are a financial sentiment analyst. Analyze the following social media discussions about the stock ticker "${item.ticker}".
+      const sentimentPrompt = `Analyze the following social media discussions about the stock ticker "${item.ticker}".
 
 SOCIAL MEDIA CONTEXTS:
 ${allContexts.map((context, idx) => `${idx + 1}. ${context}`).join('\n')}
-
-Please provide a JSON response with the following structure:
-{
-  "sentiment_score": <number between -1 and 1, where -1 is very bearish, 0 is neutral, 1 is very bullish>,
-  "sentiment_label": <"positive", "negative", or "neutral">,
-  "confidence": <number between 0 and 1 indicating confidence in the analysis>,
-  "key_themes": [<array of 3-5 main themes or topics discussed>],
-  "summary": "<2-3 sentence summary of the overall sentiment and key points>"
-}
 
 Consider:
 - Financial terminology (calls, puts, earnings, etc.)
@@ -61,25 +59,27 @@ Consider:
 - Options activity and trading sentiment
 - Overall tone and context of discussions
 
-Respond only with valid JSON.`;
+Provide:
+- sentiment_score: number between -1 (very bearish) and 1 (very bullish)
+- sentiment_label: "positive", "negative", or "neutral"
+- confidence: number between 0 and 1
+- key_themes: array of 3-5 main themes
+- summary: 2-3 sentence summary`;
 
-      const result = await model.generateContent(sentimentPrompt);
-      const response = await result.response;
-      const text = response.text();
+      const completion = await openai.beta.chat.completions.parse({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: 'You are a financial sentiment analyst analyzing social media discussions about stocks.' },
+          { role: 'user', content: sentimentPrompt }
+        ],
+        response_format: zodResponseFormat(SentimentAnalysisSchema, 'sentiment_analysis'),
+        temperature: 0.1
+      });
 
-      // Parse LLM response
-      let llmAnalysis;
-      try {
-        // Clean up the response text to extract JSON
-        const jsonMatch = text.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          llmAnalysis = JSON.parse(jsonMatch[0]);
-        } else {
-          throw new Error('No JSON found in LLM response');
-        }
-      } catch (parseError) {
-        console.warn(`Failed to parse LLM response for ${item.ticker}, using fallback:`, parseError);
-        llmAnalysis = await analyzeSentimentFallback([item]).then(results => results[0]);
+      const llmAnalysis = completion.choices[0].message.parsed
+      
+      if (!llmAnalysis) {
+        throw new Error('Failed to parse OpenAI response')
       }
 
       // Calculate mention counts

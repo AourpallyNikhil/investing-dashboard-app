@@ -115,19 +115,29 @@ export async function GET(request: NextRequest) {
 
 
 async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts: any[]): Promise<{ sentimentData: SentimentDataPoint[], topPosts: any[] }> {
-  // Initialize Gemini Flash for sentiment analysis
-  const { GoogleGenerativeAI } = require('@google/generative-ai');
+  // Use OpenAI GPT-4o-mini for sentiment analysis with structured outputs
+  const OpenAI = require('openai').default;
+  const { zodResponseFormat } = require('openai/helpers/zod');
+  const { z } = require('zod');
+
+  // Zod schema for sentiment analysis
+  const SentimentAnalysisSchema = z.object({
+    sentiment_score: z.number().min(-1).max(1),
+    sentiment_label: z.enum(['positive', 'negative', 'neutral']),
+    confidence: z.number().min(0).max(1),
+    key_themes: z.array(z.string()),
+    summary: z.string()
+  });
   
-  if (!process.env.GEMINI_API_KEY) {
-    console.warn('GEMINI_API_KEY not found, falling back to keyword-based analysis');
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn('OPENAI_API_KEY not found, falling back to keyword-based analysis');
     return {
       sentimentData: await analyzeSentimentFallback(tickerData),
       topPosts: topRedditPosts
     };
   }
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   const sentimentResults = [];
 
@@ -136,20 +146,10 @@ async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts: any[])
       const allContexts = [...item.reddit.contexts, ...item.twitter.contexts];
       
       // Create a comprehensive prompt for LLM sentiment analysis
-      const sentimentPrompt = `
-You are a financial sentiment analyst. Analyze the following social media discussions about the stock ticker "${item.ticker}".
+      const sentimentPrompt = `Analyze the following social media discussions about the stock ticker "${item.ticker}".
 
 SOCIAL MEDIA CONTEXTS:
 ${allContexts.map((context, idx) => `${idx + 1}. ${context}`).join('\n')}
-
-Please provide a JSON response with the following structure:
-{
-  "sentiment_score": <number between -1 and 1, where -1 is very bearish, 0 is neutral, 1 is very bullish>,
-  "sentiment_label": <"positive", "negative", or "neutral">,
-  "confidence": <number between 0 and 1 indicating confidence in the analysis>,
-  "key_themes": [<array of 3-5 main themes or topics discussed>],
-  "summary": "<2-3 sentence summary of the overall sentiment and key points>"
-}
 
 Consider:
 - Financial terminology (calls, puts, earnings, etc.)
@@ -158,40 +158,27 @@ Consider:
 - Options activity and trading sentiment
 - Overall tone and context of discussions
 
-Respond only with valid JSON.`;
+Provide:
+- sentiment_score: number between -1 (very bearish) and 1 (very bullish)
+- sentiment_label: "positive", "negative", or "neutral"
+- confidence: number between 0 and 1
+- key_themes: array of 3-5 main themes
+- summary: 2-3 sentence summary`;
 
-      const result = await model.generateContent(sentimentPrompt);
-      const response = await result.response;
-      const text = response.text();
+      const completion = await openai.beta.chat.completions.parse({
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: 'You are a financial sentiment analyst analyzing social media discussions about stocks.' },
+          { role: 'user', content: sentimentPrompt }
+        ],
+        response_format: zodResponseFormat(SentimentAnalysisSchema, 'sentiment_analysis'),
+        temperature: 0.1
+      });
 
-      let analysis;
-      try {
-        // Clean the response to extract JSON and fix common issues
-        let jsonText = text;
-        
-        // Remove markdown code blocks if present
-        jsonText = jsonText.replace(/```json\s*|\s*```/g, '');
-        
-        // Extract JSON object
-        const jsonMatch = jsonText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-          jsonText = jsonMatch[0];
-        }
-        
-        // Fix trailing commas before closing braces/brackets
-        jsonText = jsonText.replace(/,(\s*[}\]])/g, '$1');
-        
-        analysis = JSON.parse(jsonText);
-      } catch (parseError) {
-        console.error(`Failed to parse LLM response for ${item.ticker}:`, text);
-        // Fallback to neutral sentiment
-        analysis = {
-          sentiment_score: 0,
-          sentiment_label: 'neutral',
-          confidence: 0.5,
-          key_themes: ['Unable to analyze'],
-          summary: 'Analysis unavailable due to parsing error'
-        };
+      const analysis = completion.choices[0].message.parsed;
+      
+      if (!analysis) {
+        throw new Error('Failed to parse OpenAI response');
       }
 
       sentimentResults.push({
@@ -258,7 +245,7 @@ Respond only with valid JSON.`;
   };
 }
 
-// Fallback function for when Gemini API is not available
+// Fallback function for when OpenAI API is not available
 async function analyzeSentimentFallback(tickerData: any[]): Promise<SentimentDataPoint[]> {
   return tickerData.map(item => {
     const allContexts = [...item.reddit.contexts, ...item.twitter.contexts];
@@ -530,7 +517,7 @@ async function getCachedSentimentData(
       data: transformedSentimentData,
       topPosts: transformedPosts,
       twitterPosts: transformedTwitterPosts,
-      sources: ['Cached Reddit API', 'Cached Twitter API', 'Cached Gemini Flash AI Analysis'],
+      sources: ['Cached Reddit API', 'Cached Twitter API', 'OpenAI GPT-4o-mini AI Analysis'],
       lastUpdated: new Date().toISOString().split('T')[0],
       fromCache: true
     };
