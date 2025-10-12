@@ -88,17 +88,34 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     const client = getOpenAI()
     const prompt = buildBatchPrompt(posts, source)
     
-    const completion = await client.beta.chat.completions.parse({
-        model: 'gpt-5-nano',
+    const completion = await client.chat.completions.create({
+      model: 'gpt-5-nano',
       messages: [
         { role: 'system', content: 'You are a financial sentiment analyzer. Analyze social media posts and return structured sentiment data.' },
-        { role: 'user', content: prompt }
+        { role: 'user', content: prompt + '\n\nRespond with valid JSON matching the expected schema.' }
       ],
-      response_format: zodResponseFormat(BatchAnalysisSchema, 'batch_analysis'),
-      temperature: 0.1
+      max_completion_tokens: 2000
     })
 
-    const response = completion.choices[0].message.parsed
+    const responseText = completion.choices[0].message.content
+    
+    if (!responseText) {
+      throw new Error('Empty response from GPT-5 Nano')
+    }
+
+    // Parse JSON from response
+    let response
+    try {
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        response = JSON.parse(jsonMatch[0])
+      } else {
+        throw new Error('No JSON found in GPT-5 Nano response')
+      }
+    } catch (parseError) {
+      console.error('Failed to parse GPT-5 Nano JSON:', parseError)
+      throw new Error(`Failed to parse GPT-5 Nano response: ${parseError.message}`)
+    }
     
     if (!response || !response.analyses) {
       throw new Error('Failed to parse OpenAI response')
