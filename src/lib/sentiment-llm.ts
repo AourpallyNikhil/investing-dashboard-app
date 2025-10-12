@@ -40,22 +40,15 @@ export async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts:
   }
 
   const apiKey = process.env.OPENAI_API_KEY;
-  console.log('🔑 [DEBUG] OPENAI_API_KEY present:', !!apiKey);
-  console.log('🔑 [DEBUG] OPENAI_API_KEY length:', apiKey?.length || 0);
-  
   if (!apiKey) {
-    console.error('❌ [DEBUG] OPENAI_API_KEY environment variable is not set');
+    console.error('OPENAI_API_KEY environment variable is not set');
     return {
       sentimentData: await analyzeSentimentFallback(tickerData),
       topPosts: topRedditPosts
     };
   }
   
-  console.log('✅ [DEBUG] Creating OpenAI client...');
   const openai = new OpenAI({ apiKey });
-  console.log('✅ [DEBUG] OpenAI client created successfully:', !!openai);
-  console.log('✅ [DEBUG] OpenAI client has chat:', !!openai.chat);
-  console.log('✅ [DEBUG] OpenAI client has completions:', !!openai.chat?.completions);
   const sentimentResults = [];
 
   for (const item of tickerData) {

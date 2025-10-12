@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import OpenAI from 'openai';
 
 // Initialize Supabase client (lazy initialization to avoid build errors)
 function getSupabaseClient() {
@@ -115,8 +116,7 @@ export async function GET(request: NextRequest) {
 
 
 async function analyzeSentimentWithLLM(tickerData: any[], topRedditPosts: any[]): Promise<{ sentimentData: SentimentDataPoint[], topPosts: any[] }> {
-  // Use OpenAI GPT-4o-mini for sentiment analysis with structured outputs
-  const OpenAI = require('openai').default;
+  // Use OpenAI GPT-5 Nano for sentiment analysis
   const { zodResponseFormat } = require('openai/helpers/zod');
   const { z } = require('zod');
 
