@@ -171,17 +171,34 @@ Provide:
 - key_themes: array of 3-5 main themes
 - summary: 2-3 sentence summary`;
 
-      const completion = await openai.beta.chat.completions.parse({
+      const completion = await openai.chat.completions.create({
         model: 'gpt-5-nano',
         messages: [
           { role: 'system', content: 'You are a financial sentiment analyst analyzing social media discussions about stocks.' },
-          { role: 'user', content: sentimentPrompt }
+          { role: 'user', content: sentimentPrompt + '\n\nRespond with valid JSON matching the expected schema.' }
         ],
-        response_format: zodResponseFormat(SentimentAnalysisSchema, 'sentiment_analysis'),
-        temperature: 0.1
+        max_completion_tokens: 2000
       });
 
-      const analysis = completion.choices[0].message.parsed;
+      const responseText = completion.choices[0].message.content;
+      
+      if (!responseText) {
+        throw new Error('Empty response from GPT-5 Nano');
+      }
+
+      // Parse JSON from response
+      let analysis;
+      try {
+        const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          analysis = JSON.parse(jsonMatch[0]);
+        } else {
+          throw new Error('No JSON found in GPT-5 Nano response');
+        }
+      } catch (parseError) {
+        console.error('Failed to parse GPT-5 Nano JSON:', parseError);
+        throw new Error(`Failed to parse GPT-5 Nano response: ${parseError.message}`);
+      }
       
       if (!analysis) {
         throw new Error('Failed to parse OpenAI response');
