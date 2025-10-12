@@ -3,49 +3,22 @@
  * Processes individual posts immediately after fetching from APIs
  */
 
-import OpenAI from 'openai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import { updateTickerAggregation, saveBatchWithRealTimeAggregation } from './real-time-aggregator'
-import { zodResponseFormat } from 'openai/helpers/zod'
-import { z } from 'zod'
 
-// Lazy initialization of OpenAI to avoid issues when env vars aren't loaded yet
-let openai: OpenAI | null = null;
+// Lazy initialization of Gemini to avoid issues when env vars aren't loaded yet
+let genAI: GoogleGenerativeAI | null = null;
 
-function getOpenAI(): OpenAI {
-  if (!openai) {
-    const apiKey = process.env.OPENAI_API_KEY;
-    console.log('🔑 [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY present:', !!apiKey);
-    console.log('🔑 [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY length:', apiKey?.length || 0);
-    
+function getGenAI(): GoogleGenerativeAI {
+  if (!genAI) {
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.error('❌ [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY environment variable is not set');
-      throw new Error('OPENAI_API_KEY environment variable is not set');
+      throw new Error('GEMINI_API_KEY environment variable is not set');
     }
-    
-    console.log('✅ [LLM-PROCESSOR-DEBUG] Creating OpenAI client...');
-    openai = new OpenAI({ apiKey });
-    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client created successfully:', !!openai);
-    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client has chat:', !!openai.chat);
-    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client has completions:', !!openai.chat?.completions);
+    genAI = new GoogleGenerativeAI(apiKey);
   }
-  return openai;
+  return genAI;
 }
-
-// Zod schema for structured output
-const PostAnalysisSchema = z.object({
-  ticker: z.string().nullable(),
-  sentiment_score: z.number().min(-1).max(1),
-  sentiment_label: z.enum(['positive', 'negative', 'neutral']),
-  confidence: z.number().min(0).max(1),
-  key_themes: z.array(z.string()),
-  actionability_score: z.number().min(0).max(1),
-  has_catalyst: z.boolean(),
-  reasoning: z.string()
-})
-
-const BatchAnalysisSchema = z.object({
-  analyses: z.array(PostAnalysisSchema)
-})
 
 export interface LLMPostAnalysis {
   ticker: string | null
@@ -118,7 +91,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     }
     
     if (!response || !response.analyses) {
-      throw new Error('Failed to parse OpenAI response')
+      throw new Error('Invalid response structure from GPT-5 Nano')
     }
 
     console.log(`🤖 [LLM] Successfully parsed ${response.analyses.length} analyses`)
@@ -134,7 +107,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
       original: post,
       llm_analysis: analyses[index] || getFallbackAnalysis(post, source),
       processed_at: new Date().toISOString(),
-      analysis_version: '1.0-gemini'
+      analysis_version: '1.0-gpt5-nano'
     }))
     
     console.log(`✅ [LLM] Successfully processed ${processedPosts.length} posts`)
@@ -169,35 +142,65 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
 function buildBatchPrompt(posts: any[], source: 'reddit' | 'twitter'): string {
   const postTexts = posts.map((post, index) => {
     if (source === 'reddit') {
-      return `POST_${index}: ${post.title} ${post.selftext || ''}`.trim()
+      return `POST_${index}: "${post.title} ${post.selftext || ''}".trim()`
     } else {
-      return `POST_${index}: ${post.text}`.trim()
+      return `POST_${index}: "${post.text}".trim()`
     }
-  }).join('\n\n')
+  }).join('\n')
   
-  return `Analyze these ${posts.length} ${source} posts and extract sentiment data for each.
+  return `You are a financial sentiment analyzer. Analyze these ${source} posts and return a JSON array with exactly ${posts.length} objects.
+
+For each post, extract:
+1. **ticker**: Stock ticker mentioned (e.g., "NVDA", "AAPL") or null if none
+2. **sentiment_score**: Float from -1.0 (very negative) to 1.0 (very positive)  
+3. **sentiment_label**: "positive", "negative", or "neutral"
+4. **confidence**: Float from 0.0 to 1.0 (how confident you are)
+5. **key_themes**: Array of 1-3 key themes (e.g., ["earnings", "AI", "growth"])
+6. **actionability_score**: Float 0.0-1.0 (how actionable/specific is this for traders)
+7. **has_catalyst**: Boolean (mentions earnings, FDA approval, contracts, etc.)
+8. **reasoning**: Brief explanation of your analysis
 
 POSTS TO ANALYZE:
 ${postTexts}
 
-INSTRUCTIONS:
-- For ticker: Extract stock ticker symbol (e.g., "NVDA", "AAPL", "TSLA") or null if none mentioned
-- Company names should be converted to tickers (e.g., "NVIDIA" → "NVDA", "Apple" → "AAPL")
+IMPORTANT RULES:
+- Company names → tickers (e.g., "NVIDIA" → "NVDA", "Apple" → "AAPL", "Tesla" → "TSLA")
 - Only well-known public companies (no crypto, no private companies)
 - If multiple tickers mentioned, pick the PRIMARY one
-- For sentiment_score: Rate from -1.0 (very negative) to 1.0 (very positive), most posts are neutral (around 0)
-- For sentiment_label: "positive", "negative", or "neutral"
-- For confidence: Rate from 0.0 to 1.0
-- For key_themes: List 1-3 key themes (e.g., ["earnings", "AI", "growth"])
-- For actionability_score: Rate 0.0-1.0 how actionable/specific this is for traders
-- For has_catalyst: true if mentions earnings, FDA approval, contracts, product launches, etc.
-- For reasoning: Brief explanation of your analysis
+- Be conservative with sentiment scores (most posts are neutral)
+- Return valid JSON array with EXACTLY ${posts.length} objects
+- Use null for ticker if no stock mentioned
+- Always use true/false for has_catalyst (never incomplete)
 
-Return exactly ${posts.length} analysis objects.`
+CRITICAL: Return ONLY valid JSON. No explanations, no markdown, no extra text.
+
+RESPONSE FORMAT (exactly ${posts.length} objects):
+[
+  {
+    "ticker": "NVDA",
+    "sentiment_score": 0.7,
+    "sentiment_label": "positive",
+    "confidence": 0.9,
+    "key_themes": ["earnings", "AI"],
+    "actionability_score": 0.8,
+    "has_catalyst": true,
+    "reasoning": "Positive discussion about NVIDIA's AI earnings potential"
+  },
+  {
+    "ticker": null,
+    "sentiment_score": 0.0,
+    "sentiment_label": "neutral",
+    "confidence": 0.5,
+    "key_themes": ["general"],
+    "actionability_score": 0.1,
+    "has_catalyst": false,
+    "reasoning": "No specific stock mentioned"
+  }
+]`
 }
 
 /**
- * Legacy function - no longer needed with OpenAI structured outputs
+ * Parse Gemini's JSON response with robust error handling
  */
 function parseGeminiResponse(response: string, expectedCount: number = 10): LLMPostAnalysis[] {
   try {
@@ -298,37 +301,12 @@ function fixCommonJsonIssues(jsonStr: string): string {
   jsonStr = jsonStr.replace(/:\s*"?has_catalys?t?$/gm, ': false')
   jsonStr = jsonStr.replace(/:\s*"?reasonin?g?$/gm, ': "Analysis incomplete"')
   
-  // Fix truncated field names (the main issue we're seeing)
-  jsonStr = jsonStr.replace(/"confiden?c?e?$/gm, '"confidence": 0.8')
-  jsonStr = jsonStr.replace(/"confide?$/gm, '"confidence": 0.8')
-  jsonStr = jsonStr.replace(/"actionability_scor?e?$/gm, '"actionability_score": 0.5')
-  jsonStr = jsonStr.replace(/"key_theme?s?$/gm, '"key_themes": ["general"]')
-  jsonStr = jsonStr.replace(/"has_catalys?t?$/gm, '"has_catalyst": false')
-  jsonStr = jsonStr.replace(/"reasonin?g?$/gm, '"reasoning": "Analysis incomplete"')
-  jsonStr = jsonStr.replace(/"sentiment_scor?e?$/gm, '"sentiment_score": 0.0')
-  jsonStr = jsonStr.replace(/"sentiment_labe?l?$/gm, '"sentiment_label": "neutral"')
-  
-  // Handle incomplete objects at the end more aggressively
+  // Remove incomplete objects at the end
   const lastCompleteObject = jsonStr.lastIndexOf('}')
   if (lastCompleteObject > 0) {
     const afterLastObject = jsonStr.substring(lastCompleteObject + 1).trim()
     if (afterLastObject && !afterLastObject.startsWith(']')) {
-      // Check if there's an incomplete object after the last complete one
-      const incompleteStart = jsonStr.indexOf('{', lastCompleteObject + 1)
-      if (incompleteStart > 0) {
-        // Remove the incomplete object and close the array
-        jsonStr = jsonStr.substring(0, lastCompleteObject + 1) + ']'
-      } else {
-        // Just close the array if no incomplete object
-        jsonStr = jsonStr.substring(0, lastCompleteObject + 1) + ']'
-      }
-    }
-  }
-  
-  // Ensure the JSON ends with a proper array closing
-  if (!jsonStr.trim().endsWith(']') && !jsonStr.trim().endsWith('}')) {
-    if (jsonStr.includes('[')) {
-      jsonStr = jsonStr.trim() + ']'
+      jsonStr = jsonStr.substring(0, lastCompleteObject + 1) + ']'
     }
   }
   
@@ -558,7 +536,7 @@ export async function processRedditPostsBatch(posts: any[]): Promise<ProcessedPo
     console.log(`🤖 [LLM] Processing batch of ${posts.length} Reddit posts...`)
     
     const model = getGenAI().getGenerativeModel({ 
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.0-flash-001',
       generationConfig: {
         maxOutputTokens: 2048,
         temperature: 0.1
