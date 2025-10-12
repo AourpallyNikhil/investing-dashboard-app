@@ -26,7 +26,7 @@ Go to your deployment dashboard and add:
 
 ### 2. Remove Old Gemini Key (Optional)
 
-The `GEMINI_API_KEY` environment variable is no longer needed and can be removed.
+All Gemini-related environment variables have been removed from the codebase.
 
 ## Model Used
 

@@ -82,7 +82,7 @@ export async function savePostWithRealTimeAggregation(
       llm_has_catalyst: analysis.has_catalyst,
       // Note: llm_reasoning not available in reddit_posts_raw schema
       llm_analyzed_at: new Date().toISOString(),
-      llm_analysis_version: '1.0-gemini',
+      llm_analysis_version: '1.0-gpt5-nano',
       retrieved_at: new Date().toISOString()
       // Note: reddit_posts_raw doesn't have updated_at column
     }
@@ -159,7 +159,7 @@ export async function saveBatchWithRealTimeAggregation(
         llm_has_catalyst: analysis.has_catalyst,
         // Note: llm_reasoning not available in reddit_posts_raw schema
         llm_analyzed_at: new Date().toISOString(),
-        llm_analysis_version: '1.0-gemini',
+        llm_analysis_version: '1.0-gpt5-nano',
         retrieved_at: new Date().toISOString()
         // Note: reddit_posts_raw doesn't have updated_at column
       }

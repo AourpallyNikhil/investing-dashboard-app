@@ -24,8 +24,7 @@ A professional-grade financial analysis platform with AI-powered Reddit sentimen
    ```bash
    cp .env.example .env.local
    # Add your API keys:
-   # - FINANCIAL_DATASETS_API_KEY
-   # - GEMINI_API_KEY  
+   # - OPENAI_API_KEY
    # - SUPABASE keys
    ```
 

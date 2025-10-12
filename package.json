@@ -19,11 +19,9 @@
     "ingest:config": "tsx scripts/ingest-data.ts config",
     "ingest:stats": "tsx scripts/ingest-data.ts stats",
     "ingest:high": "tsx scripts/ingest-data.ts ingest-high",
-    "process-reddit": "tsx scripts/process-reddit-posts.ts",
-    "process-reddit-comments": "tsx src/scripts/process-reddit-comments.ts"
+    "process-reddit": "tsx scripts/process-reddit-posts.ts"
   },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",

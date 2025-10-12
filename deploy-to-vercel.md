@@ -29,7 +29,7 @@ After deployment, add your environment variables:
 vercel env add NEXT_PUBLIC_SUPABASE_URL
 vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY
 vercel env add FINANCIAL_DATASETS_API_KEY
-vercel env add GEMINI_API_KEY
+vercel env add OPENAI_API_KEY
 vercel env add TWITTER_BEARER_TOKEN
 vercel env add CRON_SECRET
 ```
