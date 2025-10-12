@@ -7,61 +7,47 @@
 import { updateTickerAggregation, saveBatchWithRealTimeAggregation } from './real-time-aggregator'
 import { z } from 'zod'
 
-// OpenAI Responses API configuration
-const RESPONSES_API_URL = 'https://api.openai.com/v1/responses';
+// OpenAI Chat Completions API (reverting from Responses API due to 400 errors)
+const CHAT_COMPLETIONS_URL = 'https://api.openai.com/v1/chat/completions';
 const MODEL = 'gpt-4o-mini';
 
-interface ResponsesAPIContent {
-  type: string;
-  text?: string;
-}
-
-interface ResponsesAPIMessage {
+interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
-  content: ResponsesAPIContent[];
+  content: string;
 }
 
-interface ResponsesAPIRequest {
+interface ChatCompletionRequest {
   model: string;
-  input: ResponsesAPIMessage[];
-  response_format?: {
-    type: 'json_schema';
-    json_schema: {
-      name: string;
-      schema: Record<string, any>;
-      strict: true;
-    };
-  };
+  messages: ChatMessage[];
   temperature?: number;
-  max_output_tokens?: number;
+  max_tokens?: number;
 }
 
-interface ResponsesAPIResponse {
-  output?: Array<{
-    content: Array<{
-      type: string;
-      text?: string;
-    }>;
+interface ChatCompletionResponse {
+  choices: Array<{
+    message: {
+      content: string | null;
+    };
   }>;
 }
 
 /**
- * Make a request to the OpenAI Responses API with structured outputs
+ * Make a request to the OpenAI Chat Completions API
  */
-async function callResponsesAPI(request: ResponsesAPIRequest): Promise<ResponsesAPIResponse> {
+async function callChatCompletionsAPI(request: ChatCompletionRequest): Promise<ChatCompletionResponse> {
   const apiKey = process.env.OPENAI_API_KEY;
   
-  console.log('🔑 [RESPONSES-API-DEBUG] OpenAI API key present:', !!apiKey);
-  console.log('🔑 [RESPONSES-API-DEBUG] API key length:', apiKey?.length || 0);
+  console.log('🔑 [CHAT-API-DEBUG] OpenAI API key present:', !!apiKey);
+  console.log('🔑 [CHAT-API-DEBUG] API key length:', apiKey?.length || 0);
   
   if (!apiKey) {
-    console.error('❌ [RESPONSES-API-DEBUG] OPENAI_API_KEY environment variable is not set');
+    console.error('❌ [CHAT-API-DEBUG] OPENAI_API_KEY environment variable is not set');
     throw new Error('OPENAI_API_KEY environment variable is not set');
   }
   
-  console.log('✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...');
+  console.log('✅ [CHAT-API-DEBUG] Making request to OpenAI Chat Completions API...');
   
-  const response = await fetch(RESPONSES_API_URL, {
+  const response = await fetch(CHAT_COMPLETIONS_URL, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${apiKey}`,
@@ -71,11 +57,11 @@ async function callResponsesAPI(request: ResponsesAPIRequest): Promise<Responses
   });
 
   if (!response.ok) {
-    throw new Error(`OpenAI Responses API request failed: ${response.status} ${response.statusText}`);
+    throw new Error(`OpenAI Chat Completions API request failed: ${response.status} ${response.statusText}`);
   }
 
   const data = await response.json();
-  console.log('✅ [RESPONSES-API-DEBUG] OpenAI Responses API response received successfully');
+  console.log('✅ [CHAT-API-DEBUG] OpenAI Chat Completions API response received successfully');
   
   return data;
 }
@@ -96,42 +82,6 @@ const BatchAnalysisSchema = z.object({
   analyses: z.array(PostAnalysisSchema)
 })
 
-/**
- * Build JSON schema for structured outputs
- */
-function buildAnalysisSchema(postCount: number) {
-  return {
-    name: "BatchAnalysis",
-    schema: {
-      type: "object",
-      properties: {
-        analyses: {
-          type: "array",
-          minItems: postCount,
-          maxItems: postCount,
-          items: {
-            type: "object",
-            additionalProperties: false,
-            properties: {
-              ticker: { type: ["string", "null"] },
-              sentiment_score: { type: "number", minimum: -1, maximum: 1 },
-              sentiment_label: { type: "string", enum: ["positive", "negative", "neutral"] },
-              confidence: { type: "number", minimum: 0, maximum: 1 },
-              key_themes: { type: "array", items: { type: "string" }, maxItems: 5 },
-              actionability_score: { type: "number", minimum: 0, maximum: 1 },
-              has_catalyst: { type: "boolean" },
-              reasoning: { type: "string" }
-            },
-            required: ["ticker", "sentiment_score", "sentiment_label", "confidence", "key_themes", "actionability_score", "has_catalyst", "reasoning"]
-          }
-        }
-      },
-      required: ["analyses"],
-      additionalProperties: false
-    },
-    strict: true as const
-  };
-}
 
 export interface LLMPostAnalysis {
   ticker: string | null
@@ -171,44 +121,44 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
   }
 
   try {
-    console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts with OpenAI Responses API...`)
+    console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts with OpenAI Chat Completions API...`)
     
     const prompt = buildBatchPrompt(posts, source)
-    const schema = buildAnalysisSchema(posts.length)
     
-    const completion = await callResponsesAPI({
+    const completion = await callChatCompletionsAPI({
       model: MODEL,
-      input: [
-        { 
-          role: 'system', 
-          content: [{ type: 'text', text: 'You are a financial sentiment analyzer. Reply in the exact JSON schema.' }] 
-        },
-        { 
-          role: 'user', 
-          content: [{ type: 'text', text: prompt }] 
-        }
+      messages: [
+        { role: 'system', content: 'You are a financial sentiment analyzer. Analyze social media posts and return structured sentiment data.' },
+        { role: 'user', content: prompt + '\n\nRespond with valid JSON matching the expected schema.' }
       ],
-      response_format: { 
-        type: 'json_schema', 
-        json_schema: schema 
-      },
       temperature: 0.1,
-      max_output_tokens: 2000
+      max_tokens: 2000
     })
 
-    // Extract JSON deterministically (no regex needed with structured outputs)
-    const text = completion.output?.[0]?.content?.find(c => c.type === 'text')?.text;
-    if (!text) {
-      throw new Error('Empty response from OpenAI Responses API')
+    const responseText = completion.choices[0].message.content;
+    if (!responseText) {
+      throw new Error('Empty response from OpenAI Chat Completions API')
     }
 
-    // Parse JSON - guaranteed to match schema with structured outputs
-    const response = JSON.parse(text);
-    const analyses = response.analyses;
-    
-    if (!analyses) {
-      throw new Error('Invalid response structure from OpenAI Responses API')
+    // Parse JSON from response
+    let response
+    try {
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/)
+      if (jsonMatch) {
+        response = JSON.parse(jsonMatch[0])
+      } else {
+        throw new Error('No JSON found in Chat Completions response')
+      }
+    } catch (parseError) {
+      console.error('Failed to parse Chat Completions JSON:', parseError)
+      throw new Error(`Failed to parse Chat Completions response: ${parseError instanceof Error ? parseError.message : 'Unknown error'}`)
     }
+    
+    if (!response || !response.analyses) {
+      throw new Error('Invalid response structure from Chat Completions API')
+    }
+
+    const analyses = response.analyses;
 
     console.log(`🤖 [LLM] Successfully parsed ${analyses.length} analyses`)
     
@@ -221,7 +171,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
       original: post,
       llm_analysis: analyses[index] || getFallbackAnalysis(post, source),
       processed_at: new Date().toISOString(),
-      analysis_version: '1.0-gpt4o-mini-responses'
+      analysis_version: '1.0-gpt4o-mini-chat'
     }))
     
     console.log(`✅ [LLM] Successfully processed ${processedPosts.length} posts`)
