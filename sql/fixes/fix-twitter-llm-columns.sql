@@ -3,7 +3,7 @@
 
 -- Add LLM analysis columns to Twitter posts table
 ALTER TABLE public.twitter_posts_raw 
-ADD COLUMN IF NOT EXISTS llm_ticker VARCHAR(10),
+ADD COLUMN IF NOT EXISTS llm_ticker VARCHAR(20),
 ADD COLUMN IF NOT EXISTS llm_sentiment_score DECIMAL(4,3),
 ADD COLUMN IF NOT EXISTS llm_sentiment_label VARCHAR(20),
 ADD COLUMN IF NOT EXISTS llm_confidence DECIMAL(3,2),
@@ -12,7 +12,7 @@ ADD COLUMN IF NOT EXISTS llm_actionability_score DECIMAL(3,2),
 ADD COLUMN IF NOT EXISTS llm_has_catalyst BOOLEAN,
 ADD COLUMN IF NOT EXISTS llm_reasoning TEXT,
 ADD COLUMN IF NOT EXISTS llm_analyzed_at TIMESTAMPTZ,
-ADD COLUMN IF NOT EXISTS llm_analysis_version VARCHAR(10) DEFAULT '1.0';
+ADD COLUMN IF NOT EXISTS llm_analysis_version VARCHAR(30) DEFAULT '1.0';
 
 -- Create indexes for LLM-analyzed Twitter data
 CREATE INDEX IF NOT EXISTS idx_twitter_posts_llm_ticker ON public.twitter_posts_raw(llm_ticker);

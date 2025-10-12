@@ -1,0 +1,1001 @@
+2025-10-12T09:13:41.746990964Z [err]    code: '22001',
+2025-10-12T09:13:41.746997867Z [err]    details: null,
+2025-10-12T09:13:41.747003155Z [err]    hint: null,
+2025-10-12T09:13:41.747007392Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:41.747011266Z [err]  }
+2025-10-12T09:13:42.047101851Z [inf]  🤖 [ENHANCED] Processing Twitter batch 266/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:42.047109868Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:42.047114953Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:42.047120676Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:42.047125483Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:42.100918760Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:42.100925841Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:42.100930709Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:42.542400567Z [inf]  🤖 [ENHANCED] Processing Twitter batch 246/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:42.542406915Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:42.542412112Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:42.542416680Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:42.542420582Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:42.633588190Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:42.633598219Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:42.633608250Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:42.668702707Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:42.668710934Z [err]    code: '22001',
+2025-10-12T09:13:42.668716691Z [err]    details: null,
+2025-10-12T09:13:42.668725236Z [err]    hint: null,
+2025-10-12T09:13:42.668731174Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:42.668736805Z [err]  }
+2025-10-12T09:13:42.824356089Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:42.824362067Z [err]    code: '22001',
+2025-10-12T09:13:42.824367212Z [err]    details: null,
+2025-10-12T09:13:42.824373058Z [err]    hint: null,
+2025-10-12T09:13:42.824377334Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:42.824383560Z [err]  }
+2025-10-12T09:13:43.470097510Z [inf]  🤖 [ENHANCED] Processing Twitter batch 267/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:43.470101761Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:43.470106058Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:43.470110628Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:43.470114938Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:43.562644002Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:43.562662424Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:43.562668869Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:43.571538097Z [inf]  🤖 [ENHANCED] Processing Twitter batch 247/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:43.571548909Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:43.571555547Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:43.571561660Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:43.571566476Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:43.649242871Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:43.649249931Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:43.649255137Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:43.670705076Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:43.670713590Z [err]    code: '22001',
+2025-10-12T09:13:43.670719592Z [err]    details: null,
+2025-10-12T09:13:43.670725740Z [err]    hint: null,
+2025-10-12T09:13:43.670731771Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:43.670737467Z [err]  }
+2025-10-12T09:13:43.939761883Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:43.939768432Z [err]    code: '22001',
+2025-10-12T09:13:43.939772986Z [err]    details: null,
+2025-10-12T09:13:43.939777781Z [err]    hint: null,
+2025-10-12T09:13:43.939782804Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:43.939786742Z [err]  }
+2025-10-12T09:13:44.527585839Z [inf]  🤖 [ENHANCED] Processing Twitter batch 268/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:44.527590827Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:44.527594549Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:44.527598610Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:44.527603654Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:44.562261955Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:44.562271540Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:44.562277796Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:44.662285467Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:44.662290036Z [err]    code: '22001',
+2025-10-12T09:13:44.662294271Z [err]    details: null,
+2025-10-12T09:13:44.662298610Z [err]    hint: null,
+2025-10-12T09:13:44.662302614Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:44.662306826Z [err]  }
+2025-10-12T09:13:44.716003285Z [inf]  🤖 [ENHANCED] Processing Twitter batch 248/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:44.716010637Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:44.716016470Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:44.716021683Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:44.716027980Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:44.786066948Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:44.786077649Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:44.786085138Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:44.891349508Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:44.891359633Z [err]    code: '22001',
+2025-10-12T09:13:44.891365957Z [err]    details: null,
+2025-10-12T09:13:44.891372432Z [err]    hint: null,
+2025-10-12T09:13:44.891378656Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:44.891385270Z [err]  }
+2025-10-12T09:13:45.478255492Z [inf]  🤖 [ENHANCED] Processing Twitter batch 269/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:45.478262611Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:45.478267229Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:45.478271841Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:45.478276192Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:45.532842442Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:45.532849252Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:45.532853455Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:45.621611552Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:45.621618795Z [err]    code: '22001',
+2025-10-12T09:13:45.621625325Z [err]    details: null,
+2025-10-12T09:13:45.621630108Z [err]    hint: null,
+2025-10-12T09:13:45.621634483Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:45.621638917Z [err]  }
+2025-10-12T09:13:45.690136230Z [inf]  🤖 [ENHANCED] Processing Twitter batch 249/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:45.690142070Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:45.690146374Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:45.690150772Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:45.690155464Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:45.760290872Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:45.760297622Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:45.760302016Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:45.929664354Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:45.929672241Z [err]    code: '22001',
+2025-10-12T09:13:45.929677283Z [err]    details: null,
+2025-10-12T09:13:45.929682251Z [err]    hint: null,
+2025-10-12T09:13:45.929686872Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:45.929691710Z [err]  }
+2025-10-12T09:13:46.430747610Z [inf]  🤖 [ENHANCED] Processing Twitter batch 270/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:46.430754670Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:46.430759366Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:46.430763630Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:46.430767603Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:46.511473442Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:46.511483253Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:46.511490339Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:46.598401979Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:46.598406066Z [err]    code: '22001',
+2025-10-12T09:13:46.598409772Z [err]    details: null,
+2025-10-12T09:13:46.598415738Z [err]    hint: null,
+2025-10-12T09:13:46.598420627Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:46.598425037Z [err]  }
+2025-10-12T09:13:46.689021193Z [inf]  🤖 [ENHANCED] Processing Twitter batch 250/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:46.689029407Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:46.689036034Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:46.689041710Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:46.689047524Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:46.793435321Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:46.793445758Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:46.793452010Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:46.880193165Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:46.880201225Z [err]    code: '22001',
+2025-10-12T09:13:46.880208158Z [err]    details: null,
+2025-10-12T09:13:46.880213999Z [err]    hint: null,
+2025-10-12T09:13:46.880220304Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:46.880226466Z [err]  }
+2025-10-12T09:13:47.415317856Z [inf]  🤖 [ENHANCED] Processing Twitter batch 271/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:47.415328245Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:47.415334644Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:47.415341236Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:47.415347729Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:47.587008789Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:47.587014805Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:47.587020841Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:47.671672115Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:47.671679727Z [err]    code: '22001',
+2025-10-12T09:13:47.671685639Z [err]    details: null,
+2025-10-12T09:13:47.671689674Z [err]    hint: null,
+2025-10-12T09:13:47.671693322Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:47.671697151Z [err]  }
+2025-10-12T09:13:47.680094771Z [inf]  🤖 [ENHANCED] Processing Twitter batch 251/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:47.680102605Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:47.680107235Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:47.680111964Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:47.680115869Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:47.767038353Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:47.767045820Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:47.767050367Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:47.900574169Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:47.900580278Z [err]    code: '22001',
+2025-10-12T09:13:47.900584957Z [err]    details: null,
+2025-10-12T09:13:47.900590137Z [err]    hint: null,
+2025-10-12T09:13:47.900595538Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:47.900600422Z [err]  }
+2025-10-12T09:13:48.474077734Z [inf]  🤖 [ENHANCED] Processing Twitter batch 272/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:48.474085433Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:48.474091157Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:48.474096870Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:48.474103026Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:48.610320749Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:48.610325157Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:48.610329674Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:48.647077347Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:48.647086467Z [err]    code: '22001',
+2025-10-12T09:13:48.647094580Z [err]    details: null,
+2025-10-12T09:13:48.647102348Z [err]    hint: null,
+2025-10-12T09:13:48.647108315Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:48.647115119Z [err]  }
+2025-10-12T09:13:48.666032981Z [inf]  🤖 [ENHANCED] Processing Twitter batch 252/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:48.666037668Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:48.666042671Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:48.666046725Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:48.666050675Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:48.868546452Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:48.868554630Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:48.868560675Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:49.002662240Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:49.002667520Z [err]    code: '22001',
+2025-10-12T09:13:49.002671659Z [err]    details: null,
+2025-10-12T09:13:49.002675581Z [err]    hint: null,
+2025-10-12T09:13:49.002679387Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:49.002683722Z [err]  }
+2025-10-12T09:13:49.447835936Z [inf]  🤖 [ENHANCED] Processing Twitter batch 273/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:49.447842805Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:49.447847192Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:49.447851695Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:49.447856285Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:49.552018856Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:49.552027979Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:49.552032880Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:49.657105479Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:49.657110834Z [err]    code: '22001',
+2025-10-12T09:13:49.657115350Z [err]    details: null,
+2025-10-12T09:13:49.657119387Z [err]    hint: null,
+2025-10-12T09:13:49.657123458Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:49.657128321Z [err]  }
+2025-10-12T09:13:49.799989473Z [inf]  🤖 [ENHANCED] Processing Twitter batch 253/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:49.799999101Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:49.800005190Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:49.800010341Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:49.800015915Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:49.835457493Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:49.835461544Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:49.835465790Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:49.971453874Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:49.971459120Z [err]    code: '22001',
+2025-10-12T09:13:49.971463531Z [err]    details: null,
+2025-10-12T09:13:49.971467644Z [err]    hint: null,
+2025-10-12T09:13:49.971472083Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:49.971477448Z [err]  }
+2025-10-12T09:13:50.462331394Z [inf]  🤖 [ENHANCED] Processing Twitter batch 274/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:50.462336243Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:50.462341201Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:50.462345377Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:50.462349511Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:50.535565756Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:50.535570646Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:50.535575608Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:50.610492752Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:50.610499602Z [err]    code: '22001',
+2025-10-12T09:13:50.610504102Z [err]    details: null,
+2025-10-12T09:13:50.610508371Z [err]    hint: null,
+2025-10-12T09:13:50.610512699Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:50.610517818Z [err]  }
+2025-10-12T09:13:50.812809120Z [inf]  🤖 [ENHANCED] Processing Twitter batch 254/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:50.812814404Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:50.812820653Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:50.812827960Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:50.812832437Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:50.830644213Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:50.830652058Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:50.830658283Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:50.964563112Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:50.964569712Z [err]    code: '22001',
+2025-10-12T09:13:50.964574061Z [err]    details: null,
+2025-10-12T09:13:50.964578568Z [err]    hint: null,
+2025-10-12T09:13:50.964582180Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:50.964585804Z [err]  }
+2025-10-12T09:13:51.423331450Z [inf]  🤖 [ENHANCED] Processing Twitter batch 275/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:51.423340220Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:51.423345355Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:51.423349395Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:51.423353421Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:51.488982145Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:51.488988514Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:51.488992943Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:51.622760466Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:51.622764567Z [err]    code: '22001',
+2025-10-12T09:13:51.622768964Z [err]    details: null,
+2025-10-12T09:13:51.622772896Z [err]    hint: null,
+2025-10-12T09:13:51.622776491Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:51.622780853Z [err]  }
+2025-10-12T09:13:51.735203485Z [inf]  🤖 [ENHANCED] Processing Twitter batch 255/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:51.735210383Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:51.735215124Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:51.735219477Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:51.735223619Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:51.997506539Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:51.997515120Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:51.997520809Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:52.015225096Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:52.015234267Z [err]    code: '22001',
+2025-10-12T09:13:52.015240207Z [err]    details: null,
+2025-10-12T09:13:52.015247072Z [err]    hint: null,
+2025-10-12T09:13:52.015259380Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:52.015270236Z [err]  }
+2025-10-12T09:13:52.388149838Z [inf]  🤖 [ENHANCED] Processing Twitter batch 276/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:52.388156074Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:52.388160540Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:52.388164801Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:52.388168950Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:52.499978623Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:52.499985255Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:52.499989344Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:52.598721920Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:52.598728439Z [err]    code: '22001',
+2025-10-12T09:13:52.598733389Z [err]    details: null,
+2025-10-12T09:13:52.598738038Z [err]    hint: null,
+2025-10-12T09:13:52.598743707Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:52.598748182Z [err]  }
+2025-10-12T09:13:52.817262994Z [inf]  🤖 [ENHANCED] Processing Twitter batch 256/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:52.817270085Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:52.817276136Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:52.817282832Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:52.817286930Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:52.951708399Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:52.951714970Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:52.951719350Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:53.020352997Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:53.020359531Z [err]    code: '22001',
+2025-10-12T09:13:53.020364127Z [err]    details: null,
+2025-10-12T09:13:53.020368651Z [err]    hint: null,
+2025-10-12T09:13:53.020373697Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:53.020378646Z [err]  }
+2025-10-12T09:13:53.412725086Z [inf]  🤖 [ENHANCED] Processing Twitter batch 277/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:53.412734536Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:53.412741009Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:53.412747175Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:53.412752654Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:53.662899094Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:53.662906669Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:53.662911116Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:53.741594308Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:53.741598380Z [err]    code: '22001',
+2025-10-12T09:13:53.741602990Z [err]    details: null,
+2025-10-12T09:13:53.741606992Z [err]    hint: null,
+2025-10-12T09:13:53.741614989Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:53.741621128Z [err]  }
+2025-10-12T09:13:53.809688249Z [inf]  🤖 [ENHANCED] Processing Twitter batch 257/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:53.809694842Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:53.809699800Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:53.809704005Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:53.809707992Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:53.943322702Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:53.943329569Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:53.943333690Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:54.012616957Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:54.012627327Z [err]    code: '22001',
+2025-10-12T09:13:54.012633821Z [err]    details: null,
+2025-10-12T09:13:54.012667415Z [err]    hint: null,
+2025-10-12T09:13:54.012674702Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:54.012682294Z [err]  }
+2025-10-12T09:13:54.539670429Z [inf]  🤖 [ENHANCED] Processing Twitter batch 278/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:54.539675205Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:54.539679115Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:54.539682818Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:54.539686464Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:54.605125139Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:54.605131531Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:54.605136289Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:54.709428850Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:54.709438181Z [err]    code: '22001',
+2025-10-12T09:13:54.709448579Z [err]    details: null,
+2025-10-12T09:13:54.709454643Z [err]    hint: null,
+2025-10-12T09:13:54.709460763Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:54.709467202Z [err]  }
+2025-10-12T09:13:54.842751635Z [inf]  🤖 [ENHANCED] Processing Twitter batch 258/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:54.842762012Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:54.842766127Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:54.842770442Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:54.842774869Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:54.878011281Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:54.878017920Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:54.878021955Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:55.012937507Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:55.012946710Z [err]    code: '22001',
+2025-10-12T09:13:55.012952253Z [err]    details: null,
+2025-10-12T09:13:55.012956365Z [err]    hint: null,
+2025-10-12T09:13:55.012961025Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:55.012965820Z [err]  }
+2025-10-12T09:13:55.549771006Z [inf]  🤖 [ENHANCED] Processing Twitter batch 279/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:55.549775528Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:55.549780151Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:55.549786806Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:55.549796989Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:55.584745130Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:55.584752254Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:55.584757142Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:55.675917078Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:55.675923500Z [err]    code: '22001',
+2025-10-12T09:13:55.675934112Z [err]    details: null,
+2025-10-12T09:13:55.675937853Z [err]    hint: null,
+2025-10-12T09:13:55.675941441Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:55.675945261Z [err]  }
+2025-10-12T09:13:55.829428695Z [inf]  🤖 [ENHANCED] Processing Twitter batch 259/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:55.829434640Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:55.829441632Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:55.829447687Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:55.829454343Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:55.865158945Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:55.865165781Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:55.865170013Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:55.967397441Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:55.967406171Z [err]    code: '22001',
+2025-10-12T09:13:55.967412905Z [err]    details: null,
+2025-10-12T09:13:55.967418853Z [err]    hint: null,
+2025-10-12T09:13:55.967422767Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:55.967426746Z [err]  }
+2025-10-12T09:13:56.476629311Z [inf]  🤖 [ENHANCED] Processing Twitter batch 280/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:56.476663394Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:56.476671609Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:56.476677573Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:56.476683406Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:56.566212098Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:56.566221911Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:56.566227690Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:56.675298176Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:56.675305165Z [err]    code: '22001',
+2025-10-12T09:13:56.675310635Z [err]    details: null,
+2025-10-12T09:13:56.675315772Z [err]    hint: null,
+2025-10-12T09:13:56.675320484Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:56.675325861Z [err]  }
+2025-10-12T09:13:56.810291876Z [inf]  🤖 [ENHANCED] Processing Twitter batch 260/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:56.810297134Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:56.810301605Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:56.810306307Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:56.810311652Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:56.888858178Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:56.888862838Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:56.888867727Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:56.958091812Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:56.958098702Z [err]    code: '22001',
+2025-10-12T09:13:56.958102645Z [err]    details: null,
+2025-10-12T09:13:56.958106585Z [err]    hint: null,
+2025-10-12T09:13:56.958110438Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:56.958114638Z [err]  }
+2025-10-12T09:13:57.455723018Z [inf]  🤖 [ENHANCED] Processing Twitter batch 281/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:57.455733420Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:57.455743406Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:57.455749394Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:57.455755868Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:57.524050763Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:57.524058592Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:57.524063843Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:57.619082623Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:57.619086543Z [err]    code: '22001',
+2025-10-12T09:13:57.619090590Z [err]    details: null,
+2025-10-12T09:13:57.619094454Z [err]    hint: null,
+2025-10-12T09:13:57.619098068Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:57.619101824Z [err]  }
+2025-10-12T09:13:57.762149640Z [inf]  🤖 [ENHANCED] Processing Twitter batch 261/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:57.762158301Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:57.762163875Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:57.762170922Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:57.762176359Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:57.831963487Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:57.831970202Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:57.831975632Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:57.929048511Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:57.929054396Z [err]    code: '22001',
+2025-10-12T09:13:57.929060269Z [err]    details: null,
+2025-10-12T09:13:57.929064837Z [err]    hint: null,
+2025-10-12T09:13:57.929074600Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:57.929079120Z [err]  }
+2025-10-12T09:13:58.463077682Z [inf]  🤖 [ENHANCED] Processing Twitter batch 282/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:58.463082110Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:58.463086768Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:58.463093477Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:58.463097752Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:58.512806572Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:58.512810490Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:58.512816395Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:58.591834776Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:58.591839471Z [err]    code: '22001',
+2025-10-12T09:13:58.591843667Z [err]    details: null,
+2025-10-12T09:13:58.591847597Z [err]    hint: null,
+2025-10-12T09:13:58.591852037Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:58.591856254Z [err]  }
+2025-10-12T09:13:58.747876092Z [inf]  🤖 [ENHANCED] Processing Twitter batch 262/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:58.747880257Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:58.747884108Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:58.747887924Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:58.747891529Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:58.816156040Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:58.816163356Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:58.816171317Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:58.949597636Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:58.949603507Z [err]    code: '22001',
+2025-10-12T09:13:58.949609842Z [err]    details: null,
+2025-10-12T09:13:58.949616651Z [err]    hint: null,
+2025-10-12T09:13:58.949622308Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:58.949627912Z [err]  }
+2025-10-12T09:13:59.395033113Z [inf]  🤖 [ENHANCED] Processing Twitter batch 283/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:59.395040114Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:59.395044851Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:59.395048956Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:59.395052924Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:13:59.466650386Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:13:59.466660322Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:13:59.466667234Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:13:59.562314586Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:13:59.562323273Z [err]    code: '22001',
+2025-10-12T09:13:59.562329197Z [err]    details: null,
+2025-10-12T09:13:59.562336392Z [err]    hint: null,
+2025-10-12T09:13:59.562343425Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:13:59.562350020Z [err]  }
+2025-10-12T09:13:59.730705059Z [inf]  🤖 [ENHANCED] Processing Twitter batch 263/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:13:59.730711008Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:13:59.730716502Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:13:59.730722194Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:13:59.730728086Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:00.004686623Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:00.004715475Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:00.004724867Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:00.080786643Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:00.080795385Z [err]    code: '22001',
+2025-10-12T09:14:00.080801134Z [err]    details: null,
+2025-10-12T09:14:00.080806503Z [err]    hint: null,
+2025-10-12T09:14:00.080811464Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:00.080817613Z [err]  }
+2025-10-12T09:14:00.360618603Z [inf]  🤖 [ENHANCED] Processing Twitter batch 284/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:00.360623423Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:00.360627736Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:00.360657356Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:00.360666938Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:00.443730873Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:00.443740484Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:00.443746758Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:00.562434659Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:00.562439547Z [err]    code: '22001',
+2025-10-12T09:14:00.562444143Z [err]    details: null,
+2025-10-12T09:14:00.562449182Z [err]    hint: null,
+2025-10-12T09:14:00.562454018Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:00.562458122Z [err]  }
+2025-10-12T09:14:00.880280093Z [inf]  🤖 [ENHANCED] Processing Twitter batch 264/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:00.880290596Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:00.880297464Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:00.880303326Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:00.880309257Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:00.959232806Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:00.959240491Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:00.959244531Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:01.063387439Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:01.063394624Z [err]    code: '22001',
+2025-10-12T09:14:01.063399100Z [err]    details: null,
+2025-10-12T09:14:01.063403576Z [err]    hint: null,
+2025-10-12T09:14:01.063411678Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:01.063417363Z [err]  }
+2025-10-12T09:14:01.332790594Z [inf]  🤖 [ENHANCED] Processing Twitter batch 285/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:01.332796895Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:01.332803963Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:01.332810992Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:01.332817736Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:01.439008326Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:01.439014344Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:01.439020123Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:01.595746333Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:01.595751191Z [err]    code: '22001',
+2025-10-12T09:14:01.595757399Z [err]    details: null,
+2025-10-12T09:14:01.595762167Z [err]    hint: null,
+2025-10-12T09:14:01.595767352Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:01.595773331Z [err]  }
+2025-10-12T09:14:01.853628407Z [inf]  🤖 [ENHANCED] Processing Twitter batch 265/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:01.853638195Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:01.853644890Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:01.853651448Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:01.853661075Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:01.940155940Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:01.940166379Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:01.940172814Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:02.064840685Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:02.064847576Z [err]    code: '22001',
+2025-10-12T09:14:02.064854056Z [err]    details: null,
+2025-10-12T09:14:02.064861273Z [err]    hint: null,
+2025-10-12T09:14:02.064868226Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:02.064875224Z [err]  }
+2025-10-12T09:14:02.371812157Z [inf]  🤖 [ENHANCED] Processing Twitter batch 286/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:02.371817307Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:02.371821806Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:02.371826200Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:02.371831005Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:02.388654146Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:02.388666064Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:02.388672575Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:02.501702797Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:02.501710034Z [err]    code: '22001',
+2025-10-12T09:14:02.501714919Z [err]    details: null,
+2025-10-12T09:14:02.501719739Z [err]    hint: null,
+2025-10-12T09:14:02.501723652Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:02.501727696Z [err]  }
+2025-10-12T09:14:02.882010639Z [inf]  🤖 [ENHANCED] Processing Twitter batch 266/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:02.882017671Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:02.882022276Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:02.882026750Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:02.882031153Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:02.943825050Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:02.943832667Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:02.943837522Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:03.082361022Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:03.082408051Z [err]    code: '22001',
+2025-10-12T09:14:03.082413251Z [err]    details: null,
+2025-10-12T09:14:03.082417497Z [err]    hint: null,
+2025-10-12T09:14:03.082421646Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:03.082428543Z [err]  }
+2025-10-12T09:14:03.293291610Z [inf]  🤖 [ENHANCED] Processing Twitter batch 287/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:03.293299144Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:03.293303784Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:03.293308676Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:03.293312838Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:03.373375753Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:03.373383006Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:03.373387239Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:03.537963996Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:03.537971175Z [err]    code: '22001',
+2025-10-12T09:14:03.537975414Z [err]    details: null,
+2025-10-12T09:14:03.537979595Z [err]    hint: null,
+2025-10-12T09:14:03.537984176Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:03.537988345Z [err]  }
+2025-10-12T09:14:03.884696853Z [inf]  🤖 [ENHANCED] Processing Twitter batch 267/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:03.884709562Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:03.884716713Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:03.884722138Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:03.884727352Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:03.968833713Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:03.968844792Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:03.968851361Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:04.104271352Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:04.104277772Z [err]    code: '22001',
+2025-10-12T09:14:04.104283403Z [err]    details: null,
+2025-10-12T09:14:04.104289309Z [err]    hint: null,
+2025-10-12T09:14:04.104293941Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:04.104298299Z [err]  }
+2025-10-12T09:14:04.404812354Z [inf]  🤖 [ENHANCED] Processing Twitter batch 288/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:04.404817820Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:04.404823789Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:04.404830207Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:04.404836389Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:04.616455265Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:04.616461051Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:04.616466475Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:04.702983624Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:04.702988095Z [err]    code: '22001',
+2025-10-12T09:14:04.702992462Z [err]    details: null,
+2025-10-12T09:14:04.702997097Z [err]    hint: null,
+2025-10-12T09:14:04.703000724Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:04.703004491Z [err]  }
+2025-10-12T09:14:04.865479686Z [inf]  🤖 [ENHANCED] Processing Twitter batch 268/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:04.865486479Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:04.865492544Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:04.865497053Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:04.865500908Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:05.161504606Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:05.161509268Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:05.161514147Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:05.230199763Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:05.230206706Z [err]    code: '22001',
+2025-10-12T09:14:05.230246776Z [err]    details: null,
+2025-10-12T09:14:05.230251112Z [err]    hint: null,
+2025-10-12T09:14:05.230255004Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:05.230258942Z [err]  }
+2025-10-12T09:14:05.566913645Z [inf]  🤖 [ENHANCED] Processing Twitter batch 289/289 (2 posts) with OpenAI Responses API
+2025-10-12T09:14:05.566918544Z [inf]  🤖 [LLM] Processing batch of 2 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:05.566924953Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:05.566929896Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:05.566935518Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:05.570093085Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:05.570101817Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:05.570107654Z [inf]  💾 [REAL-TIME] Saving batch of 2 twitter posts...
+2025-10-12T09:14:05.683395760Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:05.683404263Z [err]    code: '22001',
+2025-10-12T09:14:05.683409850Z [err]    details: null,
+2025-10-12T09:14:05.683414899Z [err]    hint: null,
+2025-10-12T09:14:05.683420476Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:05.683426007Z [err]  }
+2025-10-12T09:14:05.683431813Z [inf]  ✅ [ENHANCED] Completed Twitter processing with real-time aggregation for 866 posts
+2025-10-12T09:14:05.683437757Z [inf]  ✅ [CRON] Successfully completed LLM Twitter processing with real-time aggregation
+2025-10-12T09:14:05.683442616Z [inf]  💾 [CRON] Saving 15 Reddit posts to simple table...
+2025-10-12T09:14:05.946884131Z [inf]  📊 [CRON] Inserting 15 posts into reddit_posts table...
+2025-10-12T09:14:06.018108874Z [inf]  🤖 [ENHANCED] Processing Twitter batch 269/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:06.018117183Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:06.018122399Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:06.018127102Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:06.018131414Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:06.075807164Z [inf]  ✅ [CRON] Successfully completed database save operation
+2025-10-12T09:14:06.075812007Z [inf]  💾 [CRON] Database save operation completed
+2025-10-12T09:14:06.075816173Z [inf]  ✅ [CRON] Real-time aggregations will be handled by LLM processing functions
+2025-10-12T09:14:06.075819918Z [inf]  ✅ [CRON] Daily sentiment data fetch completed successfully
+2025-10-12T09:14:06.075824036Z [err]  ⚠️ [CRON] Error inserting Reddit posts (non-critical): {
+2025-10-12T09:14:06.075828004Z [err]    code: '23505',
+2025-10-12T09:14:06.075832042Z [err]    details: 'Key (post_id)=(1o460u9) already exists.',
+2025-10-12T09:14:06.075835679Z [err]    hint: null,
+2025-10-12T09:14:06.075839495Z [err]    message: 'duplicate key value violates unique constraint "reddit_posts_post_id_key"'
+2025-10-12T09:14:06.075843295Z [err]  }
+2025-10-12T09:14:06.075847182Z [inf]  🤖 [CRON] ========== SENTIMENT DATA FETCH COMPLETED ==========
+2025-10-12T09:14:06.075852995Z [inf]  📤 [CRON] Returning response: {
+2025-10-12T09:14:06.075856891Z [inf]    "success": true,
+2025-10-12T09:14:06.075861275Z [inf]    "message": "Sentiment data fetched and saved successfully",
+2025-10-12T09:14:06.075865040Z [inf]    "dataPoints": 17,
+2025-10-12T09:14:06.075868707Z [inf]    "topPosts": 15,
+2025-10-12T09:14:06.075872791Z [inf]    "timestamp": "2025-10-12T09:14:06.070Z"
+2025-10-12T09:14:06.075876459Z [inf]  }
+2025-10-12T09:14:06.111074480Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:06.111081911Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:06.111086731Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:06.226617825Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:06.226629352Z [err]    code: '22001',
+2025-10-12T09:14:06.226634587Z [err]    details: null,
+2025-10-12T09:14:06.226639778Z [err]    hint: null,
+2025-10-12T09:14:06.226645108Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:06.226650684Z [err]  }
+2025-10-12T09:14:07.085598699Z [inf]  🤖 [ENHANCED] Processing Twitter batch 270/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:07.085602859Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:07.085606743Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:07.085610548Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:07.085614562Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:07.085618309Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:07.085621939Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:07.085625748Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:07.219907135Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:07.219916765Z [err]    code: '22001',
+2025-10-12T09:14:07.219923936Z [err]    details: null,
+2025-10-12T09:14:07.219929066Z [err]    hint: null,
+2025-10-12T09:14:07.219933677Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:07.219940766Z [err]  }
+2025-10-12T09:14:07.990164265Z [inf]  🤖 [ENHANCED] Processing Twitter batch 271/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:07.990171195Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:07.990176457Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:07.990198171Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:07.990205975Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:08.059446731Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:08.059453686Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:08.059458645Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:08.226488202Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:08.226492378Z [err]    code: '22001',
+2025-10-12T09:14:08.226496448Z [err]    details: null,
+2025-10-12T09:14:08.226500394Z [err]    hint: null,
+2025-10-12T09:14:08.226504908Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:08.226509235Z [err]  }
+2025-10-12T09:14:09.208763054Z [inf]  🤖 [ENHANCED] Processing Twitter batch 272/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:09.208766861Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:09.208771924Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:09.208776083Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:09.208779830Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:09.208783590Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:09.208788000Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:09.208792747Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:09.208797090Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:09.208801427Z [err]    code: '22001',
+2025-10-12T09:14:09.208805650Z [err]    details: null,
+2025-10-12T09:14:09.208809751Z [err]    hint: null,
+2025-10-12T09:14:09.208813551Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:09.208817207Z [err]  }
+2025-10-12T09:14:10.014899356Z [inf]  🤖 [ENHANCED] Processing Twitter batch 273/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:10.014907949Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:10.014912633Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:10.014916891Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:10.014921286Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:10.050453022Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:10.050459430Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:10.050463404Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:10.155888571Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:10.155896873Z [err]    code: '22001',
+2025-10-12T09:14:10.155901714Z [err]    details: null,
+2025-10-12T09:14:10.155906731Z [err]    hint: null,
+2025-10-12T09:14:10.155910514Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:10.155914547Z [err]  }
+2025-10-12T09:14:10.955777048Z [inf]  🤖 [ENHANCED] Processing Twitter batch 274/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:10.955783839Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:10.955792083Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:10.955797062Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:10.955801324Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:11.024408127Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:11.024429404Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:11.024434095Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:11.128772120Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:11.128782433Z [err]    code: '22001',
+2025-10-12T09:14:11.128788437Z [err]    details: null,
+2025-10-12T09:14:11.128794851Z [err]    hint: null,
+2025-10-12T09:14:11.128801186Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:11.128807798Z [err]  }
+2025-10-12T09:14:11.985960386Z [inf]  🤖 [ENHANCED] Processing Twitter batch 275/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:11.985967358Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:11.985972022Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:11.985975990Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:11.985980051Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:12.004952525Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:12.004959715Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:12.004964839Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:12.111583276Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:12.111591107Z [err]    code: '22001',
+2025-10-12T09:14:12.111598376Z [err]    details: null,
+2025-10-12T09:14:12.111602408Z [err]    hint: null,
+2025-10-12T09:14:12.111620299Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:12.111627361Z [err]  }
+2025-10-12T09:14:12.923678186Z [inf]  🤖 [ENHANCED] Processing Twitter batch 276/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:12.923685100Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:12.923689440Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:12.923693770Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:12.923698134Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:12.992273973Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:12.992281165Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:12.992284833Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:13.127009748Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:13.127014688Z [err]    code: '22001',
+2025-10-12T09:14:13.127019584Z [err]    details: null,
+2025-10-12T09:14:13.127023720Z [err]    hint: null,
+2025-10-12T09:14:13.127027497Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:13.127031638Z [err]  }
+2025-10-12T09:14:13.892755591Z [inf]  🤖 [ENHANCED] Processing Twitter batch 277/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:13.892761976Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:13.892767054Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:13.892771575Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:13.892776023Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:13.962197611Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:13.962205504Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:13.962212116Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:14.096760945Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:14.096765246Z [err]    code: '22001',
+2025-10-12T09:14:14.096769417Z [err]    details: null,
+2025-10-12T09:14:14.096773701Z [err]    hint: null,
+2025-10-12T09:14:14.096778140Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:14.096782310Z [err]  }
+2025-10-12T09:14:14.902465005Z [inf]  🤖 [ENHANCED] Processing Twitter batch 278/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:14.902472760Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:14.902478197Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:14.902484604Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:14.902489256Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:14.920665017Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:14.920675775Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:14.920682451Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:15.055931638Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:15.055936311Z [err]    code: '22001',
+2025-10-12T09:14:15.055944493Z [err]    details: null,
+2025-10-12T09:14:15.055951146Z [err]    hint: null,
+2025-10-12T09:14:15.055956474Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:15.055961351Z [err]  }
+2025-10-12T09:14:15.883328960Z [inf]  🤖 [ENHANCED] Processing Twitter batch 279/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:15.883335392Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:15.883341394Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:15.883347444Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:15.883353506Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:15.919375679Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:15.919383997Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:15.919390483Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:16.054583340Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:16.054588156Z [err]    code: '22001',
+2025-10-12T09:14:16.054592370Z [err]    details: null,
+2025-10-12T09:14:16.054596720Z [err]    hint: null,
+2025-10-12T09:14:16.054600560Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:16.054604405Z [err]  }
+2025-10-12T09:14:16.810825249Z [inf]  🤖 [ENHANCED] Processing Twitter batch 280/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:16.810833059Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:16.810868527Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:16.810872573Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:16.810877247Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:16.943331607Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:16.943338617Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:16.943353416Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:17.010874770Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:17.010883796Z [err]    code: '22001',
+2025-10-12T09:14:17.010890524Z [err]    details: null,
+2025-10-12T09:14:17.010896657Z [err]    hint: null,
+2025-10-12T09:14:17.010903676Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:17.010910607Z [err]  }
+2025-10-12T09:14:17.783558733Z [inf]  🤖 [ENHANCED] Processing Twitter batch 281/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:17.783566547Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:17.783572718Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:17.783579352Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:17.783588348Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:18.051659857Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:18.051668968Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:18.051673838Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:18.185019210Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:18.185023744Z [err]    code: '22001',
+2025-10-12T09:14:18.185028919Z [err]    details: null,
+2025-10-12T09:14:18.185033465Z [err]    hint: null,
+2025-10-12T09:14:18.185038041Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:18.185042638Z [err]  }
+2025-10-12T09:14:18.994048770Z [inf]  🤖 [ENHANCED] Processing Twitter batch 282/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:18.994054785Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:18.994061225Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:18.994066568Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:18.994071759Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:19.028667322Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:19.028678506Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:19.028685141Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:19.132880280Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:19.132890303Z [err]    code: '22001',
+2025-10-12T09:14:19.132896869Z [err]    details: null,
+2025-10-12T09:14:19.132903056Z [err]    hint: null,
+2025-10-12T09:14:19.132909375Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:19.132914955Z [err]  }
+2025-10-12T09:14:19.931766130Z [inf]  🤖 [ENHANCED] Processing Twitter batch 283/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:19.931772697Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:19.931777451Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:19.931782103Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:19.931788706Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:20.000166157Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:20.000174326Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:20.000181073Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:20.109348779Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:20.109394624Z [err]    code: '22001',
+2025-10-12T09:14:20.109400032Z [err]    details: null,
+2025-10-12T09:14:20.109404500Z [err]    hint: null,
+2025-10-12T09:14:20.109409047Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:20.109413818Z [err]  }
+2025-10-12T09:14:20.904476680Z [inf]  🤖 [ENHANCED] Processing Twitter batch 284/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:20.904484575Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:20.904489713Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:20.904494237Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:20.904498228Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:20.989996686Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:20.990003822Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:20.990008681Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:21.095630348Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:21.095638435Z [err]    code: '22001',
+2025-10-12T09:14:21.095644773Z [err]    details: null,
+2025-10-12T09:14:21.095649355Z [err]    hint: null,
+2025-10-12T09:14:21.095654250Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:21.095659033Z [err]  }
+2025-10-12T09:14:21.894982520Z [inf]  🤖 [ENHANCED] Processing Twitter batch 285/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:21.894994836Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:21.895002404Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:21.895009118Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:21.895014877Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:22.120098643Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:22.120108013Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:22.120114412Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:22.225292687Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:22.225302301Z [err]    code: '22001',
+2025-10-12T09:14:22.225309024Z [err]    details: null,
+2025-10-12T09:14:22.225315236Z [err]    hint: null,
+2025-10-12T09:14:22.225321290Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:22.225336707Z [err]  }
+2025-10-12T09:14:23.045899549Z [inf]  🤖 [ENHANCED] Processing Twitter batch 286/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:23.045904383Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:23.045908640Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:23.045912756Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:23.045916990Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:23.080136353Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:23.080145361Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:23.080151403Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:23.188981443Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:23.188995919Z [err]    code: '22001',
+2025-10-12T09:14:23.189000537Z [err]    details: null,
+2025-10-12T09:14:23.189005085Z [err]    hint: null,
+2025-10-12T09:14:23.189009723Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:23.189014229Z [err]  }
+2025-10-12T09:14:23.995532626Z [inf]  🤖 [ENHANCED] Processing Twitter batch 287/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:23.995539906Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:23.995545328Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:23.995549655Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:23.995554554Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:24.065275040Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:24.065280303Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:24.065284952Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:24.156774988Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:24.156781158Z [err]    code: '22001',
+2025-10-12T09:14:24.156796466Z [err]    details: null,
+2025-10-12T09:14:24.156801525Z [err]    hint: null,
+2025-10-12T09:14:24.156806227Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:24.156810650Z [err]  }
+2025-10-12T09:14:24.994280029Z [inf]  🤖 [ENHANCED] Processing Twitter batch 288/289 (3 posts) with OpenAI Responses API
+2025-10-12T09:14:24.994286978Z [inf]  🤖 [LLM] Processing batch of 3 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:24.994291125Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:24.994295344Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:24.994300098Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:25.030607047Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:25.030611283Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:25.030615705Z [inf]  💾 [REAL-TIME] Saving batch of 3 twitter posts...
+2025-10-12T09:14:25.136732155Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:25.136738908Z [err]    code: '22001',
+2025-10-12T09:14:25.136753078Z [err]    details: null,
+2025-10-12T09:14:25.136758519Z [err]    hint: null,
+2025-10-12T09:14:25.136763055Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:25.136768699Z [err]  }
+2025-10-12T09:14:25.938447165Z [inf]  🤖 [ENHANCED] Processing Twitter batch 289/289 (2 posts) with OpenAI Responses API
+2025-10-12T09:14:25.938457228Z [inf]  🤖 [LLM] Processing batch of 2 twitter posts with OpenAI Responses API...
+2025-10-12T09:14:25.938463593Z [inf]  🔑 [RESPONSES-API-DEBUG] OpenAI API key present: true
+2025-10-12T09:14:25.938470123Z [inf]  🔑 [RESPONSES-API-DEBUG] API key length: 164
+2025-10-12T09:14:25.938476869Z [inf]  ✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...
+2025-10-12T09:14:26.016227770Z [err]  ❌ [LLM] Error processing posts batch: [Error: OpenAI Responses API request failed: 400 Bad Request]
+2025-10-12T09:14:26.016234406Z [inf]  🚨 [LLM] Triggering real-time aggregation for fallback posts...
+2025-10-12T09:14:26.016241694Z [inf]  💾 [REAL-TIME] Saving batch of 2 twitter posts...
+2025-10-12T09:14:26.123348103Z [err]  ❌ [REAL-TIME] Error saving twitter batch: {
+2025-10-12T09:14:26.123361008Z [err]    code: '22001',
+2025-10-12T09:14:26.123373242Z [err]    details: null,
+2025-10-12T09:14:26.123394529Z [err]    hint: null,
+2025-10-12T09:14:26.123403212Z [err]    message: 'value too long for type character varying(10)'
+2025-10-12T09:14:26.123410976Z [err]  }
+2025-10-12T09:14:26.123422401Z [inf]  ✅ [ENHANCED] Completed Twitter processing with real-time aggregation for 866 posts
+2025-10-12T09:14:26.123428944Z [inf]  ✅ [CRON] Successfully completed LLM Twitter processing with real-time aggregation
+2025-10-12T09:14:26.123436650Z [inf]  💾 [CRON] Saving 15 Reddit posts to simple table...
+2025-10-12T09:14:26.243533714Z [inf]  📊 [CRON] Inserting 15 posts into reddit_posts table...
+2025-10-12T09:14:26.377863226Z [err]  ⚠️ [CRON] Error inserting Reddit posts (non-critical): {
+2025-10-12T09:14:26.377867871Z [err]    code: '23505',
+2025-10-12T09:14:26.377872096Z [err]    details: 'Key (post_id)=(1o460u9) already exists.',
+2025-10-12T09:14:26.377876339Z [err]    hint: null,
+2025-10-12T09:14:26.377880586Z [err]    message: 'duplicate key value violates unique constraint "reddit_posts_post_id_key"'
+2025-10-12T09:14:26.377888841Z [err]  }
+2025-10-12T09:14:26.377893021Z [inf]  ✅ [CRON] Successfully completed database save operation
+2025-10-12T09:14:26.377897050Z [inf]  💾 [CRON] Database save operation completed
+2025-10-12T09:14:26.377901167Z [inf]  ✅ [CRON] Real-time aggregations will be handled by LLM processing functions
+2025-10-12T09:14:26.377905176Z [inf]  ✅ [CRON] Daily sentiment data fetch completed successfully
+2025-10-12T09:14:26.377909238Z [inf]  🤖 [CRON] ========== SENTIMENT DATA FETCH COMPLETED ==========
+2025-10-12T09:14:26.377913407Z [inf]  📤 [CRON] Returning response: {
+2025-10-12T09:14:26.377917731Z [inf]    "success": true,
+2025-10-12T09:14:26.377922014Z [inf]    "message": "Sentiment data fetched and saved successfully",
+2025-10-12T09:14:26.377925976Z [inf]    "dataPoints": 17,
+2025-10-12T09:14:26.377929983Z [inf]    "topPosts": 15,
+2025-10-12T09:14:26.377934196Z [inf]    "timestamp": "2025-10-12T09:14:26.375Z"
+2025-10-12T09:14:26.377944257Z [inf]  }

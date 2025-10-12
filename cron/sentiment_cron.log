@@ -451,3 +451,23 @@
 2025-10-10 09:05:02,282 - ERROR - ❌ Sentiment analysis cron job failed
 2025-10-10 09:05:02,282 - INFO - ============================================================
 2025-10-10 09:05:02,282 - INFO - ============================================================
+2025-10-12 09:00:01,100 - INFO - ============================================================
+2025-10-12 09:00:01,100 - INFO - ============================================================
+2025-10-12 09:00:01,101 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-12 09:00:01,101 - INFO - 🕘 DAILY SENTIMENT ANALYSIS CRON JOB STARTED
+2025-10-12 09:00:01,101 - INFO - ⏰ Current time: 2025-10-12T09:00:01.101071
+2025-10-12 09:00:01,101 - INFO - ⏰ Current time: 2025-10-12T09:00:01.101071
+2025-10-12 09:00:01,101 - INFO - ============================================================
+2025-10-12 09:00:01,101 - INFO - ============================================================
+2025-10-12 09:00:01,101 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-12 09:00:01,101 - INFO - Loading config from /Users/naourpally/workspaces/nara-workspace/investing-dashboard/cron/config.env
+2025-10-12 09:00:01,101 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-10-12 09:00:01,101 - INFO - 🔧 Configuration loaded - Base URL: http://localhost:3000
+2025-10-12 09:00:01,101 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-10-12 09:00:01,101 - INFO - 🤖 Starting sentiment data fetch from http://localhost:3000/api/cron/sentiment-data
+2025-10-12 09:05:01,131 - ERROR - ⏰ Request timed out after 300 seconds
+2025-10-12 09:05:01,131 - ERROR - ⏰ Request timed out after 300 seconds
+2025-10-12 09:05:01,143 - ERROR - ❌ Sentiment analysis cron job failed
+2025-10-12 09:05:01,143 - ERROR - ❌ Sentiment analysis cron job failed
+2025-10-12 09:05:01,144 - INFO - ============================================================
+2025-10-12 09:05:01,144 - INFO - ============================================================
