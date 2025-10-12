@@ -1,34 +1,83 @@
 /**
  * Real-time LLM Post Processor
  * Processes individual posts immediately after fetching from APIs
+ * Now using Responses API with GPT-5-nano
  */
 
-import OpenAI from 'openai'
 import { updateTickerAggregation, saveBatchWithRealTimeAggregation } from './real-time-aggregator'
-import { zodResponseFormat } from 'openai/helpers/zod'
 import { z } from 'zod'
 
-// Lazy initialization of OpenAI to avoid issues when env vars aren't loaded yet
-let openai: OpenAI | null = null;
+// OpenAI Responses API configuration
+const RESPONSES_API_URL = 'https://api.openai.com/v1/responses';
+const MODEL = 'gpt-4o-mini';
 
-function getOpenAI(): OpenAI {
-  if (!openai) {
-    const apiKey = process.env.OPENAI_API_KEY;
-    console.log('🔑 [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY present:', !!apiKey);
-    console.log('🔑 [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY length:', apiKey?.length || 0);
-    
-    if (!apiKey) {
-      console.error('❌ [LLM-PROCESSOR-DEBUG] OPENAI_API_KEY environment variable is not set');
-      throw new Error('OPENAI_API_KEY environment variable is not set');
-    }
-    
-    console.log('✅ [LLM-PROCESSOR-DEBUG] Creating OpenAI client...');
-    openai = new OpenAI({ apiKey });
-    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client created successfully:', !!openai);
-    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client has chat:', !!openai.chat);
-    console.log('✅ [LLM-PROCESSOR-DEBUG] OpenAI client has completions:', !!openai.chat?.completions);
+interface ResponsesAPIContent {
+  type: string;
+  text?: string;
+}
+
+interface ResponsesAPIMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: ResponsesAPIContent[];
+}
+
+interface ResponsesAPIRequest {
+  model: string;
+  input: ResponsesAPIMessage[];
+  response_format?: {
+    type: 'json_schema';
+    json_schema: {
+      name: string;
+      schema: Record<string, any>;
+      strict: true;
+    };
+  };
+  temperature?: number;
+  max_output_tokens?: number;
+}
+
+interface ResponsesAPIResponse {
+  output?: Array<{
+    content: Array<{
+      type: string;
+      text?: string;
+    }>;
+  }>;
+}
+
+/**
+ * Make a request to the OpenAI Responses API with structured outputs
+ */
+async function callResponsesAPI(request: ResponsesAPIRequest): Promise<ResponsesAPIResponse> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  
+  console.log('🔑 [RESPONSES-API-DEBUG] OpenAI API key present:', !!apiKey);
+  console.log('🔑 [RESPONSES-API-DEBUG] API key length:', apiKey?.length || 0);
+  
+  if (!apiKey) {
+    console.error('❌ [RESPONSES-API-DEBUG] OPENAI_API_KEY environment variable is not set');
+    throw new Error('OPENAI_API_KEY environment variable is not set');
   }
-  return openai;
+  
+  console.log('✅ [RESPONSES-API-DEBUG] Making request to OpenAI Responses API...');
+  
+  const response = await fetch(RESPONSES_API_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenAI Responses API request failed: ${response.status} ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  console.log('✅ [RESPONSES-API-DEBUG] OpenAI Responses API response received successfully');
+  
+  return data;
 }
 
 // Zod schema for structured output
@@ -46,6 +95,43 @@ const PostAnalysisSchema = z.object({
 const BatchAnalysisSchema = z.object({
   analyses: z.array(PostAnalysisSchema)
 })
+
+/**
+ * Build JSON schema for structured outputs
+ */
+function buildAnalysisSchema(postCount: number) {
+  return {
+    name: "BatchAnalysis",
+    schema: {
+      type: "object",
+      properties: {
+        analyses: {
+          type: "array",
+          minItems: postCount,
+          maxItems: postCount,
+          items: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              ticker: { type: ["string", "null"] },
+              sentiment_score: { type: "number", minimum: -1, maximum: 1 },
+              sentiment_label: { type: "string", enum: ["positive", "negative", "neutral"] },
+              confidence: { type: "number", minimum: 0, maximum: 1 },
+              key_themes: { type: "array", items: { type: "string" }, maxItems: 5 },
+              actionability_score: { type: "number", minimum: 0, maximum: 1 },
+              has_catalyst: { type: "boolean" },
+              reasoning: { type: "string" }
+            },
+            required: ["ticker", "sentiment_score", "sentiment_label", "confidence", "key_themes", "actionability_score", "has_catalyst", "reasoning"]
+          }
+        }
+      },
+      required: ["analyses"],
+      additionalProperties: false
+    },
+    strict: true as const
+  };
+}
 
 export interface LLMPostAnalysis {
   ticker: string | null
@@ -72,7 +158,9 @@ export interface ProcessedPost {
  * Process multiple posts in a single LLM call for efficiency WITH REAL-TIME AGGREGATION
  */
 export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitter'): Promise<ProcessedPost[]> {
-  if (!process.env.OPENAI_API_KEY) {
+  const apiKey = process.env.OPENAI_API_KEY;
+  
+  if (!apiKey) {
     console.warn('⚠️ [LLM] No OPENAI_API_KEY found, using fallback analysis')
     return posts.map(post => ({
       original: post,
@@ -83,48 +171,46 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
   }
 
   try {
-    console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts...`)
+    console.log(`🤖 [LLM] Processing batch of ${posts.length} ${source} posts with OpenAI Responses API...`)
     
-    const client = getOpenAI()
     const prompt = buildBatchPrompt(posts, source)
+    const schema = buildAnalysisSchema(posts.length)
     
-    const completion = await client.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: 'You are a financial sentiment analyzer. Analyze social media posts and return structured sentiment data.' },
-        { role: 'user', content: prompt + '\n\nRespond with valid JSON matching the expected schema.' }
+    const completion = await callResponsesAPI({
+      model: MODEL,
+      input: [
+        { 
+          role: 'system', 
+          content: [{ type: 'text', text: 'You are a financial sentiment analyzer. Reply in the exact JSON schema.' }] 
+        },
+        { 
+          role: 'user', 
+          content: [{ type: 'text', text: prompt }] 
+        }
       ],
-      max_tokens: 2000,
-      temperature: 0.1
+      response_format: { 
+        type: 'json_schema', 
+        json_schema: schema 
+      },
+      temperature: 0.1,
+      max_output_tokens: 2000
     })
 
-    const responseText = completion.choices[0].message.content
-    
-    if (!responseText) {
-      throw new Error('Empty response from OpenAI')
+    // Extract JSON deterministically (no regex needed with structured outputs)
+    const text = completion.output?.[0]?.content?.find(c => c.type === 'text')?.text;
+    if (!text) {
+      throw new Error('Empty response from OpenAI Responses API')
     }
 
-    // Parse JSON from response
-    let response
-    try {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        response = JSON.parse(jsonMatch[0])
-      } else {
-        throw new Error('No JSON found in OpenAI response')
-      }
-    } catch (parseError) {
-      console.error('Failed to parse OpenAI JSON:', parseError)
-      throw new Error(`Failed to parse OpenAI response: ${parseError.message}`)
-    }
+    // Parse JSON - guaranteed to match schema with structured outputs
+    const response = JSON.parse(text);
+    const analyses = response.analyses;
     
-    if (!response || !response.analyses) {
-      throw new Error('Invalid response structure from OpenAI')
+    if (!analyses) {
+      throw new Error('Invalid response structure from OpenAI Responses API')
     }
 
-    console.log(`🤖 [LLM] Successfully parsed ${response.analyses.length} analyses`)
-    
-    const analyses = response.analyses
+    console.log(`🤖 [LLM] Successfully parsed ${analyses.length} analyses`)
     
     if (analyses.length !== posts.length) {
       console.warn(`⚠️ [LLM] Analysis count mismatch: got ${analyses.length}, expected ${posts.length}`)
@@ -135,7 +221,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
       original: post,
       llm_analysis: analyses[index] || getFallbackAnalysis(post, source),
       processed_at: new Date().toISOString(),
-      analysis_version: '1.0-gpt4o-mini'
+      analysis_version: '1.0-gpt4o-mini-responses'
     }))
     
     console.log(`✅ [LLM] Successfully processed ${processedPosts.length} posts`)
@@ -255,7 +341,7 @@ function getFallbackAnalysis(post: any, source: 'reddit' | 'twitter'): LLMPostAn
 }
 
 /**
- * Cost estimation helper for OpenAI GPT-4o-mini
+ * Cost estimation helper for GPT-4o-mini via OpenAI Responses API
  */
 export function estimateBatchCost(postCount: number): { tokens: number, cost: number } {
   // Rough estimates for batch processing
@@ -266,7 +352,7 @@ export function estimateBatchCost(postCount: number): { tokens: number, cost: nu
   const totalInputTokens = (postCount * inputTokensPerPost) + instructionTokens
   const totalOutputTokens = postCount * outputTokensPerPost
   
-  // GPT-4o-mini pricing
+  // GPT-4o-mini pricing (OpenAI official rates)
   const inputCostPer1M = 0.15   // $0.15 per 1M input tokens
   const outputCostPer1M = 0.60  // $0.60 per 1M output tokens
   

@@ -1,6 +1,7 @@
 /**
  * Advanced sentiment aggregation utilities
  * Provides different strategies for aggregating sentiment data over time periods
+ * Compatible with GPT-4o-mini processed sentiment data via OpenAI Responses API with structured outputs
  */
 
 interface SentimentEntry {

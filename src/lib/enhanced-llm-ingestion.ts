@@ -1,6 +1,7 @@
 /**
  * Enhanced LLM Ingestion with Real-time Application-level Aggregation
  * This replaces the current saveRawRedditPosts and saveRawTwitterPosts functions
+ * Now using OpenAI Responses API with structured outputs and GPT-4o-mini for guaranteed valid JSON
  */
 
 import { processPostsBatch } from './llm-post-processor'
@@ -24,10 +25,10 @@ export async function saveRawRedditPostsWithLLM(rawPosts: any[]): Promise<void> 
     for (let i = 0; i < rawPosts.length; i += batchSize) {
       const batch = rawPosts.slice(i, i + batchSize)
       
-      console.log(`🤖 [ENHANCED] Processing Reddit batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(rawPosts.length/batchSize)} (${batch.length} posts)`)
+      console.log(`🤖 [ENHANCED] Processing Reddit batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(rawPosts.length/batchSize)} (${batch.length} posts) with OpenAI Responses API`)
       
       // This function now handles:
-      // 1. LLM processing
+      // 1. LLM processing with GPT-4o-mini via OpenAI Responses API + structured outputs
       // 2. Database saving  
       // 3. Real-time aggregation
       await processPostsBatch(batch, 'reddit')
@@ -65,10 +66,10 @@ export async function saveRawTwitterPostsWithLLM(rawTwitterPosts: any[]): Promis
     for (let i = 0; i < rawTwitterPosts.length; i += batchSize) {
       const batch = rawTwitterPosts.slice(i, i + batchSize)
       
-      console.log(`🤖 [ENHANCED] Processing Twitter batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(rawTwitterPosts.length/batchSize)} (${batch.length} posts)`)
+      console.log(`🤖 [ENHANCED] Processing Twitter batch ${Math.floor(i/batchSize) + 1}/${Math.ceil(rawTwitterPosts.length/batchSize)} (${batch.length} posts) with OpenAI Responses API`)
       
       // This function now handles:
-      // 1. LLM processing
+      // 1. LLM processing with GPT-4o-mini via OpenAI Responses API + structured outputs
       // 2. Database saving
       // 3. Real-time aggregation  
       await processPostsBatch(batch, 'twitter')
