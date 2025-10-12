@@ -89,18 +89,19 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
     const prompt = buildBatchPrompt(posts, source)
     
     const completion = await client.chat.completions.create({
-      model: 'gpt-5-nano',
+      model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: 'You are a financial sentiment analyzer. Analyze social media posts and return structured sentiment data.' },
         { role: 'user', content: prompt + '\n\nRespond with valid JSON matching the expected schema.' }
       ],
-      max_completion_tokens: 2000
+      max_tokens: 2000,
+      temperature: 0.1
     })
 
     const responseText = completion.choices[0].message.content
     
     if (!responseText) {
-      throw new Error('Empty response from GPT-5 Nano')
+      throw new Error('Empty response from OpenAI')
     }
 
     // Parse JSON from response
@@ -110,15 +111,15 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
       if (jsonMatch) {
         response = JSON.parse(jsonMatch[0])
       } else {
-        throw new Error('No JSON found in GPT-5 Nano response')
+        throw new Error('No JSON found in OpenAI response')
       }
     } catch (parseError) {
-      console.error('Failed to parse GPT-5 Nano JSON:', parseError)
-      throw new Error(`Failed to parse GPT-5 Nano response: ${parseError.message}`)
+      console.error('Failed to parse OpenAI JSON:', parseError)
+      throw new Error(`Failed to parse OpenAI response: ${parseError.message}`)
     }
     
     if (!response || !response.analyses) {
-      throw new Error('Invalid response structure from GPT-5 Nano')
+      throw new Error('Invalid response structure from OpenAI')
     }
 
     console.log(`🤖 [LLM] Successfully parsed ${response.analyses.length} analyses`)
@@ -134,7 +135,7 @@ export async function processPostsBatch(posts: any[], source: 'reddit' | 'twitte
       original: post,
       llm_analysis: analyses[index] || getFallbackAnalysis(post, source),
       processed_at: new Date().toISOString(),
-      analysis_version: '1.0-gpt5-nano'
+      analysis_version: '1.0-gpt4o-mini'
     }))
     
     console.log(`✅ [LLM] Successfully processed ${processedPosts.length} posts`)
@@ -254,7 +255,7 @@ function getFallbackAnalysis(post: any, source: 'reddit' | 'twitter'): LLMPostAn
 }
 
 /**
- * Cost estimation helper for OpenAI GPT-5 Nano
+ * Cost estimation helper for OpenAI GPT-4o-mini
  */
 export function estimateBatchCost(postCount: number): { tokens: number, cost: number } {
   // Rough estimates for batch processing
@@ -265,9 +266,9 @@ export function estimateBatchCost(postCount: number): { tokens: number, cost: nu
   const totalInputTokens = (postCount * inputTokensPerPost) + instructionTokens
   const totalOutputTokens = postCount * outputTokensPerPost
   
-  // GPT-5 Nano pricing (ultra cost-effective)
-  const inputCostPer1M = 0.05   // $0.05 per 1M input tokens
-  const outputCostPer1M = 0.10  // $0.10 per 1M output tokens
+  // GPT-4o-mini pricing
+  const inputCostPer1M = 0.15   // $0.15 per 1M input tokens
+  const outputCostPer1M = 0.60  // $0.60 per 1M output tokens
   
   const cost = (totalInputTokens / 1000000 * inputCostPer1M) + 
                (totalOutputTokens / 1000000 * outputCostPer1M)
